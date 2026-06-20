@@ -156,6 +156,16 @@
   .heart.lost{background:var(--surface-2);box-shadow:none}
   .road{height:8px;background:var(--surface-2);border-radius:20px;overflow:hidden;margin-bottom:24px}
   .road .fill{height:100%;background:var(--go);width:0;transition:width .4s;border-radius:20px}
+  /* ── навигатор по вопросам (как на экзамене ГИБДД) ── */
+  .qnav{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+  .qnav .cell{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);
+    font-family:'Oswald';font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.12s;padding:0}
+  .qnav .cell:hover{border-color:#46505f}
+  .qnav .cell.done-ok{background:rgba(38,194,129,.18);border-color:var(--go);color:#bff2da}
+  .qnav .cell.done-bad{background:rgba(255,77,79,.18);border-color:var(--stop);color:#ffc9ca}
+  .qnav .cell.cur{border-color:var(--lane);box-shadow:0 0 0 1px var(--lane) inset;color:var(--ink)}
+  .qnav-info{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;font-size:12.5px;color:var(--muted)}
+  @media(max-width:520px){.qnav .cell{width:30px;height:30px;font-size:13px}}
   .qtopic{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
   .qimg{max-width:100%;border-radius:10px;border:1px solid var(--line);margin-bottom:14px}
   .qtext{font-family:'Oswald';font-weight:500;font-size:21px;text-transform:none;line-height:1.25;margin-bottom:20px}
@@ -653,9 +663,9 @@ const store={
 /* ===================== ПОДКЛЮЧЕНИЕ К БЭКЕНДУ =====================
    Пусто = демо-режим (вход и оплата хранятся в браузере, как сейчас).
    Чтобы включить серверный режим, укажите адрес вашего бэкенда:
-       const API_BASE='https://api.вашсайт.ru';
+       const API_BASE='https://zeleny-backend-production.up.railway.app';
    PAYMENT_URL — ссылка на оплату у вашей платёжки; {email} и {plan} подставятся. */
-const API_BASE='';
+const API_BASE='https://zeleny-backend-production.up.railway.app';
 const PAYMENT_URL='';
 function serverMode(){return !!API_BASE;}
 function authToken(){return store.get('zl_token')||null;}
@@ -999,27 +1009,41 @@ function renderMistakes(){
 }
 
 /* ===================== ДВИЖОК ТРЕНАЖЁРА ===================== */
-let queue=[],qpos=0,qscore=0,qanswered=false,opts={},lives=0,timer=null,timeLeft=0;
+let queue=[],qpos=0,qscore=0,qanswered=false,opts={},lives=0,timer=null,timeLeft=0,answers=[];
 function startQuiz(list,o){
   if(list.length===0)return;
-  opts=o||{};queue=list.slice();qpos=0;qscore=0;lives=opts.lives||2;
+  opts=o||{};queue=list.slice();qpos=0;qscore=0;lives=opts.lives||2;answers=new Array(queue.length).fill(null);
   touchStreak();
   if(opts.exam){timeLeft=(opts.timeLeft||20*60);startTimer();}
   renderQ();
 }
 function startTimer(){clearInterval(timer);timer=setInterval(()=>{timeLeft--;updateTimer();if(timeLeft<=0){clearInterval(timer);finishQuiz(true);}},1000);}
 function updateTimer(){const el=document.getElementById('qtimer');if(!el)return;const m=Math.floor(timeLeft/60),s=timeLeft%60;el.textContent=m+':'+String(s).padStart(2,'0');el.classList.toggle('low',timeLeft<=60);}
+function buildNav(){
+  // сетка номеров вопросов — только для экзамена
+  if(!opts.exam)return '';
+  const cells=queue.map((gi,i)=>{
+    const a=answers[i];let cls='cell';
+    if(i===qpos)cls+=' cur';
+    if(a!=null){cls+=(a===QUESTIONS[gi].c)?' done-ok':' done-bad';}
+    return `<button class="${cls}" data-nav="${i}">${i+1}</button>`;
+  }).join('');
+  const done=answers.filter(a=>a!=null).length;
+  return `<div class="qnav-info"><span>Отвечено: ${done} из ${queue.length}</span><span>Можно отвечать в любом порядке</span></div><div class="qnav">${cells}</div>`;
+}
 function renderQ(){
   qanswered=false;
   if(qpos>=queue.length){return finishQuiz(false);}
   const q=QUESTIONS[queue[qpos]];
   const lim=queue.length;
+  const already=answers[qpos]!=null;            // на этот вопрос уже отвечали
   const livesHtml=opts.exam?`<div class="qlives">${[0,1].map(i=>`<span class="heart${i>=lives?' lost':''}"></span>`).join('')}</div>`:'';
   const timerHtml=opts.exam?`<span class="qtimer" id="qtimer"></span>`:'';
   pc.innerHTML=`<div class="quiz">
     <div class="quiz-top"><span class="qcount">${opts.label} · ${qpos+1}/${lim}</span>
       <div class="qright">${timerHtml}<span class="qscore">Верно: ${qscore}</span>${livesHtml}</div></div>
     <div class="road"><div class="fill" style="width:${qpos/lim*100}%"></div></div>
+    ${buildNav()}
     <div class="qtopic">${QTOPICS[q.tp]}</div>
     ${q.img?`<img class="qimg" src="${q.img}" onerror="this.style.display='none'" alt="">`:''}
     <div class="qtext">${q.q}</div>
@@ -1028,12 +1052,27 @@ function renderQ(){
     <div class="quiz-foot"><div class="signal"><span class="bulb" id="bR"></span><span class="bulb" id="bG"></span></div><div id="nextSlot"></div></div>
   </div>`;
   if(opts.exam)updateTimer();
-  pc.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>choose(+b.dataset.k)));
+  // клики по сетке номеров
+  pc.querySelectorAll('.qnav .cell').forEach(b=>b.addEventListener('click',()=>{qpos=+b.dataset.nav;renderQ();}));
+  if(already){restoreAnswered(q);}            // показать уже данный ответ
+  else{pc.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>choose(+b.dataset.k)));}
+}
+/* показ ранее данного ответа (когда вернулись к отвеченному вопросу) */
+function restoreAnswered(q){
+  const k=answers[qpos],els=pc.querySelectorAll('.opt');
+  els.forEach(b=>b.disabled=true);
+  els[q.c].classList.add('correct');
+  if(k!==q.c)els[k].classList.add('wrong');
+  document.getElementById(k===q.c?'bG':'bR').className='bulb '+(k===q.c?'on-g':'on-r');
+  pc.querySelector('.explain').classList.add('show');
+  const aiBtn=document.getElementById('aiBtn');if(aiBtn)aiBtn.addEventListener('click',()=>aiExplain(q));
+  addNextButton();
 }
 function choose(k){
   if(qanswered)return;qanswered=true;
   const gi=queue[qpos],q=QUESTIONS[gi],els=pc.querySelectorAll('.opt');
   els.forEach(b=>b.disabled=true);els[q.c].classList.add('correct');
+  answers[qpos]=k;                         // запомнили ответ на этот вопрос
   state.answered++;
   if(k===q.c){qscore++;state.correct++;document.getElementById('bG').className='bulb on-g';if(state.wrong.has(gi))state.wrong.delete(gi);}
   else{els[k].classList.add('wrong');document.getElementById('bR').className='bulb on-r';state.wrong.add(gi);state.everHadMistake=true;
@@ -1042,22 +1081,51 @@ function choose(k){
   pc.querySelector('.explain').classList.add('show');
   var aiBtn=document.getElementById('aiBtn');if(aiBtn)aiBtn.addEventListener('click',function(){aiExplain(q);});
   pc.querySelector('.qscore').textContent='Верно: '+qscore;
+  // обновим подсветку и счётчик в сетке номеров
+  if(opts.exam){
+    const cell=pc.querySelector(`.qnav .cell[data-nav="${qpos}"]`);
+    if(cell){cell.classList.remove('cur');cell.classList.add(k===q.c?'done-ok':'done-bad');}
+    const info=pc.querySelector('.qnav-info span');if(info)info.textContent='Отвечено: '+answers.filter(a=>a!=null).length+' из '+queue.length;
+  }
   if(opts.exam&&lives<0){clearInterval(timer);const n=document.createElement('button');n.className='btn btn-go';n.textContent='Результат';n.addEventListener('click',()=>finishQuiz(true));document.getElementById('nextSlot').appendChild(n);return;}
-  const next=document.createElement('button');next.className='btn btn-go';
-  next.textContent=qpos>=queue.length-1?'Результат':'Дальше →';
-  next.addEventListener('click',()=>{qpos++;renderQ();});
-  document.getElementById('nextSlot').appendChild(next);
+  addNextButton();
+}
+/* кнопка перехода: ведёт к ближайшему неотвеченному; если все отвечены — «Завершить» */
+function addNextButton(){
+  const slot=document.getElementById('nextSlot');if(!slot)return;slot.innerHTML='';
+  const allDone=answers.every(a=>a!=null);
+  if(opts.exam&&!allDone){
+    const next=document.createElement('button');next.className='btn btn-go';next.textContent='Дальше →';
+    next.addEventListener('click',()=>{qpos=nextUnanswered();renderQ();});
+    slot.appendChild(next);
+    const fin=document.createElement('button');fin.className='btn btn-ghost';fin.style.marginLeft='10px';fin.textContent='Завершить экзамен';
+    fin.addEventListener('click',()=>{if(confirm('Завершить экзамен? Неотвеченные вопросы будут засчитаны как ошибки.'))finishQuiz(true);});
+    slot.appendChild(fin);
+  }else{
+    const next=document.createElement('button');next.className='btn btn-go';
+    next.textContent=(opts.exam||qpos>=queue.length-1)?'Результат':'Дальше →';
+    next.addEventListener('click',()=>{if(opts.exam||qpos>=queue.length-1)finishQuiz(false);else{qpos++;renderQ();}});
+    slot.appendChild(next);
+  }
+}
+/* индекс ближайшего неотвеченного вопроса после текущего (по кругу) */
+function nextUnanswered(){
+  for(let s=1;s<=queue.length;s++){const i=(qpos+s)%queue.length;if(answers[i]==null)return i;}
+  return qpos;
 }
 function finishQuiz(forced){
   clearInterval(timer);
-  const lim=queue.length;const pct=Math.round(qscore/lim*100);
+  const lim=queue.length;
+  // в экзамене неотвеченные вопросы считаем ошибками
+  const unanswered=opts.exam?answers.filter(a=>a==null).length:0;
+  const wrongCount=opts.exam?(queue.reduce((n,gi,i)=>n+((answers[i]!=null&&answers[i]!==QUESTIONS[gi].c)?1:0),0)+unanswered):0;
+  const pct=Math.round(qscore/lim*100);
   let pass;
-  if(opts.exam){pass=(lives>=0)&&!forced?true:(qscore>=lim-2&&lives>=0);if(forced&&timeLeft<=0)pass=false;if(lives<0)pass=false;
-    if(pass)state.examPassed=true;}
+  if(opts.exam){pass=wrongCount<=2;if(pass)state.examPassed=true;}
   else{pass=pct>=80;}
   save();updateDash();checkAch();
   let msg;
-  if(opts.exam)msg=pass?'Ты уложился в норму — не больше 2 ошибок. Так держать!':'Провал по правилам экзамена. Разбери ошибки и попробуй снова.';
+  if(opts.exam)msg=pass?('Ошибок: '+wrongCount+' из 20 — это в пределах нормы (не больше 2). Так держать!'):('Ошибок: '+wrongCount+(unanswered?(' (из них без ответа: '+unanswered+')'):'')+'. На экзамене допускается не больше 2 — разбери ошибки и попробуй снова.');
   else if(opts.review)msg=state.wrong.size===0?'Все ошибки разобраны — чисто!':`Осталось ${state.wrong.size} ${plural(state.wrong.size,'ошибка','ошибки','ошибок')} на разбор.`;
   else msg=pass?'Отличный результат по теме.':'Стоит перечитать тему и пройти ещё раз.';
   const upsell=opts.limited?'<div style="margin:6px 0 16px;padding:14px 16px;border-radius:12px;border:1px solid rgba(244,196,48,.4);background:rgba(244,196,48,.07);color:#efe3c2;font-size:14px">Это бесплатная часть — '+lim+' из '+(opts.total||lim)+' вопросов темы. Открой полный доступ, чтобы решать все вопросы и билеты.</div>':'';
