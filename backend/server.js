@@ -22,16 +22,27 @@ const fs = require('fs');
 const {
   PORT = 8080,
   JWT_SECRET,
-  ANTHROPIC_API_KEY,
   PAYMENT_WEBHOOK_SECRET,
   ADMIN_TOKEN,
   ALLOWED_ORIGIN = '*',
-  AI_MODEL = 'claude-haiku-4-5-20251001',
   DB_PATH = 'data.json',
-  SERVE_STATIC = ''
+  SERVE_STATIC = '',
+  // ---- настройки ИИ ----
+  AI_PROVIDER = 'mistral',                 // mistral | groq | anthropic
+  AI_API_KEY,                              // ключ выбранного провайдера
+  AI_MODEL,                                // если пусто — берётся модель по умолчанию
+  AI_REQUIRE_SUBSCRIPTION = ''             // 'true' => ИИ только для оплативших
 } = process.env;
 
 if (!JWT_SECRET) { console.error('Ошибка: задайте JWT_SECRET в файле .env'); process.exit(1); }
+
+// модель по умолчанию под выбранного провайдера
+const MODEL = AI_MODEL || (
+  AI_PROVIDER === 'groq'      ? 'llama-3.3-70b-versatile' :
+  AI_PROVIDER === 'anthropic' ? 'claude-haiku-4-5-20251001' :
+                                'mistral-small-latest'      // mistral
+);
+const REQUIRE_SUB = String(AI_REQUIRE_SUBSCRIPTION) === 'true';
 
 /* ---------- хранилище: простой JSON-файл ---------- */
 let DB = { users: [], metrics: {}, seq: 0 };
@@ -220,27 +231,53 @@ app.get('/api/stats', (req, res) => {
   });
 });
 
-/* ---------- ИИ-объяснение (только для оплативших) ---------- */
+/* ---------- ИИ-объяснение ----------
+   Провайдер выбирается переменной AI_PROVIDER (по умолчанию mistral — бесплатно).
+   Подписка по умолчанию НЕ требуется; включается через AI_REQUIRE_SUBSCRIPTION=true. */
 app.post('/api/ai/explain', aiLimiter, auth, async (req, res) => {
   const u = getUser(req.userId);
-  if (!isActive(u)) return res.status(403).json({ error: 'Доступно по подписке' });
-  if (!ANTHROPIC_API_KEY) return res.status(500).json({ error: 'AI не настроен на сервере' });
+  if (REQUIRE_SUB && !isActive(u)) return res.status(403).json({ error: 'Доступно по подписке' });
+  if (!AI_API_KEY) { console.error('ИИ: не задан AI_API_KEY'); return res.status(500).json({ error: 'AI не настроен на сервере' }); }
   const { question, correct } = req.body || {};
   if (!question || !correct) return res.status(400).json({ error: 'bad_request' });
   const prompt = 'Ты добрый автоинструктор. Объясни простым коротким языком, 3-4 предложения, без сложных терминов и без списков, можно с бытовым примером, почему на вопрос по ПДД «' + question + '» правильный ответ — «' + correct + '».';
   try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
+    const text = await callAI(prompt);
+    res.json({ text: text || 'Не удалось получить объяснение, попробуйте ещё раз.' });
+  } catch (e) {
+    console.error('ИИ ошибка:', e.message);
+    res.status(502).json({ error: 'ai_failed' });
+  }
+});
+
+/* Универсальный вызов ИИ под выбранного провайдера */
+async function callAI(prompt) {
+  // Mistral и Groq — одинаковый OpenAI-совместимый формат, отличается только адрес
+  if (AI_PROVIDER === 'mistral' || AI_PROVIDER === 'groq') {
+    const url = AI_PROVIDER === 'mistral'
+      ? 'https://api.mistral.ai/v1/chat/completions'
+      : 'https://api.groq.com/openai/v1/chat/completions';
+    const r = await fetch(url, {
       method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-api-key': ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: AI_MODEL, max_tokens: 400, messages: [{ role: 'user', content: prompt }] })
+      headers: { 'content-type': 'application/json', 'authorization': 'Bearer ' + AI_API_KEY },
+      body: JSON.stringify({ model: MODEL, max_tokens: 400, messages: [{ role: 'user', content: prompt }] })
     });
     const data = await r.json();
-    const text = (data.content || []).map(b => b && b.type === 'text' ? b.text : '').join('').trim();
-    res.json({ text: text || 'Не удалось получить объяснение, попробуйте ещё раз.' });
-  } catch (e) { res.status(502).json({ error: 'ai_failed' }); }
-});
+    if (!r.ok) throw new Error(AI_PROVIDER + ' ' + r.status + ' ' + JSON.stringify(data));
+    return (((data.choices || [])[0] || {}).message || {}).content?.trim() || '';
+  }
+  // Anthropic (платно)
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-api-key': AI_API_KEY, 'anthropic-version': '2023-06-01' },
+    body: JSON.stringify({ model: MODEL, max_tokens: 400, messages: [{ role: 'user', content: prompt }] })
+  });
+  const data = await r.json();
+  if (!r.ok) throw new Error('anthropic ' + r.status + ' ' + JSON.stringify(data));
+  return (data.content || []).map(b => b && b.type === 'text' ? b.text : '').join('').trim();
+}
 
 /* ---------- (необязательно) отдавать сам сайт с этого же сервера ---------- */
 if (SERVE_STATIC) app.use(express.static(path.resolve(SERVE_STATIC)));
 
-app.listen(PORT, () => console.log('Бэкенд «Зелёный» запущен на порту ' + PORT));
+app.listen(PORT, () => console.log('Бэкенд «Зелёный» запущен на порту ' + PORT + ' · ИИ: ' + AI_PROVIDER + '/' + MODEL));
