@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Статистика · Зелёный</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#15171C;--surface:#1E222A;--surface2:#262B35;--line:#333A46;--ink:#F2F3F0;--muted:#99A0AC;--lane:#F4C430;--go:#26C281;--info:#4DA3FF;--stop:#FF4D4F}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(900px 500px at 80% -10%,rgba(38,194,129,.08),transparent),var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:26px 18px;line-height:1.5;min-height:100vh}
+  .wrap{max-width:1000px;margin:0 auto}
+  .topbar{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Oswald';font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:.04em}
+  .light{width:24px;height:24px;border-radius:6px;background:var(--surface2);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:3px 0}
+  .light span{width:5px;height:5px;border-radius:50%}.r{background:#4a2326}.y{background:#4a4226}.g{background:var(--go);box-shadow:0 0 6px var(--go)}
+  .topbar .tag{font-family:'Oswald';font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:20px;margin-left:6px}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+  .setup{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:14px}
+  .fld{display:flex;flex-direction:column;gap:6px;flex:1;min-width:190px}
+  .fld label{font-size:12px;color:var(--muted);letter-spacing:.03em}
+  .fld input{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;color:var(--ink);font-family:inherit;font-size:14px;outline:none}
+  .fld input:focus{border-color:var(--go)}
+  button.act{font-family:'Oswald';text-transform:uppercase;letter-spacing:.04em;font-size:14px;padding:12px 22px;border-radius:10px;border:none;background:var(--go);color:#08130d;cursor:pointer}
+  button.act:hover{filter:brightness(1.08)}
+  .row2{display:flex;align-items:center;gap:14px;margin:4px 0 22px;flex-wrap:wrap}
+  .upd{font-size:12.5px;color:var(--muted)}
+  .auto{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);cursor:pointer;user-select:none}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--go);box-shadow:0 0 7px var(--go)}
+  .section-t{font-family:'Oswald';text-transform:uppercase;font-size:14px;letter-spacing:.08em;color:var(--muted);margin:22px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;position:relative;overflow:hidden;transition:.15s}
+  .card:hover{border-color:#46505f;transform:translateY(-2px)}
+  .card .ic{font-size:20px;opacity:.9}
+  .card .n{font-family:'Oswald';font-weight:700;font-size:40px;line-height:1;margin-top:10px}
+  .card .n.go{color:var(--go)}.card .n.info{color:var(--info)}.card .n.lane{color:var(--lane)}
+  .card .l{font-size:13px;color:var(--muted);margin-top:7px}
+  .card .badge{display:inline-block;margin-left:8px;font-family:'Oswald';font-size:11px;padding:2px 9px;border-radius:20px;background:var(--surface2);color:var(--muted)}
+  .hint{color:var(--muted);font-size:13px;margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+  .err{color:#ff9a9c;font-size:14px;margin-top:14px;min-height:18px}
+  .skeleton .n,.skeleton .l{color:transparent!important;background:linear-gradient(90deg,#2a2f3a,#333a46,#2a2f3a);background-size:200% 100%;border-radius:6px;animation:sh 1.2s infinite}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  @media(max-width:780px){.grid,.grid.three{grid-template-columns:1fr 1fr}}
+  @media(max-width:460px){.grid,.grid.three{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="logo"><div class="light"><span class="r"></span><span class="y"></span><span class="g"></span></div>Зелёный</div>
+    <span class="tag">Панель статистики</span>
+  </div>
+  <div class="sub">Регистрации, оплаты и посещения курса в реальном времени.</div>
+
+  <div class="setup">
+    <div class="fld"><label>Адрес бэкенда</label><input id="base" placeholder="http://localhost:8080 или https://api.вашсайт.ru"></div>
+    <div class="fld"><label>Админ-токен (ADMIN_TOKEN)</label><input id="token" type="password" placeholder="ваш секретный токен"></div>
+    <button class="act" id="load">Показать</button>
+  </div>
+  <div class="row2">
+    <span class="upd" id="upd"></span>
+    <label class="auto"><span class="dot" id="dot" style="display:none"></span><input type="checkbox" id="autochk" checked> автообновление каждые 30 сек</label>
+  </div>
+
+  <div class="section-t">👤 Пользователи</div>
+  <div class="grid">
+    <div class="card"><div class="ic">👥</div><div class="n lane" id="total">—</div><div class="l">Всего регистраций</div></div>
+    <div class="card"><div class="ic">💳</div><div class="n go" id="paid">—</div><div class="l">Оплатили доступ</div></div>
+    <div class="card"><div class="ic">📈</div><div class="n" id="conv">—</div><div class="l">Конверсия в оплату</div></div>
+    <div class="card"><div class="ic">🆕</div><div class="n" id="regToday">—</div><div class="l">Регистраций сегодня<span class="badge" id="regWeekB">за 7 дн: —</span></div></div>
+  </div>
+
+  <div class="section-t">📊 Посещения</div>
+  <div class="grid three">
+    <div class="card"><div class="ic">🔵</div><div class="n info" id="visToday">—</div><div class="l">Сегодня</div></div>
+    <div class="card"><div class="ic">🗓️</div><div class="n info" id="visWeek">—</div><div class="l">За 7 дней</div></div>
+    <div class="card"><div class="ic">∑</div><div class="n info" id="visTotal">—</div><div class="l">Всего за всё время</div></div>
+  </div>
+
+  <div class="err" id="err"></div>
+  <div class="hint">Токен и адрес сохраняются в этом браузере. Эта страница только для тебя — не давай ссылку клиентам (даже если откроют, без токена данных не увидят).</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+$('base').value=localStorage.getItem('zl_stats_base')||'';
+$('token').value=localStorage.getItem('zl_stats_token')||'';
+let timer=null;
+function setSkeleton(on){document.querySelectorAll('.card').forEach(c=>c.classList.toggle('skeleton',on));}
+function fmt(n){return (n==null||isNaN(n))?'—':Number(n).toLocaleString('ru-RU');}
+async function load(){
+  const base=$('base').value.trim().replace(/\/+$/,'');
+  const token=$('token').value.trim();
+  $('err').textContent='';
+  if(!base||!token){$('err').textContent='Укажите адрес бэкенда и админ-токен.';return;}
+  localStorage.setItem('zl_stats_base',base);localStorage.setItem('zl_stats_token',token);
+  if($('total').textContent==='—')setSkeleton(true);
+  try{
+    const r=await fetch(base+'/api/stats?token='+encodeURIComponent(token));
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error==='forbidden'?'Неверный админ-токен':(d.error||'Ошибка'));
+    setSkeleton(false);
+    $('total').textContent=fmt(d.total_users);
+    $('paid').textContent=fmt(d.paid_users);
+    const conv=d.total_users?Math.round(d.paid_users/d.total_users*100):0;
+    $('conv').textContent=conv+'%';
+    $('regToday').textContent=fmt(d.registrations_today);
+    $('regWeekB').textContent='за 7 дн: '+fmt(d.registrations_week);
+    $('visToday').textContent=fmt(d.visits_today);
+    $('visWeek').textContent=fmt(d.visits_week);
+    $('visTotal').textContent=fmt(d.visits_total);
+    $('upd').textContent='Обновлено в '+new Date().toLocaleTimeString('ru-RU');
+    $('dot').style.display=$('autochk').checked?'':'none';
+  }catch(e){
+    setSkeleton(false);
+    $('err').textContent='Не удалось загрузить: '+(e.message||e)+'. Проверьте адрес, токен и что бэкенд запущен.';
+  }
+}
+function reschedule(){clearInterval(timer);if($('autochk').checked)timer=setInterval(load,30000);$('dot').style.display=$('autochk').checked?'':'none';}
+$('load').addEventListener('click',()=>{load();reschedule();});
+$('autochk').addEventListener('change',reschedule);
+['token','base'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter'){load();reschedule();}}));
+if($('base').value&&$('token').value){load();reschedule();}
+</script>
+</body>
+</html>

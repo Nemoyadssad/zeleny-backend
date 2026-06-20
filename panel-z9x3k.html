@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Админка · Зелёный</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  .pw-screen{position:fixed;inset:0;background:#15171C;z-index:9999;display:flex;align-items:center;justify-content:center}
+  .pw-box{background:#1E222A;border:1px solid #333A46;border-radius:16px;padding:36px 32px;width:340px;max-width:calc(100vw - 40px);text-align:center}
+  .pw-logo{font-family:'Oswald',sans-serif;font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.04em;color:#F2F3F0;margin-bottom:6px}
+  .pw-hint{font-size:13px;color:#99A0AC;margin-bottom:22px}
+  .pw-box input{width:100%;background:#262B35;border:1px solid #333A46;border-radius:10px;padding:12px 14px;color:#F2F3F0;font-family:inherit;font-size:15px;outline:none;text-align:center;letter-spacing:.08em;margin-bottom:12px}
+  .pw-box input:focus{border-color:#26C281}
+  .pw-box button{width:100%;background:#26C281;color:#08130d;border:none;border-radius:10px;padding:12px;font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+  .pw-box button:hover{filter:brightness(1.08)}
+  .pw-err{color:#FF4D4F;font-size:13px;margin-top:10px;min-height:18px}
+</style>
+<style>
+  :root{--bg:#15171C;--surface:#1E222A;--surface2:#262B35;--line:#333A46;--ink:#F2F3F0;--muted:#99A0AC;--lane:#F4C430;--go:#26C281;--stop:#FF4D4F;--info:#4DA3FF}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:26px 18px;min-height:100vh;line-height:1.5}
+  .wrap{max-width:860px;margin:0 auto}
+
+  /* header */
+  .topbar{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Oswald';font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:.04em}
+  .light{width:24px;height:24px;border-radius:6px;background:var(--surface2);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:3px 0}
+  .light span{width:5px;height:5px;border-radius:50%}.r{background:#4a2326}.y{background:#4a4226}.g{background:var(--go);box-shadow:0 0 6px var(--go)}
+  .tag{font-family:'Oswald';font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:20px;margin-left:6px}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:22px}
+
+  /* connection setup */
+  .setup{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:20px}
+  .fld{display:flex;flex-direction:column;gap:6px;flex:1;min-width:200px}
+  .fld label{font-size:12px;color:var(--muted);letter-spacing:.03em}
+  .fld input,.fld select{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;color:var(--ink);font-family:inherit;font-size:14px;outline:none;width:100%}
+  .fld input:focus,.fld select:focus{border-color:var(--go)}
+  .fld select option{background:var(--surface2)}
+
+  /* tabs */
+  .tabs{display:flex;gap:6px;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:0}
+  .tab{font-family:'Oswald';text-transform:uppercase;letter-spacing:.05em;font-size:13px;padding:10px 18px;border-radius:10px 10px 0 0;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s}
+  .tab.active{color:var(--lane);border-bottom-color:var(--lane);background:rgba(244,196,48,.06)}
+  .tab:hover:not(.active){color:var(--ink)}
+
+  /* panels */
+  .panel{display:none}.panel.active{display:block}
+
+  /* cards */
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:14px}
+  .card h2{font-family:'Oswald';text-transform:uppercase;font-size:15px;letter-spacing:.06em;color:var(--muted);margin-bottom:16px}
+
+  /* form rows */
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .row .fld{min-width:160px}
+
+  /* buttons */
+  .btn{font-family:'Oswald';text-transform:uppercase;letter-spacing:.04em;font-size:14px;padding:11px 22px;border-radius:10px;border:none;cursor:pointer;transition:.15s;white-space:nowrap}
+  .btn-go{background:var(--go);color:#08130d}.btn-go:hover{filter:brightness(1.08)}
+  .btn-stop{background:rgba(255,77,79,.15);color:var(--stop);border:1px solid rgba(255,77,79,.3)}.btn-stop:hover{background:rgba(255,77,79,.25)}
+  .btn-sm{padding:6px 14px;font-size:12px;border-radius:8px}
+
+  /* result message */
+  .msg{min-height:22px;font-size:14px;margin-top:12px;border-radius:8px;padding:0}
+  .msg.ok{color:var(--go)}.msg.err{color:var(--stop)}
+
+  /* promo table */
+  .promo-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+  .promo-table th{text-align:left;color:var(--muted);font-size:12px;font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.04em}
+  .promo-table td{padding:10px 10px;border-bottom:1px solid rgba(51,58,70,.5);vertical-align:middle}
+  .promo-table tr:last-child td{border-bottom:none}
+  .promo-table tr:hover td{background:rgba(255,255,255,.02)}
+  .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-family:'Oswald';font-size:11px;letter-spacing:.04em}
+  .badge-full{background:rgba(38,194,129,.15);color:var(--go);border:1px solid rgba(38,194,129,.3)}
+  .badge-month{background:rgba(77,163,255,.15);color:var(--info);border:1px solid rgba(77,163,255,.3)}
+  .badge-used{background:rgba(255,77,79,.12);color:var(--stop)}
+  .badge-active{background:rgba(38,194,129,.12);color:var(--go)}
+  .copy-btn{background:var(--surface2);border:1px solid var(--line);border-radius:6px;color:var(--muted);font-size:11px;padding:3px 8px;cursor:pointer;font-family:'Oswald';letter-spacing:.04em;text-transform:uppercase;transition:.12s}
+  .copy-btn:hover{color:var(--lane);border-color:var(--lane)}
+  .empty{color:var(--muted);font-size:14px;text-align:center;padding:28px;opacity:.7}
+
+  /* user list */
+  .user-table{width:100%;border-collapse:collapse;font-size:14px}
+  .user-table th{text-align:left;color:var(--muted);font-size:12px;font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.04em}
+  .user-table td{padding:9px 10px;border-bottom:1px solid rgba(51,58,70,.5);vertical-align:middle;word-break:break-all}
+  .user-table tr:last-child td{border-bottom:none}
+  .user-table tr:hover td{background:rgba(255,255,255,.02)}
+
+  /* spinner */
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--go);border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  @media(max-width:560px){.row{flex-direction:column}.row .fld{min-width:100%}}
+</style>
+</head>
+<body>
+<div class="pw-screen" id="pwScreen">
+  <div class="pw-box">
+    <div class="pw-logo">🚦 Зелёный</div>
+    <div class="pw-hint">Админ-панель · введите пароль</div>
+    <input type="password" id="pwInput" placeholder="••••••••" autofocus>
+    <button onclick="checkPw()">Войти</button>
+    <div class="pw-err" id="pwErr"></div>
+  </div>
+</div>
+<script>
+(function(){
+  const PASS = 'ADS789000211HYEQDASDhhh777hrwejfn23423jdsvhbusihd';
+  const KEY = 'zl_admin_auth';
+  if(sessionStorage.getItem(KEY)==='1') document.getElementById('pwScreen').style.display='none';
+  window.checkPw = function(){
+    const v = document.getElementById('pwInput').value;
+    if(v === PASS){ sessionStorage.setItem(KEY,'1'); document.getElementById('pwScreen').style.display='none'; }
+    else{ document.getElementById('pwErr').textContent='Неверный пароль'; document.getElementById('pwInput').value=''; document.getElementById('pwInput').focus(); }
+  };
+  document.getElementById('pwInput').addEventListener('keydown',function(e){ if(e.key==='Enter') window.checkPw(); });
+})();
+</script>
+<div class="wrap">
+  <div class="topbar">
+    <div class="logo"><div class="light"><span class="r"></span><span class="y"></span><span class="g"></span></div>Зелёный</div>
+    <span class="tag">Админ-панель</span>
+  </div>
+  <div class="sub">Ручная выдача тарифов и управление промокодами.</div>
+
+  <!-- Подключение -->
+  <div class="setup">
+    <div class="fld"><label>Адрес бэкенда</label><input id="base" placeholder="https://api.yoursite.ru"></div>
+    <div class="fld"><label>ADMIN_TOKEN</label><input id="token" type="password" placeholder="секретный токен"></div>
+    <button class="btn btn-go" id="connectBtn">Подключить</button>
+  </div>
+
+  <!-- Вкладки -->
+  <div class="tabs">
+    <button class="tab active" data-tab="grant">🎁 Выдать доступ</button>
+    <button class="tab" data-tab="promos">🏷️ Промокоды</button>
+    <button class="tab" data-tab="users">👥 Пользователи</button>
+  </div>
+
+  <!-- Вкладка: выдать доступ -->
+  <div class="panel active" id="tab-grant">
+    <div class="card">
+      <h2>Выдать тариф вручную</h2>
+      <div class="row">
+        <div class="fld" style="flex:2"><label>E-mail или телефон пользователя</label><input id="grantEmail" placeholder="user@example.com"></div>
+        <div class="fld"><label>Тариф</label>
+          <select id="grantPlan">
+            <option value="full">Полный курс (навсегда)</option>
+            <option value="month">Месяц (30 дней)</option>
+          </select>
+        </div>
+        <button class="btn btn-go" id="grantBtn">Выдать</button>
+      </div>
+      <div class="msg" id="grantMsg"></div>
+    </div>
+  </div>
+
+  <!-- Вкладка: промокоды -->
+  <div class="panel" id="tab-promos">
+    <div class="card">
+      <h2>Создать промокод</h2>
+      <div class="row">
+        <div class="fld"><label>Код (латиницей, будет заглавным)</label><input id="promoCode" placeholder="FRIEND2025" style="text-transform:uppercase"></div>
+        <div class="fld"><label>Тариф</label>
+          <select id="promoPlan">
+            <option value="full">Полный курс (навсегда)</option>
+            <option value="month">Месяц (30 дней)</option>
+          </select>
+        </div>
+        <div class="fld" style="max-width:120px"><label>Макс. активаций</label><input id="promoMax" type="number" min="1" max="9999" value="1" placeholder="1"></div>
+        <div class="fld"><label>Заметка (для себя)</label><input id="promoNote" placeholder="Розыгрыш июнь 2025"></div>
+        <button class="btn btn-go" id="promoCreateBtn">Создать</button>
+      </div>
+      <div class="msg" id="promoCreateMsg"></div>
+    </div>
+
+    <div class="card">
+      <h2>Активные промокоды <button class="btn btn-sm" id="promoRefreshBtn" style="background:var(--surface2);color:var(--muted);border:1px solid var(--line);margin-left:10px">Обновить</button></h2>
+      <div id="promoTableWrap"><div class="empty">Нажмите «Подключить», чтобы загрузить список</div></div>
+    </div>
+  </div>
+
+  <!-- Вкладка: пользователи -->
+  <div class="panel" id="tab-users">
+    <div class="card">
+      <h2>Все пользователи <button class="btn btn-sm" id="usersRefreshBtn" style="background:var(--surface2);color:var(--muted);border:1px solid var(--line);margin-left:10px">Обновить</button></h2>
+      <div id="usersTableWrap"><div class="empty">Нажмите «Подключить», чтобы загрузить список</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+$('base').value=localStorage.getItem('zl_admin_base')||'';
+$('token').value=localStorage.getItem('zl_admin_token')||'';
+$('promoCode').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+
+let BASE='',TOKEN='';
+
+function setMsg(el,text,type){el.className='msg '+(type||'');el.innerHTML=text;}
+
+function adminFetch(path,opts={}){
+  return fetch(BASE+path,{...opts,headers:{...(opts.headers||{}),'x-admin-token':TOKEN,'content-type':'application/json'}});
+}
+
+// Tabs
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    $('tab-'+t.dataset.tab).classList.add('active');
+    if(t.dataset.tab==='promos') loadPromos();
+    if(t.dataset.tab==='users') loadUsers();
+  });
+});
+
+// Connect
+$('connectBtn').addEventListener('click',connect);
+['base','token'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')connect();}));
+
+async function connect(){
+  BASE=($('base').value.trim()).replace(/\/+$/,'');
+  TOKEN=$('token').value.trim();
+  if(!BASE||!TOKEN){alert('Заполните адрес и токен');return;}
+  localStorage.setItem('zl_admin_base',BASE);
+  localStorage.setItem('zl_admin_token',TOKEN);
+  $('connectBtn').innerHTML='<span class="spin"></span>Проверка...';
+  try{
+    const r=await fetch(BASE+'/api/stats?token='+encodeURIComponent(TOKEN));
+    if(!r.ok)throw new Error('Неверный токен или адрес');
+    $('connectBtn').textContent='✓ Подключено';
+    $('connectBtn').style.background='var(--go)';
+    loadPromos(); loadUsers();
+  }catch(e){
+    $('connectBtn').textContent='Подключить';
+    alert('Ошибка: '+e.message);
+  }
+}
+
+// ── Выдать доступ ──────────────────────────────────────────
+$('grantBtn').addEventListener('click',async()=>{
+  if(!BASE||!TOKEN){setMsg($('grantMsg'),'Сначала подключитесь к бэкенду','err');return;}
+  const email=$('grantEmail').value.trim();
+  const plan=$('grantPlan').value;
+  if(!email){setMsg($('grantMsg'),'Введите e-mail или телефон','err');return;}
+  $('grantBtn').innerHTML='<span class="spin"></span>';
+  try{
+    const r=await adminFetch('/api/admin/grant',{method:'POST',body:JSON.stringify({email,plan})});
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Ошибка');
+    setMsg($('grantMsg'),'✓ Доступ выдан: '+email+' → '+(plan==='full'?'Полный курс':'Месяц'),'ok');
+    $('grantEmail').value='';
+  }catch(e){setMsg($('grantMsg'),e.message,'err');}
+  $('grantBtn').textContent='Выдать';
+});
+
+// ── Промокоды ──────────────────────────────────────────────
+$('promoCreateBtn').addEventListener('click', createPromo);
+$('promoRefreshBtn').addEventListener('click', loadPromos);
+
+async function createPromo(){
+  if(!BASE||!TOKEN){setMsg($('promoCreateMsg'),'Сначала подключитесь','err');return;}
+  const code=$('promoCode').value.trim().toUpperCase();
+  const plan=$('promoPlan').value;
+  const max_uses=parseInt($('promoMax').value)||1;
+  const note=$('promoNote').value.trim();
+  if(!code){setMsg($('promoCreateMsg'),'Введите код','err');return;}
+  $('promoCreateBtn').innerHTML='<span class="spin"></span>';
+  try{
+    const r=await adminFetch('/api/admin/promo/create',{method:'POST',body:JSON.stringify({code,plan,max_uses,note})});
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Ошибка');
+    setMsg($('promoCreateMsg'),'✓ Промокод создан: '+code,'ok');
+    $('promoCode').value='';$('promoNote').value='';$('promoMax').value='1';
+    loadPromos();
+  }catch(e){setMsg($('promoCreateMsg'),e.message,'err');}
+  $('promoCreateBtn').textContent='Создать';
+}
+
+async function loadPromos(){
+  if(!BASE||!TOKEN)return;
+  $('promoTableWrap').innerHTML='<div class="empty"><span class="spin"></span> Загрузка...</div>';
+  try{
+    const r=await adminFetch('/api/admin/promo/list');
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Ошибка');
+    renderPromos(d.promos||[]);
+  }catch(e){$('promoTableWrap').innerHTML='<div class="empty" style="color:var(--stop)">'+e.message+'</div>';}
+}
+
+function renderPromos(promos){
+  if(!promos.length){$('promoTableWrap').innerHTML='<div class="empty">Промокодов пока нет</div>';return;}
+  const rows=promos.map(p=>{
+    const exhausted=p.uses>=p.max_uses;
+    const planBadge=p.plan==='month'?'<span class="badge badge-month">Месяц</span>':'<span class="badge badge-full">Полный</span>';
+    const statusBadge=exhausted?'<span class="badge badge-used">Исчерпан</span>':'<span class="badge badge-active">Активен</span>';
+    return `<tr>
+      <td><code style="font-size:15px;font-weight:600;letter-spacing:.05em;color:var(--lane)">${p.code}</code>
+        <button class="copy-btn" onclick="copy('${p.code}',this)">Copy</button>
+      </td>
+      <td>${planBadge}</td>
+      <td style="color:${exhausted?'var(--stop)':'var(--ink)'}">${p.uses} / ${p.max_uses}</td>
+      <td>${statusBadge}</td>
+      <td style="color:var(--muted);font-size:12px">${p.note||'—'}</td>
+      <td style="color:var(--muted);font-size:12px">${p.created_at?p.created_at.slice(0,10):'—'}</td>
+      <td><button class="btn btn-stop btn-sm" onclick="deletePromo('${p.code}',this)">Удалить</button></td>
+    </tr>`;
+  }).join('');
+  $('promoTableWrap').innerHTML=`<table class="promo-table">
+    <thead><tr><th>Код</th><th>Тариф</th><th>Активаций</th><th>Статус</th><th>Заметка</th><th>Создан</th><th></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+async function deletePromo(code,btn){
+  if(!confirm('Удалить промокод '+code+'?'))return;
+  btn.textContent='...';
+  try{
+    const r=await adminFetch('/api/admin/promo/'+encodeURIComponent(code),{method:'DELETE'});
+    if(!r.ok){const d=await r.json();throw new Error(d.error||'Ошибка');}
+    loadPromos();
+  }catch(e){alert(e.message);btn.textContent='Удалить';}
+}
+
+function copy(text,btn){
+  navigator.clipboard.writeText(text).then(()=>{
+    const orig=btn.textContent;btn.textContent='✓';btn.style.color='var(--go)';
+    setTimeout(()=>{btn.textContent=orig;btn.style.color='';},1200);
+  });
+}
+
+// ── Пользователи ───────────────────────────────────────────
+$('usersRefreshBtn').addEventListener('click',loadUsers);
+
+async function loadUsers(){
+  if(!BASE||!TOKEN)return;
+  $('usersTableWrap').innerHTML='<div class="empty"><span class="spin"></span> Загрузка...</div>';
+  try{
+    const r=await fetch(BASE+'/api/stats?token='+encodeURIComponent(TOKEN));
+    const stats=await r.json();
+    // stats не содержит список юзеров — читаем из отдельного эндпоинта если есть,
+    // иначе показываем сводку
+    renderUsersSummary(stats);
+  }catch(e){$('usersTableWrap').innerHTML='<div class="empty" style="color:var(--stop)">'+e.message+'</div>';}
+}
+
+function renderUsersSummary(s){
+  $('usersTableWrap').innerHTML=`
+    <table class="user-table">
+      <thead><tr><th>Показатель</th><th>Значение</th></tr></thead>
+      <tbody>
+        <tr><td>Всего зарегистрировано</td><td style="color:var(--lane);font-weight:600">${fmt(s.total_users)}</td></tr>
+        <tr><td>Оплатили доступ</td><td style="color:var(--go);font-weight:600">${fmt(s.paid_users)}</td></tr>
+        <tr><td>Конверсия</td><td>${s.total_users?Math.round(s.paid_users/s.total_users*100)+'%':'—'}</td></tr>
+        <tr><td>Регистраций сегодня</td><td>${fmt(s.registrations_today)}</td></tr>
+        <tr><td>Регистраций за 7 дней</td><td>${fmt(s.registrations_week)}</td></tr>
+        <tr><td>Посещений сегодня</td><td style="color:var(--info)">${fmt(s.visits_today)}</td></tr>
+        <tr><td>Посещений за 7 дней</td><td style="color:var(--info)">${fmt(s.visits_week)}</td></tr>
+        <tr><td>Посещений всего</td><td style="color:var(--info)">${fmt(s.visits_total)}</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin-top:14px">Детальный список пользователей недоступен через текущий API — данные хранятся в data.json на сервере.</p>`;
+}
+
+function fmt(n){return (n==null||isNaN(n))?'—':Number(n).toLocaleString('ru-RU');}
+
+// Auto-connect if saved
+if($('base').value&&$('token').value) connect();
+</script>
+</body>
+</html>

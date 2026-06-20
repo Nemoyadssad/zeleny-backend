@@ -1,0 +1,14 @@
+{
+  "name": "Зелёный — курс ПДД",
+  "short_name": "Зелёный",
+  "description": "Онлайн-курс подготовки к теории ПДД: теория, тренажёр, экзамен.",
+  "start_url": "index.html",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#15171C",
+  "theme_color": "#15171C",
+  "icons": [
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

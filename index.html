@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Зелёный — онлайн-курс подготовки к теории ПДД 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#15171C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Зелёный">
+
+<!-- ===== Яндекс.Метрика: отчёт по посещениям и регистрациям ===== -->
+<script>
+  window.YM_COUNTER_ID = 0; /* ← ВСТАВЬТЕ сюда номер вашего счётчика Яндекс.Метрики (получите на metrika.yandex.ru) */
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+  for(var j=0;j<e.scripts.length;j++){if(e.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  if(window.YM_COUNTER_ID){ym(window.YM_COUNTER_ID,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true});}
+  function ymGoal(g){try{if(window.ym&&window.YM_COUNTER_ID)ym(window.YM_COUNTER_ID,"reachGoal",g);}catch(e){}}
+  window.ymGoal=ymGoal;
+</script>
+<!-- ===== /Яндекс.Метрика ===== -->
+
+<style>
+  :root{
+    --asphalt:#15171C;--surface:#1E222A;--surface-2:#262B35;--line:#333A46;
+    --ink:#F2F3F0;--muted:#99A0AC;--lane:#F4C430;--go:#26C281;--stop:#FF4D4F;--info:#4DA3FF;--r:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--asphalt);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4,.disp{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.02em;line-height:1.06;font-weight:600}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 22px}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit}
+
+  .acct{background:var(--surface-2);border-bottom:1px solid var(--line);font-size:13px}
+  .acct .wrap{display:flex;align-items:center;gap:12px;height:42px}
+  .acct .who{color:var(--muted)}
+  .acct .badge{font-family:'Oswald';letter-spacing:.04em;font-size:12px;padding:3px 11px;border-radius:20px;border:1px solid var(--line)}
+  .acct .badge.free{color:var(--muted)}
+  .acct .badge.pro{color:var(--go);border-color:rgba(38,194,129,.4);background:rgba(38,194,129,.1)}
+  .acct .spacer{margin-left:auto}
+  .mini{font-family:'Oswald';text-transform:uppercase;letter-spacing:.04em;font-size:12px;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+  .mini:hover{border-color:var(--lane);color:var(--lane)}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(21,23,28,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:18px;height:62px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Oswald';font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.04em}
+  .logo .light{width:26px;height:26px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:3px 0}
+  .logo .light span{width:6px;height:6px;border-radius:50%}
+  .logo .r{background:#4a2326}.logo .y{background:#4a4226}.logo .g{background:var(--go);box-shadow:0 0 7px var(--go)}
+  .nav .links{display:flex;gap:3px;margin-left:auto;align-items:center}
+  .nav .links a{padding:8px 12px;border-radius:9px;font-size:14px;font-weight:500;color:var(--muted)}
+  .nav .links a:hover{color:var(--ink);background:var(--surface)}
+  .nav .buy{background:var(--go);color:#08130d;font-weight:600;padding:8px 16px;border-radius:9px}
+  .nav .buy:hover{filter:brightness(1.08);color:#08130d;background:var(--go)}
+  .navtoggle{display:none;background:transparent;border:1px solid var(--line);color:var(--ink);width:42px;height:42px;border-radius:9px;font-size:22px;line-height:1;cursor:pointer;margin-left:6px}
+  .navtoggle:hover{border-color:var(--lane);color:var(--lane)}
+
+  .hero{position:relative;padding:68px 0 52px;overflow:hidden}
+  .hero::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:0;border-left:5px dashed rgba(244,196,48,.15);transform:translateX(-50%)}
+  .hero .wrap{position:relative;z-index:1}
+  .eyebrow{font-family:'Oswald';font-size:13px;letter-spacing:.18em;color:var(--go);text-transform:uppercase;margin-bottom:16px}
+  .hero h1{font-size:clamp(38px,6.5vw,72px);font-weight:700}
+  .hero h1 .hl{color:var(--lane)}
+  .hero p.lead{margin:20px 0 28px;font-size:18px;color:var(--muted);max-width:600px}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px}
+  .btn{font-family:'Oswald';text-transform:uppercase;letter-spacing:.04em;font-weight:600;font-size:15px;padding:13px 26px;border-radius:11px;border:1px solid transparent;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:9px}
+  .btn-go{background:var(--go);color:#08130d}
+  .btn-go:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--lane);color:var(--lane)}
+  .dash{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:42px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+  .stat .num{font-family:'Oswald';font-weight:700;font-size:34px;line-height:1;color:var(--lane)}
+  .stat .num.go{color:var(--go)}.stat .num.info{color:var(--info)}
+  .stat .lbl{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  section.block{padding:58px 0;border-top:1px solid var(--line)}
+  .sec-head{margin-bottom:30px}
+  .sec-head .k{font-family:'Oswald';font-size:13px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+  .sec-head h2{font-size:clamp(26px,4vw,40px);margin-top:8px}
+  .sec-head p{color:var(--muted);margin-top:10px;max-width:640px}
+
+  /* STEPS */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+  .step .n{font-family:'Oswald';font-weight:700;font-size:30px;color:var(--lane);line-height:1}
+  .step h3{font-size:18px;margin:12px 0 8px;text-transform:none}
+  .step p{font-size:14px;color:var(--muted)}
+
+  /* MODULES */
+  .lessons{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+  .lesson{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:.15s}
+  .lesson:hover{border-color:#46505f}
+  .lesson .top{padding:18px 20px;cursor:pointer;display:flex;align-items:flex-start;gap:13px}
+  .lesson .ix{font-family:'Oswald';font-weight:700;font-size:14px;color:var(--asphalt);background:var(--lane);min-width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .lesson.done .ix{background:var(--go)}
+  .lesson.locked .ix{background:var(--surface-2);color:var(--muted)}
+  .lesson .t-wrap{flex:1}
+  .lesson .t{font-family:'Oswald';font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.01em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .lesson .free-tag{font-size:10px;letter-spacing:.08em;color:var(--go);border:1px solid rgba(38,194,129,.4);border-radius:5px;padding:1px 6px}
+  .lesson .lock-tag{font-size:10px;letter-spacing:.08em;color:var(--lane);border:1px solid rgba(244,196,48,.4);border-radius:5px;padding:1px 6px}
+  .lesson .sub{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .lesson .chev{color:var(--muted);transition:.2s;flex-shrink:0;margin-top:4px}
+  .lesson.open .chev{transform:rotate(180deg)}
+  .lesson .body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .lesson .body-in{padding:0 20px 20px 65px}
+  .lesson .body-in p{color:#cfd3da;font-size:14.5px;margin-bottom:12px}
+  .lesson .body-in h4{font-size:13px;letter-spacing:.06em;color:var(--lane);margin:16px 0 9px}
+  .lesson .body-in h4.warn{color:var(--stop)}
+  .lesson .body-in ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:6px}
+  .lesson .body-in li{position:relative;padding-left:20px;font-size:14px;color:#d4d8df}
+  .lesson .body-in li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--lane)}
+  .lesson .body-in ul.warn li::before{background:var(--stop)}
+  .tip{margin-top:14px;padding:13px 16px;border-radius:11px;border-left:4px solid var(--info);background:rgba(77,163,255,.08);font-size:14px;color:#cfe2ff}
+  .tip b{color:var(--info)}
+  .markread{margin-top:16px;font-family:'Oswald';font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--go);background:rgba(38,194,129,.1);border:1px solid rgba(38,194,129,.3);padding:8px 15px;border-radius:9px;cursor:pointer}
+  .lesson.done .markread{color:var(--muted);background:transparent;border-color:var(--line)}
+  .lock-overlay{padding:0 20px 20px 65px;color:var(--muted);font-size:14px}
+  .lock-overlay button{margin-top:10px}
+
+  /* PRACTICE */
+  .modes{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+  .mode-btn{font-family:'Oswald';text-transform:uppercase;letter-spacing:.03em;font-size:14px;padding:11px 20px;border-radius:11px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;transition:.13s}
+  .mode-btn:hover{color:var(--ink)}
+  .mode-btn.active{background:var(--lane);color:var(--asphalt);border-color:var(--lane)}
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{font-size:13.5px;padding:10px 15px;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;transition:.13s;display:flex;align-items:center;gap:7px}
+  .chip:hover{border-color:#525c6b}
+  .chip.locked{color:var(--muted)}
+  .chip .cnt{font-size:11px;color:var(--muted)}
+  .exam-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;max-width:560px}
+  .exam-card h3{font-size:22px;text-transform:none;margin-bottom:10px}
+  .exam-card ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin:14px 0 20px}
+  .exam-card li{position:relative;padding-left:22px;font-size:14.5px;color:#d4d8df}
+  .exam-card li::before{content:"✓";position:absolute;left:0;color:var(--go);font-weight:700}
+  .empty{text-align:center;padding:30px;color:var(--muted)}
+  .empty h3{font-size:20px;color:var(--ink);margin-bottom:8px}
+
+  .quiz{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px;max-width:760px}
+  .quiz-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:12px}
+  .qcount{font-family:'Oswald';font-size:14px;color:var(--muted);letter-spacing:.04em}
+  .qright{display:flex;gap:14px;align-items:center}
+  .qscore{font-family:'Oswald';font-size:14px;color:var(--lane)}
+  .qtimer{font-family:'Oswald';font-size:14px;color:var(--info)}
+  .qtimer.low{color:var(--stop)}
+  .qlives{display:flex;gap:4px}
+  .heart{width:14px;height:14px;border-radius:50%;background:var(--stop);box-shadow:0 0 6px rgba(255,77,79,.5)}
+  .heart.lost{background:var(--surface-2);box-shadow:none}
+  .road{height:8px;background:var(--surface-2);border-radius:20px;overflow:hidden;margin-bottom:24px}
+  .road .fill{height:100%;background:var(--go);width:0;transition:width .4s;border-radius:20px}
+  .qtopic{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .qimg{max-width:100%;border-radius:10px;border:1px solid var(--line);margin-bottom:14px}
+  .qtext{font-family:'Oswald';font-weight:500;font-size:21px;text-transform:none;line-height:1.25;margin-bottom:20px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{text-align:left;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:14px 17px;font-size:15px;color:var(--ink);cursor:pointer;transition:.13s}
+  .opt:hover:not(:disabled){border-color:#525c6b}
+  .opt:disabled{cursor:default}
+  .opt.correct{border-color:var(--go);background:rgba(38,194,129,.14);color:#bff5dd}
+  .opt.wrong{border-color:var(--stop);background:rgba(255,77,79,.13);color:#ffc9ca}
+  .explain{margin-top:16px;padding:14px 17px;border-radius:11px;border-left:4px solid var(--info);background:rgba(77,163,255,.08);font-size:14px;color:#cfe2ff;display:none}
+  .explain.show{display:block}.explain b{color:var(--info)}
+  .quiz-foot{margin-top:20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .signal{display:flex;gap:8px;align-items:center}
+  .bulb{width:16px;height:16px;border-radius:50%;background:var(--surface-2);transition:.2s}
+  .bulb.on-g{background:var(--go);box-shadow:0 0 12px var(--go)}
+  .bulb.on-r{background:var(--stop);box-shadow:0 0 12px var(--stop)}
+  .result{text-align:center;padding:14px 0}
+  .result .big{font-family:'Oswald';font-weight:700;font-size:60px;line-height:1}
+  .result .verdict{font-family:'Oswald';font-size:23px;text-transform:uppercase;margin:14px 0 6px;letter-spacing:.03em}
+  .result.pass .verdict{color:var(--go)}.result.fail .verdict{color:var(--stop)}
+  .result p{color:var(--muted);margin-bottom:22px}
+
+  /* ACHIEVEMENTS */
+  .ach{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+  .badge-c{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;text-align:center;opacity:.45;transition:.2s}
+  .badge-c.got{opacity:1;border-color:rgba(244,196,48,.4)}
+  .badge-c .ic{font-size:30px}
+  .badge-c .nm{font-family:'Oswald';text-transform:uppercase;font-size:14px;letter-spacing:.02em;margin:8px 0 4px}
+  .badge-c .ds{font-size:12px;color:var(--muted)}
+
+  /* PRICING */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tier{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;flex-direction:column}
+  .tier.best{border-color:var(--go);box-shadow:0 0 0 1px var(--go) inset}
+  .tier.premium{border-color:var(--lane);box-shadow:0 0 0 1px var(--lane) inset}
+  .tier .ribbon.gold{background:var(--lane);color:#1a1500}
+  .tier .ribbon{font-family:'Oswald';font-size:11px;letter-spacing:.1em;color:#08130d;background:var(--go);align-self:flex-start;padding:3px 10px;border-radius:6px;margin-bottom:14px;text-transform:uppercase}
+  .tier .name{font-family:'Oswald';font-size:20px;text-transform:uppercase;letter-spacing:.02em}
+  .tier .price{font-family:'Oswald';font-weight:700;font-size:42px;margin:10px 0 2px;color:var(--lane)}
+  .tier .per{font-size:13px;color:var(--muted);margin-bottom:18px}
+  .tier ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:22px;flex:1}
+  .tier li{position:relative;padding-left:24px;font-size:14px;color:#d4d8df}
+  .tier li::before{content:"✓";position:absolute;left:0;color:var(--go);font-weight:700}
+  .tier li.no{color:var(--muted)}.tier li.no::before{content:"–";color:var(--muted)}
+  .tier .btn{width:100%;justify-content:center}
+
+  /* FAQ */
+  .faq{display:flex;flex-direction:column;gap:11px;max-width:780px}
+  .qa{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .qa .q{padding:17px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:'Oswald';font-weight:500;text-transform:none;font-size:16px}
+  .qa .a{max-height:0;overflow:hidden;transition:max-height .3s}
+  .qa .a-in{padding:0 20px 18px;color:#cfd3da;font-size:14.5px}
+  .qa.open .a{max-height:240px}
+  .qa .plus{color:var(--lane);transition:.2s;font-size:20px}
+  .qa.open .plus{transform:rotate(45deg)}
+
+  footer{border-top:1px solid var(--line);padding:38px 0;color:var(--muted);font-size:13.5px}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:center}
+  .foot a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}.foot a:hover{color:var(--lane)}
+
+  .modal-bg{position:fixed;inset:0;background:rgba(8,9,12,.78);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--surface);border:1px solid var(--line);border-radius:18px;max-width:440px;width:100%;padding:30px;position:relative}
+  .modal h3{font-size:24px;margin-bottom:6px}
+  .modal p{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+  .modal .close{position:absolute;top:16px;right:18px;color:var(--muted);cursor:pointer;font-size:22px;line-height:1}
+  .modal .note{font-size:12.5px;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+
+  @media(max-width:860px){
+    .nav .links{position:absolute;top:62px;left:0;right:0;background:var(--asphalt);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0;padding:8px 16px 14px;margin-left:0;display:none}
+    .nav .links.open{display:flex}
+    .nav .links a{padding:13px 10px;font-size:16px;border-radius:9px}
+    .nav .links .buy{margin-top:6px;text-align:center}
+    .navtoggle{display:flex;align-items:center;justify-content:center;margin-left:auto}
+    .lessons,.tiers,.steps{grid-template-columns:1fr}
+    .ach{grid-template-columns:repeat(2,1fr)}
+    .dash{grid-template-columns:repeat(2,1fr)}
+    .lesson .body-in,.lock-overlay{padding-left:20px}
+    .quiz,.exam-card{padding:20px}
+  }
+  /* LEVEL */
+  .levelbar{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:flex;align-items:center;gap:18px}
+  .levelbar .lvnum{font-family:'Oswald';font-weight:700;font-size:30px;color:var(--lane);line-height:1;min-width:40px;text-align:center}
+  .levelbar .lvmeta{flex:1}
+  .levelbar .lvtitle{font-family:'Oswald';text-transform:uppercase;font-size:14px;letter-spacing:.03em}
+  .levelbar .lvtrack{height:8px;background:var(--surface-2);border-radius:20px;overflow:hidden;margin-top:8px}
+  .levelbar .lvfill{height:100%;background:var(--lane);width:0;transition:width .5s;border-radius:20px}
+  .levelbar .lvxp{font-size:12px;color:var(--muted);margin-top:6px}
+  /* PLAN */
+  .plan-setup{display:flex;flex-wrap:wrap;gap:26px;align-items:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
+  .plan-setup .grp{display:flex;flex-direction:column;gap:10px}
+  .plan-setup .gl{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .plan-setup .row{display:flex;gap:8px;flex-wrap:wrap}
+  .pchip{font-family:'Oswald';font-size:14px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer;transition:.13s}
+  .pchip:hover{border-color:#525c6b}
+  .pchip.on{background:var(--lane);color:var(--asphalt);border-color:var(--lane)}
+  .plan-days{display:flex;flex-direction:column;gap:11px;margin-top:22px}
+  .pday{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:flex;gap:16px;align-items:flex-start}
+  .pday .d{font-family:'Oswald';font-weight:700;font-size:13px;color:var(--asphalt);background:var(--go);min-width:72px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;text-transform:uppercase;letter-spacing:.03em}
+  .pday .pc{flex:1}
+  .pday .ph{font-family:'Oswald';text-transform:uppercase;font-size:15px;letter-spacing:.02em;margin-bottom:4px}
+  .pday .pp{font-size:13.5px;color:var(--muted)}
+  .plan-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px}
+  .plan-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;cursor:pointer;transition:.15s;position:relative}
+  .plan-card:hover{border-color:#46505f}
+  .plan-card.on{border-color:var(--lane);box-shadow:0 0 0 1px var(--lane) inset}
+  .plan-card .pname{font-family:'Oswald';text-transform:uppercase;font-size:13px;letter-spacing:.04em;color:var(--lane)}
+  .plan-card .pdays{font-family:'Oswald';font-weight:700;font-size:34px;line-height:1;margin:8px 0 4px}
+  .plan-card .pdays small{font-size:14px;color:var(--muted);font-weight:400}
+  .plan-card .pdesc{font-size:12.5px;color:var(--muted)}
+  .plan-card .ptag{position:absolute;top:14px;right:14px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#08130d;background:var(--lane);padding:2px 7px;border-radius:5px}
+  /* AI */
+  .ai-btn{margin-top:12px;font-family:'Oswald';text-transform:uppercase;letter-spacing:.04em;font-size:12.5px;padding:8px 15px;border-radius:9px;border:1px solid rgba(77,163,255,.4);background:rgba(77,163,255,.08);color:var(--info);cursor:pointer}
+  .ai-btn:hover{background:rgba(77,163,255,.16)}.ai-btn:disabled{opacity:.6;cursor:default}
+  .ai-out{margin-top:12px;padding:13px 16px;border-radius:11px;border-left:4px solid var(--lane);background:rgba(244,196,48,.06);font-size:14px;color:#efe3c2;line-height:1.55;display:none}
+  .ai-out.show{display:block}
+  .ai-out .tag{font-family:'Oswald';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--lane);display:block;margin-bottom:6px}
+  /* MISTAKE ANALYSIS */
+  .mbar{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+  .mbar .ml{font-size:13px;color:#d4d8df;min-width:150px}
+  .mbar .mt{flex:1;height:8px;background:var(--surface-2);border-radius:20px;overflow:hidden}
+  .mbar .mf{height:100%;background:var(--stop);border-radius:20px}
+  .mbar .mv{font-size:12px;color:var(--muted);min-width:22px;text-align:right}
+  /* TRUST STRIP + ABOUT + WHY */
+  .trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:24px}
+  .trust .ti{display:flex;align-items:center;gap:9px;font-size:14px;color:#d4d8df}
+  .trust .ti b{font-family:'Oswald';color:var(--lane);font-size:18px}
+  .trust .ti .ic{color:var(--go)}
+  .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center}
+  .about-grid .txt p{color:#cfd3da;font-size:15.5px;margin-bottom:14px}
+  .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .about-stats .s{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+  .about-stats .s .n{font-family:'Oswald';font-weight:700;font-size:34px;color:var(--lane);line-height:1}
+  .about-stats .s .l{font-size:13px;color:var(--muted);margin-top:7px}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .why{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+  .why .ic{font-size:26px}
+  .why h3{font-size:17px;text-transform:none;margin:12px 0 7px}
+  .why p{font-size:14px;color:var(--muted)}
+  .guarantee{margin-top:22px;display:flex;align-items:center;gap:12px;background:rgba(38,194,129,.07);border:1px solid rgba(38,194,129,.3);border-radius:12px;padding:16px 18px;font-size:14.5px;color:#bff5dd}
+  .guarantee .ic{font-size:22px}
+  .guarantee a{color:var(--go);text-decoration:underline;text-underline-offset:2px}
+  /* REFERENCE (Справочник) */
+  .ref-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+  .ref-search{width:100%;max-width:440px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:11px 14px;color:var(--ink);font-family:inherit;font-size:15px;outline:none;margin-bottom:16px;display:block}
+  .ref-search:focus{border-color:var(--go)}
+  .ref-cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .ref-cats .chip.on{background:var(--lane);color:var(--asphalt);border-color:var(--lane)}
+  .ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+  .ref-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;cursor:pointer;transition:.13s;text-align:center}
+  .ref-card:hover{border-color:var(--lane)}
+  .ref-card img{width:60px;height:60px;object-fit:contain;margin:0 auto 8px;display:block}
+  .ref-card .rn{font-family:'Oswald';font-size:13px;color:var(--lane)}
+  .ref-card .rt{font-size:11.5px;color:#d4d8df;margin-top:3px;line-height:1.3}
+  .ref-list{display:flex;flex-direction:column;gap:10px}
+  .ref-row{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px 18px}
+  .ref-row .ra{font-family:'Oswald';color:var(--lane);font-size:14px;margin-bottom:6px;letter-spacing:.02em}
+  .ref-row .rx{font-size:14px;color:#d4d8df;margin-bottom:8px;line-height:1.5}
+  .ref-row .rp{font-size:13.5px;color:#ffc9ca}
+  .ref-empty{color:var(--muted);padding:20px 0}
+  .ref-upsell{margin-top:18px;padding:18px 20px;border-radius:14px;border:1px solid rgba(244,196,48,.45);background:rgba(244,196,48,.08);color:#efe3c2;font-size:14.5px;line-height:1.55}
+  .ref-upsell b{color:var(--lane)}
+  /* PRACTICE HELP BANNER */
+  .practice-help{background:linear-gradient(135deg,rgba(38,194,129,.10),rgba(244,196,48,.08));border:1px solid rgba(244,196,48,.35);border-radius:18px;padding:30px;display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+  .practice-help .ph-txt{flex:1;min-width:260px}
+  .practice-help h3{font-size:24px;text-transform:none;margin-bottom:10px}
+  .practice-help p{color:#d4d8df;font-size:15px;margin-bottom:14px}
+  .practice-help ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+  .practice-help li{position:relative;padding-left:24px;font-size:14.5px;color:#d4d8df}
+  .practice-help li::before{content:"✓";position:absolute;left:0;color:var(--go);font-weight:700}
+  .practice-help .ph-cta{display:flex;flex-direction:column;gap:10px;min-width:200px}
+  .modal.wide{max-width:560px}
+  .ref-modal-img{width:120px;height:120px;object-fit:contain;display:block;margin:0 auto 14px}
+  .ref-modal-desc{font-size:14px;color:#d4d8df;line-height:1.6;max-height:48vh;overflow-y:auto}
+  /* REG FORM */
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .field label{font-size:12.5px;color:var(--muted);letter-spacing:.03em}
+  .field input{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink);font-family:inherit;font-size:15px;outline:none}
+  .field input:focus{border-color:var(--go)}
+  .field .err{color:var(--stop);font-size:12px;display:none}
+  .field.bad input{border-color:var(--stop)}.field.bad .err{display:block}
+  @media(max-width:860px){
+    .plan-setup{flex-direction:column;align-items:stretch;gap:18px}
+    .plan-setup .btn{width:100%;justify-content:center}
+    .levelbar{flex-wrap:wrap;gap:14px}
+    .levelbar #installBtn{width:100%;justify-content:center}
+    .hero{padding:48px 0 40px}
+    section.block{padding:46px 0}
+    .about-grid{grid-template-columns:1fr;gap:24px}
+    .why-grid{grid-template-columns:1fr}
+    .plan-cards{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:560px){
+    .acct .who{display:none}
+    .dash{grid-template-columns:1fr 1fr;gap:10px}
+    .stat{padding:14px}.stat .num{font-size:28px}
+    .ach{grid-template-columns:1fr 1fr}
+    .about-stats{grid-template-columns:1fr 1fr}
+    .quiz-top{flex-wrap:wrap}
+    .pday{flex-direction:column;gap:10px}
+    .pday .d{min-width:auto;align-self:flex-start;padding:0 14px}
+    .mbar .ml{min-width:108px;font-size:12px}
+    .qtext{font-size:19px}
+    .cta-row{flex-direction:column}.cta-row .btn{width:100%;justify-content:center}
+  }
+  /* Планшеты и небольшие ноутбуки */
+  @media(min-width:861px) and (max-width:1024px){
+    .wrap{padding:0 26px}
+    .tiers{gap:13px}
+    .plan-cards{grid-template-columns:repeat(4,1fr)}
+    .why-grid{grid-template-columns:repeat(3,1fr)}
+  }
+  /* Маленькие телефоны */
+  @media(max-width:430px){
+    .wrap{padding:0 15px}
+    section.block{padding:38px 0}
+    .dash{grid-template-columns:1fr 1fr;gap:8px}
+    .ach{grid-template-columns:1fr}
+    .about-stats{grid-template-columns:1fr}
+    .plan-cards{grid-template-columns:1fr 1fr}
+    .ref-grid{grid-template-columns:repeat(auto-fill,minmax(116px,1fr))}
+    .practice-help{padding:22px 18px;gap:18px}
+    .practice-help h3{font-size:21px}
+    .acct .wrap{gap:8px}
+    .mini{padding:6px 9px;font-size:11px}
+    .modal{padding:24px 20px}
+    .lc-panel{right:12px;left:12px;width:auto;max-width:none;bottom:84px}
+    .lc-btn{right:14px;bottom:14px}
+  }
+  /* Большие мониторы (ПК) */
+  @media(min-width:1500px){
+    .wrap{max-width:1240px}
+  }
+  body{overflow-x:hidden}
+  :focus-visible{outline:2px solid var(--lane);outline-offset:2px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="acct"><div class="wrap">
+  <span class="who">Ваш доступ:</span>
+  <span class="badge free" id="accBadge">Бесплатный</span>
+  <span class="spacer"></span>
+  <button class="mini" id="regBtn">Регистрация</button>
+  <button class="mini" id="logoutBtn" style="display:none">Выйти</button>
+</div></div>
+
+<header><div class="wrap nav">
+  <div class="logo"><div class="light"><span class="r"></span><span class="y"></span><span class="g"></span></div>Зелёный</div>
+  <nav class="links" id="navLinks">
+    <a href="#about">О нас</a>
+    <a href="#plan">План</a>
+    <a href="#program">Программа</a>
+    <a href="#practice">Тренажёр</a>
+    <a href="#reference">Справочник</a>
+    <a href="#driving">Практика ГИБДД</a>
+    <a href="#why">Почему мы</a>
+    <a href="#pricing">Тарифы</a>
+    <a href="#pricing" class="buy">Купить доступ</a>
+  </nav>
+  <button class="navtoggle" id="navToggle" aria-label="Меню">☰</button>
+</div></header>
+
+<section class="hero" id="start"><div class="wrap">
+  <div class="eyebrow">Онлайн-курс · теория ПДД · категория B</div>
+  <h1>Сдай теорию <span class="hl">с первого раза</span></h1>
+  <p class="lead">Вся теория разобрана простым языком, тренажёр по темам и режим экзамена один в один как в ГИБДД. Прогресс, ошибки и достижения сохраняются — учись с телефона и компьютера.</p>
+  <div class="cta-row">
+    <button class="btn btn-go" onclick="go('program')">Начать бесплатно →</button>
+    <button class="btn btn-ghost" onclick="go('practice')">К тренажёру</button>
+  </div>
+  <div class="trust">
+    <div class="ti"><span class="ic">✔</span><b>15 000+</b> успешно сдали экзамен</div>
+    <div class="ti"><span class="ic">✔</span>Своя школа вождения с опытом</div>
+    <div class="ti"><span class="ic">✔</span>Поддержка каждый день</div>
+  </div>
+  <div class="dash">
+    <div class="stat"><div class="num" id="sLessons">0/10</div><div class="lbl">Тем изучено</div></div>
+    <div class="stat"><div class="num go" id="sAcc">—</div><div class="lbl">Точность ответов</div></div>
+    <div class="stat"><div class="num info" id="sStreak">0</div><div class="lbl">Дней подряд</div></div>
+    <div class="stat"><div class="num" id="sMistakes">0</div><div class="lbl">Ошибок на разбор</div></div>
+  </div>
+  <div class="levelbar" id="levelBar">
+    <div class="lvnum" id="lvNum">1</div>
+    <div class="lvmeta">
+      <div class="lvtitle" id="lvTitle">Новичок за рулём</div>
+      <div class="lvtrack"><div class="lvfill" id="lvFill"></div></div>
+      <div class="lvxp" id="lvXp">0 XP</div>
+    </div>
+    <button class="btn btn-ghost" id="installBtn" style="display:none">Установить приложение</button>
+  </div>
+</div></section>
+
+<section class="block" id="about"><div class="wrap">
+  <div class="sec-head"><div class="k">О нас</div><h2>Мы учим людей сдавать — уже не первый год</h2></div>
+  <div class="about-grid">
+    <div class="txt">
+      <p>«Зелёный» делает не просто очередной сайт с билетами. За нами — настоящая школа вождения и живой опыт подготовки учеников к экзамену. Мы видели, на чём люди заваливаются чаще всего, и собрали это знание в курс.</p>
+      <p>Раньше мы готовили к экзамену вживую, и более <b style="color:var(--lane)">15 000 наших учеников успешно сдали</b> теорию и получили права. Теперь мы открываем этот же подход онлайн — чтобы готовиться можно было откуда угодно, в своём темпе и заметно дешевле, чем на индивидуальных занятиях.</p>
+      <p>Мы продолжаем развивать и саму школу вождения, и этот курс — добавляем темы, вопросы и инструменты, которые реально помогают сдать с первого раза.</p>
+    </div>
+    <div class="about-stats">
+      <div class="s"><div class="n">15 000+</div><div class="l">учеников сдали экзамен</div></div>
+      <div class="s"><div class="n">Школа</div><div class="l">вождения за плечами</div></div>
+      <div class="s"><div class="n">10</div><div class="l">тем по всей теории</div></div>
+      <div class="s"><div class="n">Онлайн</div><div class="l">учись с телефона и ПК</div></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="block" id="plan"><div class="wrap">
+  <div class="sec-head"><div class="k">Персональный план</div><h2>Выбери свой план подготовки</h2>
+    <p>Четыре готовых плана под твой срок и уровень. Курс разложит все темы и тренировки по дням — останется идти по шагам.</p></div>
+  <div class="plan-cards" id="planCards">
+    <div class="plan-card" data-d="3"><div class="pname">Срочный</div><div class="pdays">3<small> дня</small></div><div class="pdesc">Интенсив, ~2–3 часа в день</div></div>
+    <div class="plan-card on" data-d="7"><div class="ptag">Хит</div><div class="pname">Быстрый</div><div class="pdays">7<small> дней</small></div><div class="pdesc">~1,5 часа в день</div></div>
+    <div class="plan-card" data-d="14"><div class="pname">Спокойный</div><div class="pdays">14<small> дней</small></div><div class="pdesc">~45 минут в день</div></div>
+    <div class="plan-card" data-d="30"><div class="pname">Свободный</div><div class="pdays">30<small> дней</small></div><div class="pdesc">20–30 минут в день</div></div>
+  </div>
+  <div class="plan-setup">
+    <div class="grp"><span class="gl">Что знаешь о ПДД</span><div class="row" id="planLevel">
+      <button class="pchip on" data-l="0">Не знаю</button>
+      <button class="pchip" data-l="1">Знаю немного</button>
+      <button class="pchip" data-l="2">Уже учил</button></div></div>
+    <button class="btn btn-go" id="makePlan">Составить план →</button>
+  </div>
+  <div class="plan-days" id="planOut"></div>
+</div></section>
+
+<section class="block" id="how"><div class="wrap">
+  <div class="sec-head"><div class="k">Как устроено обучение</div><h2>Три шага до уверенности</h2></div>
+  <div class="steps">
+    <div class="step"><div class="n">01</div><h3>Читаешь тему</h3><p>Короткий разбор правила без юридического языка: главное, частые ошибки и совет, как запомнить.</p></div>
+    <div class="step"><div class="n">02</div><h3>Закрепляешь на тренажёре</h3><p>Вопросы по теме сразу после теории. Светофор показывает, верно или нет, и объясняет почему.</p></div>
+    <div class="step"><div class="n">03</div><h3>Сдаёшь экзамен</h3><p>20 вопросов, 20 минут, не больше 2 ошибок — точная репетиция настоящего экзамена в ГИБДД.</p></div>
+  </div>
+</div></section>
+
+<section class="block" id="program"><div class="wrap">
+  <div class="sec-head"><div class="k">01 — Программа курса</div><h2>Десять тем до полного понимания</h2>
+    <p>Первые три темы открыты бесплатно. Открывай, читай разбор и отмечай пройденным — прогресс сохранится.</p></div>
+  <div class="lessons" id="lessons"></div>
+</div></section>
+
+<section class="block" id="practice"><div class="wrap">
+  <div class="sec-head"><div class="k">02 — Тренажёр</div><h2>Решай билеты, как на экзамене</h2>
+    <p>Тренируйся по конкретной теме, сдавай пробный экзамен или разбирай свои ошибки. Зелёный сигнал — верно, красный — ошибка.</p></div>
+  <div class="modes">
+    <button class="mode-btn active" data-mode="topics">По темам</button>
+    <button class="mode-btn" data-mode="tickets">Билеты</button>
+    <button class="mode-btn" data-mode="exam">Экзамен</button>
+    <button class="mode-btn" data-mode="mistakes">Мои ошибки</button>
+  </div>
+  <div id="practiceContent"></div>
+</div></section>
+
+<section class="block" id="reference"><div class="wrap">
+  <div class="sec-head"><div class="k">Справочник ПДД</div><h2>Знаки, разметка и штрафы под рукой</h2>
+    <p>Полный справочник прямо в курсе: 298 дорожных знаков, вся разметка и актуальные штрафы. Открывай во время учёбы, когда что-то забыл.</p></div>
+  <div class="ref-tabs">
+    <button class="mode-btn active" data-ref="signs">Знаки</button>
+    <button class="mode-btn" data-ref="markup">Разметка</button>
+    <button class="mode-btn" data-ref="penalties">Штрафы</button>
+  </div>
+  <div id="refContent"></div>
+</div></section>
+
+<section class="block" id="driving"><div class="wrap">
+  <div class="sec-head"><div class="k">Практический экзамен • тариф «Полный курс»</div><h2>Практика в ГИБДД: где заваливают и как сдать</h2>
+    <p>Пошаговый разбор практического экзамена: формат, обязательные манёвры, система штрафных баллов и главные ошибки, на которых чаще всего «срезают». Раздел входит в тариф «Полный курс».</p></div>
+  <div id="drivingContent"></div>
+</div></section>
+
+<section class="block" id="ach"><div class="wrap">
+  <div class="sec-head"><div class="k">03 — Достижения</div><h2>Учись и открывай награды</h2>
+    <p>Маленькие цели, которые держат мотивацию по дороге к правам.</p></div>
+  <div class="ach" id="achGrid"></div>
+</div></section>
+
+<section class="block" id="why"><div class="wrap">
+  <div class="sec-head"><div class="k">Почему с нами</div><h2>Почему платный доступ окупается</h2>
+    <p>Бесплатных билетов в интернете много — но они не доводят до результата. Вот что отличает курс «Зелёный».</p></div>
+  <div class="why-grid">
+    <div class="why"><div class="ic">🎯</div><h3>Учим на результат</h3><p>Не просто «прорешай билеты», а пошаговый путь: теория → тренажёр → экзамен. Цель — сдать с первого раза, а не убить время.</p></div>
+    <div class="why"><div class="ic">🧠</div><h3>Понятно, а не зубрёжка</h3><p>Каждое правило разобрано простым языком, а ИИ объяснит любой вопрос ещё проще, с примером. Понимаешь — значит, не забудешь на экзамене.</p></div>
+    <div class="why"><div class="ic">📅</div><h3>Личный план под срок</h3><p>Скажи, сколько дней до экзамена — получишь расписание по дням. Не нужно думать, что учить сегодня.</p></div>
+    <div class="why"><div class="ic">🔁</div><h3>Работа над ошибками</h3><p>Курс запоминает, где ты ошибаешься, и даёт это переразобрать. Слабые места закрываются прицельно.</p></div>
+    <div class="why"><div class="ic">🚦</div><h3>Репетиция экзамена</h3><p>Симулятор один в один как в ГИБДД: 20 вопросов, таймер, две ошибки. На реальном экзамене уже не страшно.</p></div>
+    <div class="why"><div class="ic">🏫</div><h3>За нами — школа вождения</h3><p>Курс собран на опыте подготовки 15 000+ человек, которые реально сдали. Это не теория из интернета.</p></div>
+  </div>
+  <div class="guarantee"><span class="ic">🛡️</span><div>Не подошло — действует прозрачная политика возврата. Подробности в разделе <a href="refund.html">«Возврат»</a>.</div></div>
+</div></section>
+
+<section class="block" id="pricing"><div class="wrap">
+  <div class="practice-help" style="margin-bottom:34px">
+    <div class="ph-txt">
+      <h3>Поможем не только с теорией, но и с практикой</h3>
+      <p>Сдать теорию — половина дела. На полном курсе мы разбираем и практику: что и как делать на площадке и в городе, чтобы прийти на экзамен подготовленным.</p>
+      <ul>
+        <li>Разбор экзамена в ГИБДД: площадка и город — что от тебя ждут и где чаще всего заваливают</li>
+        <li>Пошаговые чек-листы к каждому элементу (старт, эстакада, парковка, повороты)</li>
+        <li>Ответы куратора в чате на твои вопросы по практике</li>
+      </ul>
+    </div>
+    <div class="ph-cta">
+      <button class="btn btn-go" onclick="go('pricing')">Взять «Полный курс»</button>
+      <span style="font-size:12.5px;color:var(--muted);text-align:center">Входит в тариф «Полный курс»</span>
+    </div>
+  </div>
+  <div class="sec-head"><div class="k">04 — Тарифы</div><h2>Выбери доступ</h2>
+    <p>Оплатил — доступ открывается сразу и сохраняется. Цены можно изменить под себя.</p></div>
+  <div class="tiers" id="tiers"></div>
+</div></section>
+
+<section class="block" id="faq"><div class="wrap">
+  <div class="sec-head"><div class="k">05 — Частые вопросы</div><h2>Коротко о главном</h2></div>
+  <div class="faq" id="faqList"></div>
+</div></section>
+
+<footer><div class="wrap foot">
+  <div>«Зелёный» · онлайн-курс подготовки к теории ПДД</div>
+  <div><a href="oferta.html">Оферта</a> · <a href="refund.html">Возврат</a> · <a href="delivery.html">Доставка</a> · <a href="contacts.html">Контакты</a></div>
+</div></footer>
+
+<div class="modal-bg" id="modal"><div class="modal">
+  <span class="close" id="modalClose">×</span>
+  <h3 id="modalTitle">Оформление доступа</h3>
+  <p id="modalText"></p>
+  <button class="btn btn-go" style="width:100%;justify-content:center" id="modalPay">Перейти к оплате</button>
+  <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:10px;display:none" id="modalCheck">Я оплатил — проверить</button>
+  <div class="note">Здесь подключается платёжная система. После успешной оплаты вызовите <b>activateSubscription()</b>. Оформляя доступ, пользователь принимает <a href="oferta.html" style="color:var(--lane)">условия оферты</a>.</div>
+</div></div>
+
+<div class="modal-bg" id="regModal"><div class="modal">
+  <span class="close" id="regClose">×</span>
+  <h3 id="regTitle">Регистрация</h3>
+  <p id="regSub">Быстрая регистрация — нужны только контакт и пароль.</p>
+  <div class="field" id="fName"><label>Имя <span style="opacity:.6">(необязательно)</span></label><input id="rName" placeholder="Как к вам обращаться" autocomplete="name"></div>
+  <div class="field" id="fEmail"><label>E-mail или телефон</label><input id="rEmail" placeholder="you@mail.ru или +7…" autocomplete="username"><span class="err">Укажите e-mail или телефон</span></div>
+  <div class="field" id="fPass"><label>Пароль</label><input id="rPass" type="password" placeholder="минимум 6 символов" autocomplete="current-password"><span class="err">Минимум 6 символов</span></div>
+  <button class="btn btn-go" style="width:100%;justify-content:center" id="regSubmit">Зарегистрироваться</button>
+  <div class="note" style="text-align:center"><span id="regSwitch" style="color:var(--lane);cursor:pointer">Уже регистрировались? Войти</span></div>
+  <div class="note">Регистрируясь, вы принимаете <a href="oferta.html" style="color:var(--lane)">условия оферты</a>.</div>
+</div></div>
+
+<!-- ====== ПАНЕЛЬ СТАТИСТИКИ (для владельца) ====== -->
+<style>
+#statsModal .modal{max-width:720px}
+.st-h{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.st-h .em{font-size:24px}
+.st-h h3{margin:0}
+.st-sub{color:var(--muted);font-size:13px;margin:0 0 18px;line-height:1.5}
+.st-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.st-kpi{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:15px 16px}
+.st-kpi .v{font-family:'Oswald';font-weight:700;font-size:28px;line-height:1}
+.st-kpi.go .v{color:var(--go)}.st-kpi.gold .v{color:var(--lane)}.st-kpi.info .v{color:var(--info)}
+.st-kpi .l{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.35}
+.st-sec{font-family:'Oswald';text-transform:uppercase;letter-spacing:.04em;font-size:13px;color:var(--muted);margin:20px 0 10px}
+.st-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.st-tbl th{text-align:left;color:var(--muted);font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;border-bottom:1px solid var(--line)}
+.st-tbl td{padding:9px 10px;border-bottom:1px solid var(--line);color:#dfe3e8}
+.st-tbl tr:last-child td{border-bottom:0}
+.st-tag{font-family:'Oswald';font-size:11px;padding:2px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted)}
+.st-tag.full{color:var(--lane);border-color:rgba(244,196,48,.5)}
+.st-tag.month{color:var(--info);border-color:rgba(77,163,255,.5)}
+.st-empty{color:var(--muted);font-size:13px;padding:10px 0}
+.st-scroll{max-height:200px;overflow-y:auto;border:1px solid var(--line);border-radius:12px}
+.st-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.st-note{margin-top:16px;font-size:12.5px;color:var(--muted);background:var(--surface-2);border-left:3px solid var(--info);border-radius:8px;padding:12px 14px;line-height:1.55}
+@media(max-width:560px){.st-kpis{grid-template-columns:1fr 1fr}}
+</style>
+<div class="modal-bg" id="statsModal"><div class="modal">
+  <span class="close" id="statsClose">×</span>
+  <div class="st-h"><span class="em">📊</span><h3>Статистика курса</h3></div>
+  <p class="st-sub">Данные этого браузера (регистрации, тарифы, обращения в поддержку). Видна только вам по адресу с «#stats».</p>
+  <div id="statsBody"></div>
+</div></div>
+
+<div class="modal-bg" id="refModal"><div class="modal wide">
+  <span class="close" id="refClose">×</span>
+  <h3 id="refTitle"></h3>
+  <img class="ref-modal-img" id="refImg" alt="">
+  <div class="ref-modal-desc" id="refDesc"></div>
+</div></div>
+
+<script>
+/* ===================== ХРАНИЛИЩЕ ===================== */
+const mem={};
+const store={
+  get(k){try{const v=localStorage.getItem(k);return v===null?(mem[k]??null):JSON.parse(v);}catch(e){return mem[k]??null;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){mem[k]=v;}}
+};
+
+/* ===================== ПОДКЛЮЧЕНИЕ К БЭКЕНДУ =====================
+   Пусто = демо-режим (вход и оплата хранятся в браузере, как сейчас).
+   Чтобы включить серверный режим, укажите адрес вашего бэкенда:
+       const API_BASE='https://api.вашсайт.ru';
+   PAYMENT_URL — ссылка на оплату у вашей платёжки; {email} и {plan} подставятся. */
+const API_BASE='';
+const PAYMENT_URL='';
+function serverMode(){return !!API_BASE;}
+function authToken(){return store.get('zl_token')||null;}
+async function api(path,opts){
+  opts=opts||{};
+  const headers=Object.assign({'Content-Type':'application/json'},opts.headers||{});
+  const t=authToken();if(t)headers['Authorization']='Bearer '+t;
+  const r=await fetch(API_BASE+path,{method:opts.method||'GET',headers,body:opts.body?JSON.stringify(opts.body):undefined});
+  let data=null;try{data=await r.json();}catch(e){}
+  if(!r.ok)throw new Error((data&&data.error)||'Ошибка сервера');
+  return data;
+}
+async function refreshMe(){
+  if(!serverMode()||!authToken())return;
+  try{
+    const d=await api('/api/me');
+    state.user={name:d.user.name,email:d.user.email};
+    state.paid=!!d.user.paid;
+    store.set('zl_user',state.user);store.set('zl_paid',state.paid);
+  }catch(e){
+    if((''+e.message).indexOf('token')>=0){store.set('zl_token',null);state.user=null;state.paid=false;}
+  }
+}
+
+/* ===================== ТЕМЫ КУРСА ===================== */
+const TOPICS=["Светофор и регулировщик","Дорожные знаки","Перекрёстки и приоритет","Скоростной режим","Обгон и опережение","Остановка и стоянка","Дорожная разметка","Железнодорожные переезды","Ответственность и перевозка","Действия при ДТП"];
+const FREE_TOPICS=[0,1,2];
+let QTOPICS=TOPICS.slice();          /* темы вопросов — заменяются из questions.json */
+const FREE_FRACTION=0.15;            /* бесплатная доля контента (15%) */
+const FREE_BILETY=6;                 /* бесплатные билеты 1..6 (≈15% из 40) */
+function biletFree(n){return n<=FREE_BILETY;}
+function freeCount(total){return Math.max(1,Math.ceil(total*FREE_FRACTION));}
+function freePool(){return QUESTIONS.map((q,i)=>i).filter(i=>biletFree(QUESTIONS[i].bilet));}
+
+const LESSONS=[
+ {sub:"Кто главнее и что значит каждый сигнал",
+  intro:"Светофор и регулировщик управляют движением на перекрёстке. Если они одновременно — слушаем только регулировщика: его сигналы важнее светофора, знаков и разметки.",
+  rules:["Красный — стоп, даже если путь свободен.","Красный с жёлтым — скоро зелёный, но ехать ещё нельзя.","Зелёный мигающий — время сигнала истекает, скоро жёлтый.","Жёлтый — запрещает движение, кроме случая, когда остановиться можно только резким торможением.","Жёлтый мигающий — перекрёсток нерегулируемый, действуем по знакам приоритета.","Регулировщик с поднятой вверх рукой — стоп для всех направлений."],
+  mistakes:["Думать, что на жёлтый можно «проскочить» — можно только если уже нельзя безопасно остановиться.","Игнорировать регулировщика при работающем светофоре."],
+  tip:"Регулировщик стоит к тебе боком, руки опущены или в стороны — можно прямо и направо. Грудью или спиной — стоп."},
+ {sub:"Как с одного взгляда понять, что требует знак",
+  intro:"Все знаки делятся на 8 групп. Форма и цвет сразу подсказывают смысл, даже если конкретный знак ты видишь впервые.",
+  rules:["Предупреждающие — треугольник с красной каймой: впереди опасность, снизь внимание.","Знаки приоритета — определяют, кто кого пропускает на перекрёстке.","Запрещающие — круг с красной каймой: что-то делать нельзя.","Предписывающие — синий круг: ехать можно только так, как показано.","Особых предписаний, информационные и сервиса — прямоугольники, которые что-то разрешают или сообщают.","Таблички — белые прямоугольники, уточняют действие основного знака."],
+  mistakes:["Путать запрещающие (красная кайма) и предписывающие (синий фон).","Не замечать таблички под знаком — они меняют его действие."],
+  tip:"Красное = нельзя, синее = можно или нужно. Это правило снимает половину вопросов по знакам."},
+ {sub:"Помеха справа, главная дорога и кто едет первым",
+  intro:"На перекрёстке порядок один: сначала смотрим светофор и регулировщика, затем знаки приоритета, и только если их нет — действует правило равнозначного перекрёстка.",
+  rules:["Равнозначный перекрёсток: уступи тому, кто приближается справа.","Главная дорога обозначена знаком — у неё приоритет, как бы она ни поворачивала.","Поворачивая налево или разворачиваясь, уступи встречным, едущим прямо и направо.","На круговом перекрёстке уступает тот, кто въезжает (если знаки не говорят иначе).","Трамвай при равных условиях имеет преимущество перед безрельсовым транспортом."],
+  mistakes:["Считать «помеху справа» главнее знаков — знаки и светофор всегда выше.","Забывать про трамвай, у которого часто приоритет."],
+  tip:"Алгоритм на любом перекрёстке: светофор → регулировщик → знаки → помеха справа. Идёшь по списку сверху вниз."},
+ {sub:"Сколько можно ехать на разных дорогах",
+  intro:"Базовые ограничения скорости нужно знать наизусть — это одни из самых частых вопросов. Знаки могут менять их в обе стороны.",
+  rules:["В населённом пункте — 60 км/ч.","В жилой зоне и во дворовой территории — 20 км/ч.","Вне населённого пункта на обычной дороге для легковых — 90 км/ч.","На автомагистрали — 110 км/ч (знаком может разрешаться больше).","При буксировке — не более 50 км/ч."],
+  mistakes:["Путать «жилую зону» (20) с обычной улицей в городе (60).","Забывать, что знак «Конец населённого пункта» снимает городское ограничение."],
+  tip:"Запомни четвёрку: двор 20, город 60, трасса 90, автомагистраль 110."},
+ {sub:"Где обгонять запрещено и как делать это безопасно",
+  intro:"Обгон — это выезд на встречную полосу с возвратом обратно. Самый рискованный манёвр и частая причина серьёзных ДТП, поэтому правил вокруг него много.",
+  rules:["Обгон запрещён на перекрёстках, пешеходных переходах, мостах, эстакадах, в тоннелях.","Запрещён на железнодорожных переездах и ближе 100 м перед ними.","Запрещён в конце подъёма и на опасных поворотах с ограниченной видимостью.","Нельзя обгонять, если впереди идущий подал сигнал поворота налево.","Нельзя начинать обгон, если идущий сзади уже начал обгонять тебя."],
+  mistakes:["Путать обгон (с выездом на встречную) и опережение (по своей стороне) — у них разные правила.","Начинать обгон в конце подъёма, где не видно встречных."],
+  tip:"Если не уверен, что успеешь завершить обгон и вернуться без помех — не начинай его вообще."},
+ {sub:"Где можно встать, а где категорически нельзя",
+  intro:"Остановка — кратковременная (до 5 минут или для посадки и высадки), стоянка — дольше. Запреты у них во многом общие.",
+  rules:["Нельзя останавливаться на пешеходных переходах и ближе 5 м перед ними.","Запрещена остановка на переездах, в тоннелях, на мостах при узкой проезжей части.","Нельзя стоять ближе 15 м от остановок маршрутных транспортных средств.","Нельзя останавливаться на трамвайных путях и рядом, если мешаешь трамваю.","Стоянка запрещена там, где это указывают знак или разметка."],
+  mistakes:["Вставать «на минутку» на переходе — это запрещено в любом случае.","Не учитывать 15 метров до остановки автобуса."],
+  tip:"Остановка ради высадки пассажира разрешена дольше 5 минут — но только если это не запрещено в конкретном месте."},
+ {sub:"Что разрешают и запрещают линии на асфальте",
+  intro:"Разметка дополняет знаки. Если они противоречат друг другу — приоритет у знаков, кроме временной (жёлтой или оранжевой) разметки, которая главнее постоянной.",
+  rules:["Сплошная линия — пересекать запрещено, даже одним колесом.","Прерывистая — пересекать можно с любой стороны.","Двойная сплошная разделяет встречные потоки, пересекать нельзя.","Сплошная рядом с прерывистой: пересекать можно только со стороны прерывистой.","Стоп-линия — место, где нужно остановиться на красный или по знаку STOP."],
+  mistakes:["Пересекать сплошную при объезде — почти всегда нарушение.","Путать временную (жёлтую) и постоянную разметку — временная важнее."],
+  tip:"Сплошная — это «стена». Прерывистая — «дверь». Двойная сплошная — «стена, которую нельзя трогать вообще»."},
+ {sub:"Самая опасная зона на дороге",
+  intro:"Железнодорожный переезд — место, где ошибка стоит жизни. Пересекать его можно только при полной уверенности, что успеешь, и при разрешающих сигналах.",
+  rules:["При мигающих красных и опущенном или опускающемся шлагбауме движение запрещено.","Нельзя выезжать на переезд, если впереди затор и придётся остановиться на путях.","Обгон запрещён на переезде и ближе 100 м перед ним.","Остановка и стоянка на переезде запрещены.","При вынужденной остановке на путях — высадить людей и принять меры, чтобы убрать машину."],
+  mistakes:["Заезжать на переезд «впритык» за другой машиной при заторе.","Объезжать опущенный шлагбаум — грубейшее и смертельно опасное нарушение."],
+  tip:"Перед переездом всегда снижай скорость и убедись, что выезд за переездом свободен."},
+ {sub:"Что грозит за нарушения и как возить людей",
+  intro:"На экзамене спрашивают основы ответственности, обязательное оснащение автомобиля и правила перевозки пассажиров и детей.",
+  rules:["Ремень безопасности обязателен для всех в салоне, включая задние сиденья.","Дети до 7 лет — только в детском удерживающем устройстве.","Управление в нетрезвом виде и без прав — самые тяжёлые нарушения.","В машине обязательны аптечка, огнетушитель и знак аварийной остановки.","При приближении спецтранспорта с синим маячком и сиреной нужно уступить дорогу."],
+  mistakes:["Считать ремень необязательным на заднем сиденье.","Возить ребёнка до 7 лет без кресла «на короткое расстояние»."],
+  tip:"Минимальный набор в багажнике: аптечка, огнетушитель, знак аварийной остановки. Без него — штраф."},
+ {sub:"Правильные действия на месте аварии",
+  intro:"Чёткий порядок действий после ДТП — частая тема в билетах и реальный навык, который однажды пригодится.",
+  rules:["Немедленно остановиться, включить аварийную сигнализацию.","Выставить знак аварийной остановки: 15 м в городе, 30 м вне города.","Не перемещать предметы, имеющие отношение к ДТП.","Оказать первую помощь пострадавшим и вызвать скорую.","Сообщить о происшествии в полицию и зафиксировать обстановку."],
+  mistakes:["Уезжать с места ДТП — это лишение прав.","Сразу убирать машины до фиксации, когда есть пострадавшие."],
+  tip:"Выходя из машины на трассе в тёмное время, надень светоотражающий жилет — это обязательно."}
+];
+
+/* ===================== ВОПРОСЫ (tp = индекс темы) ===================== */
+const QUESTIONS=[
+ {tp:0,q:"Что означает жёлтый мигающий сигнал светофора?",o:["Движение запрещено","Перекрёсток нерегулируемый, едем по знакам","Скоро загорится зелёный"],c:1,e:"Жёлтый мигающий — светофор не в обычном режиме, перекрёсток считается нерегулируемым."},
+ {tp:0,q:"Сигнал регулировщика «рука поднята вверх» означает:",o:["Разрешено всем","Запрещено всем направлениям","Только направо"],c:1,e:"Поднятая вверх рука запрещает движение всем, кроме завершающих манёвр."},
+ {tp:0,q:"Жёлтый немигающий сигнал светофора:",o:["Разрешает движение","Запрещает, кроме случая экстренного торможения","Означает поворот"],c:1,e:"Жёлтый запрещает, но если безопасно остановиться нельзя — можно продолжить."},
+ {tp:0,q:"Зелёный мигающий сигнал означает:",o:["Можно ускориться","Время сигнала истекает, скоро жёлтый","Поломку светофора"],c:1,e:"Предупреждает, что сейчас включится запрещающий сигнал."},
+ {tp:0,q:"Что главнее: светофор или регулировщик?",o:["Светофор","Регулировщик","Дорожные знаки"],c:1,e:"Сигналы регулировщика имеют приоритет над светофором и знаками."},
+ {tp:0,q:"Красный сигнал вместе с жёлтым означает:",o:["Можно ехать","Скоро включится зелёный, но ехать пока нельзя","Поворот налево"],c:1,e:"Это подготовительный сигнал — движение всё ещё запрещено."},
+ {tp:1,q:"Круг с красной каймой — это знак группы:",o:["Предупреждающие","Запрещающие","Предписывающие"],c:1,e:"Круг с красной каймой — запрещающие знаки."},
+ {tp:1,q:"Треугольник с красной каймой относится к группе:",o:["Предупреждающие","Запрещающие","Приоритета"],c:0,e:"Треугольник с красной каймой — предупреждающие знаки об опасности."},
+ {tp:1,q:"Синий круг с белым рисунком — это знак:",o:["Запрещающий","Предписывающий","Информационный"],c:1,e:"Синий круг — предписывающие знаки: ехать можно только так, как показано."},
+ {tp:1,q:"Знак «Уступи дорогу» выглядит как:",o:["Перевёрнутый треугольник с красной каймой","Красный круг","Синий квадрат"],c:0,e:"Это треугольник вершиной вниз с красной каймой."},
+ {tp:1,q:"Сколько всего групп дорожных знаков?",o:["6","8","10"],c:1,e:"Знаки делятся на 8 групп."},
+ {tp:1,q:"Что уточняют таблички под знаками?",o:["Ничего, это декор","Действие основного знака","Только расстояние"],c:1,e:"Таблички уточняют или ограничивают действие основного знака."},
+ {tp:2,q:"Кому уступите на равнозначном перекрёстке?",o:["Тому, кто слева","Тому, кто справа","Тому, кто быстрее"],c:1,e:"Действует правило «помеха справа»."},
+ {tp:2,q:"При повороте налево вы обязаны уступить:",o:["Только пешеходам","Встречным, едущим прямо и направо","Никому"],c:1,e:"При повороте налево уступаем встречным ТС, движущимся прямо и направо."},
+ {tp:2,q:"Кто имеет приоритет на круговом перекрёстке (без знаков)?",o:["Кто въезжает на круг","Кто уже движется по кругу","Кто справа"],c:1,e:"При въезде на круг уступает въезжающий."},
+ {tp:2,q:"Что в порядке приоритета стоит выше всего?",o:["Помеха справа","Сигналы регулировщика","Знаки приоритета"],c:1,e:"Регулировщик главнее светофора, знаков и правила помехи справа."},
+ {tp:2,q:"Главная дорога на перекрёстке поворачивает. Приоритет:",o:["Теряется на повороте","Сохраняется по направлению главной дороги","Переходит к второстепенной"],c:1,e:"Приоритет остаётся у главной дороги независимо от её направления."},
+ {tp:2,q:"При равных условиях преимущество имеет:",o:["Легковой автомобиль","Трамвай","Грузовик"],c:1,e:"Трамвай имеет преимущество перед безрельсовым транспортом при равных условиях."},
+ {tp:3,q:"Разрешённая скорость в населённом пункте для легкового авто:",o:["60 км/ч","90 км/ч","80 км/ч"],c:0,e:"Базовое ограничение в населённом пункте — 60 км/ч."},
+ {tp:3,q:"Скорость в жилой зоне и во дворе:",o:["60 км/ч","40 км/ч","20 км/ч"],c:2,e:"В жилой зоне и во дворовой территории — не более 20 км/ч."},
+ {tp:3,q:"Скорость вне населённого пункта на обычной дороге:",o:["90 км/ч","110 км/ч","60 км/ч"],c:0,e:"Для легковых вне населённого пункта — 90 км/ч."},
+ {tp:3,q:"Скорость на автомагистрали для легкового авто:",o:["90 км/ч","110 км/ч","130 всегда"],c:1,e:"На автомагистрали — 110 км/ч, знаком может разрешаться больше."},
+ {tp:3,q:"Максимальная скорость при буксировке:",o:["50 км/ч","70 км/ч","90 км/ч"],c:0,e:"При буксировке — не более 50 км/ч."},
+ {tp:4,q:"Разрешён ли обгон на пешеходном переходе?",o:["Да","Нет","Если нет пешеходов"],c:1,e:"Обгон на пешеходных переходах запрещён всегда."},
+ {tp:4,q:"Разрешён ли обгон на железнодорожном переезде?",o:["Да","Нет","Если шлагбаум открыт"],c:1,e:"Обгон запрещён на переездах и ближе 100 м перед ними."},
+ {tp:4,q:"Можно ли обгонять, если впереди подали сигнал поворота налево?",o:["Да","Нет","Только справа"],c:1,e:"Обгонять идущего, подавшего левый поворот, запрещено."},
+ {tp:4,q:"Чем обгон отличается от опережения?",o:["Ничем","Обгон — с выездом на встречную полосу","Опережение опаснее"],c:1,e:"Обгон связан с выездом на встречную полосу, опережение — нет."},
+ {tp:4,q:"Где обгон запрещён из-за плохой видимости?",o:["На прямой","В конце подъёма и на опасных поворотах","На широкой дороге"],c:1,e:"В конце подъёма и на опасных поворотах обгон запрещён."},
+ {tp:5,q:"Ближе скольких метров перед пешеходным переходом нельзя останавливаться?",o:["5 метров","15 метров","3 метра"],c:0,e:"Остановка запрещена на переходе и ближе 5 м перед ним."},
+ {tp:5,q:"Ближе скольких метров от остановки маршрутных ТС запрещена стоянка?",o:["5 метров","15 метров","10 метров"],c:1,e:"Остановка и стоянка запрещены ближе 15 м от остановок маршрутных ТС."},
+ {tp:5,q:"Разрешена ли остановка в тоннеле?",o:["Да","Нет","Только ночью"],c:1,e:"Остановка в тоннелях запрещена."},
+ {tp:5,q:"Чем остановка отличается от стоянки?",o:["Ничем","Остановка — кратковременная, до 5 минут","Стоянка короче"],c:1,e:"Остановка — до 5 минут или для посадки/высадки, стоянка — дольше."},
+ {tp:6,q:"Можно ли пересекать двойную сплошную линию?",o:["Да, аккуратно","Нет","Только при обгоне"],c:1,e:"Двойную сплошную пересекать запрещено."},
+ {tp:6,q:"Сплошная рядом с прерывистой — пересекать с какой стороны?",o:["Со стороны сплошной","Со стороны прерывистой","С любой"],c:1,e:"Пересекать можно только со стороны прерывистой линии."},
+ {tp:6,q:"Что важнее при противоречии: знак или разметка?",o:["Разметка","Знак","Всегда разметка"],c:1,e:"При противоречии приоритет у знаков, кроме временной разметки."},
+ {tp:6,q:"Прерывистую линию разметки:",o:["Пересекать нельзя","Пересекать можно","Можно только направо"],c:1,e:"Прерывистую линию пересекать разрешено."},
+ {tp:7,q:"Можно ли выезжать на переезд при заторе впереди?",o:["Да","Нет","Если успеваешь"],c:1,e:"Нельзя, если придётся остановиться на путях."},
+ {tp:7,q:"На каком расстоянии перед переездом запрещён обгон?",o:["50 м","100 м","30 м"],c:1,e:"Обгон запрещён на переезде и ближе 100 м перед ним."},
+ {tp:7,q:"Что делать при мигающих красных сигналах у переезда?",o:["Быстро проехать","Остановиться, движение запрещено","Снизить скорость и ехать"],c:1,e:"Красные мигающие сигналы запрещают движение через переезд."},
+ {tp:8,q:"Обязателен ли ремень безопасности на заднем сиденье?",o:["Нет","Да","Только на трассе"],c:1,e:"Ремень обязателен для всех в салоне."},
+ {tp:8,q:"Как перевозить ребёнка до 7 лет?",o:["На руках","В детском кресле","Просто на заднем сиденье"],c:1,e:"До 7 лет — только в детском удерживающем устройстве."},
+ {tp:8,q:"Что относится к обязательному оснащению автомобиля?",o:["Только аптечка","Аптечка, огнетушитель, знак аварийной остановки","Ничего"],c:1,e:"Обязательны аптечка, огнетушитель и знак аварийной остановки."},
+ {tp:8,q:"Что делать при приближении авто с синим маячком и сиреной?",o:["Ускориться","Уступить дорогу","Игнорировать"],c:1,e:"Нужно уступить дорогу спецтранспорту."},
+ {tp:9,q:"Первое действие водителя при ДТП?",o:["Уехать","Остановиться и включить аварийку","Позвонить другу"],c:1,e:"Остановиться, включить аварийку, выставить знак аварийной остановки."},
+ {tp:9,q:"На каком расстоянии выставляется знак аварийной остановки в городе?",o:["15 метров","30 метров","5 метров"],c:0,e:"В населённом пункте — не менее 15 м, вне города — 30 м."},
+ {tp:9,q:"Что надеть, выходя из машины на трассе в тёмное время?",o:["Ничего особенного","Светоотражающий жилет","Перчатки"],c:1,e:"Светоотражающий жилет обязателен вне населённого пункта в тёмное время."},
+ {tp:9,q:"Можно ли уехать с места ДТП, если виноват не ты?",o:["Да","Нет","Если нет пострадавших"],c:1,e:"Оставление места ДТП запрещено и грозит лишением прав."}
+];
+
+/* ===================== ДОСТИЖЕНИЯ ===================== */
+const ACHS=[
+ {id:"first",ic:"📘",nm:"Старт",ds:"Прошёл первую тему",chk:s=>s.read.size>=1},
+ {id:"half",ic:"📚",nm:"На полпути",ds:"Прошёл 5 тем",chk:s=>s.read.size>=5},
+ {id:"all",ic:"🎓",nm:"Вся теория",ds:"Прошёл все темы",chk:s=>s.read.size>=LESSONS.length},
+ {id:"c25",ic:"✅",nm:"Меткий",ds:"25 верных ответов",chk:s=>s.correct>=25},
+ {id:"c100",ic:"🏅",nm:"Сотня",ds:"100 верных ответов",chk:s=>s.correct>=100},
+ {id:"exam",ic:"🚦",nm:"Экзамен сдан",ds:"Прошёл экзамен без провала",chk:s=>s.examPassed},
+ {id:"streak3",ic:"🔥",nm:"Три дня",ds:"Серия 3 дня подряд",chk:s=>s.streak>=3},
+ {id:"clean",ic:"🧹",nm:"Без ошибок",ds:"Разобрал все свои ошибки",chk:s=>s.everHadMistake&&s.wrong.size===0}
+];
+
+/* ===================== FAQ ===================== */
+const FAQ=[
+ {q:"Подойдёт ли курс новичку с нуля?",a:"Да. Темы написаны простым языком и идут от базовых правил к сложным, без юридических формулировок."},
+ {q:"Сохраняется ли прогресс?",a:"Да, прогресс, ошибки и достижения сохраняются в твоём браузере. Возвращайся в любой момент и продолжай с того же места."},
+ {q:"Чем режим экзамена отличается от тренажёра?",a:"Экзамен — это репетиция настоящего: 20 вопросов, ограничение по времени и не больше 2 ошибок. Тренажёр позволяет спокойно отрабатывать темы."},
+ {q:"Что входит в платный доступ?",a:"Все 10 тем теории, полный банк вопросов по всем темам, режим экзамена и работа над ошибками."},
+ {q:"Что такое персональный план?",a:"Ты указываешь, сколько дней до экзамена, и курс раскладывает все темы и тренировки по дням — остаётся просто идти по плану."},
+ {q:"Как работает ИИ-объяснение?",a:"Под каждым вопросом есть кнопка «Объяснить проще» — ИИ разбирает правильный ответ живым языком с примером, если обычного пояснения мало."},
+ {q:"Актуальны ли правила?",a:"Курс охватывает действующие правила. Перед экзаменом всегда полезно свериться с актуальной редакцией ПДД."}
+];
+
+/* ===================== СОСТОЯНИЕ ===================== */
+const today=()=>new Date().toDateString();
+const state={
+  read:new Set(store.get('zl_read')||[]),
+  correct:store.get('zl_correct')||0,
+  answered:store.get('zl_answered')||0,
+  wrong:new Set(store.get('zl_wrong')||[]),
+  everHadMistake:store.get('zl_ehm')||false,
+  examPassed:store.get('zl_exam')||false,
+  streak:store.get('zl_streak')||0,
+  lastDay:store.get('zl_lastday')||null,
+  achGot:new Set(store.get('zl_ach')||[]),
+  paid:store.get('zl_paid')||false,
+  tier:store.get('zl_tier')||'free'
+};
+/* синхронизация старого флага paid с тарифом */
+if(state.paid&&state.tier==='free')state.tier='full';
+if(state.tier!=='free')state.paid=true;
+function save(){
+  store.set('zl_read',[...state.read]);store.set('zl_correct',state.correct);store.set('zl_answered',state.answered);
+  store.set('zl_wrong',[...state.wrong]);store.set('zl_ehm',state.everHadMistake);store.set('zl_exam',state.examPassed);
+  store.set('zl_streak',state.streak);store.set('zl_lastday',state.lastDay);store.set('zl_ach',[...state.achGot]);store.set('zl_paid',state.paid);store.set('zl_tier',state.tier);
+}
+function isPaid(){return state.tier==='month'||state.tier==='full';}
+function isFull(){return state.tier==='full';}
+function topicLocked(tp){return !FREE_TOPICS.includes(tp)&&!isPaid();}
+
+function touchStreak(){
+  const t=today();
+  if(state.lastDay===t)return;
+  const y=new Date();y.setDate(y.getDate()-1);
+  state.streak=(state.lastDay===y.toDateString())?state.streak+1:1;
+  state.lastDay=t;save();updateDash();
+}
+function checkAch(){
+  let unlocked=null;
+  ACHS.forEach(a=>{if(!state.achGot.has(a.id)&&a.chk(state)){state.achGot.add(a.id);unlocked=a;}});
+  if(unlocked){save();renderAch();}
+}
+
+function setTier(tier){
+  state.tier=tier;
+  state.paid=(tier!=='free');
+  /* записать тариф в учётную запись пользователя, если вошёл */
+  const cur=store.get('zl_session');
+  if(cur){
+    const users=store.get('zl_users')||{};
+    if(users[cur]){users[cur].tier=tier;store.set('zl_users',users);}
+  }
+  save();
+}
+function activateSubscription(tier){
+  const t=tier||'full';
+  setTier(t);
+  /* запись продажи в локальный журнал (для статистики) */
+  try{
+    const sales=store.get('zl_sales')||[];
+    const cur=store.get('zl_session');const u=cur&&(store.get('zl_users')||{})[cur];
+    sales.push({tier:t,price:t==='full'?990:499,contact:(u&&(u.email||u.phone||u.name))||(state.user&&(state.user.email||state.user.phone))||'аноним',date:new Date().toISOString()});
+    store.set('zl_sales',sales);
+  }catch(e){}
+  if(window.ymGoal)ymGoal('purchase');
+  applyAccess();closeModal();
+  alert(isFull()?'Полный доступ открыт! Теперь вам доступен и практический гид по экзамену в ГИБДД. Спасибо за покупку!':'Доступ открыт. Спасибо за покупку!');
+}
+function deactivateSubscription(){setTier('free');applyAccess();}
+window.activateSubscription=activateSubscription;
+
+/* ===================== РЕНДЕР ТЕМ ===================== */
+const lessonsEl=document.getElementById('lessons');
+function lessonBody(l){
+  return `<p>${l.intro}</p>
+    <h4>Главные правила</h4><ul>${l.rules.map(x=>`<li>${x}</li>`).join('')}</ul>
+    <h4 class="warn">Частые ошибки</h4><ul class="warn">${l.mistakes.map(x=>`<li>${x}</li>`).join('')}</ul>
+    <div class="tip"><b>Совет.</b> ${l.tip}</div>`;
+}
+function renderLessons(){
+  lessonsEl.innerHTML='';
+  LESSONS.forEach((l,i)=>{
+    const locked=topicLocked(i);
+    const card=document.createElement('div');
+    card.className='lesson'+(state.read.has(i)?' done':'')+(locked?' locked':'');
+    const tag=FREE_TOPICS.includes(i)?'<span class="free-tag">Бесплатно</span>':(locked?'<span class="lock-tag">Подписка</span>':'');
+    if(locked){
+      card.innerHTML=`<div class="top"><div class="ix">🔒</div><div class="t-wrap"><div class="t">${TOPICS[i]} ${tag}</div><div class="sub">${l.sub}</div></div></div>
+        <div class="lock-overlay">Тема доступна по подписке.<br><button class="btn btn-go" onclick="go('pricing')">Открыть доступ →</button></div>`;
+    }else{
+      card.innerHTML=`<div class="top"><div class="ix">${i+1}</div>
+          <div class="t-wrap"><div class="t">${TOPICS[i]} ${tag}</div><div class="sub">${l.sub}</div></div>
+          <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <div class="body"><div class="body-in">${lessonBody(l)}
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px">
+          <button class="markread">${state.read.has(i)?'Пройдено ✓':'Отметить пройденным ✓'}</button>
+          <button onclick="goMode('tickets')" style="background:none;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:12px;padding:7px 13px;cursor:pointer;font-family:inherit;transition:.13s" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">🎫 Билеты</button>
+          <button onclick="goMode('exam')" style="background:none;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:12px;padding:7px 13px;cursor:pointer;font-family:inherit;transition:.13s" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">🚦 Экзамен</button>
+          <button onclick="go('reference')" style="background:none;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:12px;padding:7px 13px;cursor:pointer;font-family:inherit;transition:.13s" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">🪧 Знаки</button>
+          </div></div></div>`;
+      const top=card.querySelector('.top'),body=card.querySelector('.body');
+      top.addEventListener('click',e=>{if(e.target.closest('.markread'))return;const o=card.classList.toggle('open');body.style.maxHeight=o?body.scrollHeight+'px':0;});
+      card.querySelector('.markread').addEventListener('click',()=>{
+        state.read.has(i)?state.read.delete(i):state.read.add(i);
+        card.classList.toggle('done',state.read.has(i));
+        card.querySelector('.markread').textContent=state.read.has(i)?'Пройдено ✓':'Отметить пройденным ✓';
+        touchStreak();save();updateDash();checkAch();
+      });
+    }
+    lessonsEl.appendChild(card);
+  });
+}
+
+/* ===================== ПРАКТИКА ===================== */
+const pc=document.getElementById('practiceContent');
+let mode='topics';
+document.querySelectorAll('.mode-btn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');mode=b.dataset.mode;renderMode();
+}));
+function renderMode(){
+  if(mode==='topics')renderTopics();
+  else if(mode==='tickets')renderTickets();
+  else if(mode==='exam')renderExamIntro();
+  else renderMistakes();
+}
+function renderTopics(){
+  const paid=isPaid();
+  const chips=QTOPICS.map((t,i)=>{
+    const cnt=QUESTIONS.filter(q=>q.tp===i).length;
+    if(!cnt)return '';
+    const tag=paid?('<span class="cnt">'+cnt+'</span>'):('<span class="cnt">'+freeCount(cnt)+' из '+cnt+' бесплатно</span>');
+    return '<div class="chip" data-tp="'+i+'">'+t+' '+tag+'</div>';
+  }).join('');
+  pc.innerHTML=`<div class="chips">${chips}</div>`;
+  pc.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{
+    const tp=+ch.dataset.tp;
+    const all=QUESTIONS.map((q,idx)=>idx).filter(idx=>QUESTIONS[idx].tp===tp);
+    if(isPaid()){startQuiz(all,{label:QTOPICS[tp]});return;}
+    startQuiz(all.slice(0,freeCount(all.length)),{label:QTOPICS[tp],limited:true,total:all.length});
+  }));
+}
+function renderTickets(){
+  const set=[...new Set(QUESTIONS.map(q=>q.bilet).filter(Boolean))].sort((a,b)=>a-b);
+  if(set.length===0){pc.innerHTML=`<div class="empty"><h3>Билеты ещё не подключены</h3><p>Билеты появятся, когда рядом с сайтом лежит полный банк (questions.json с номерами билетов).</p></div>`;return;}
+  const paid=isPaid();
+  const chips=set.map(n=>{const locked=!paid&&!biletFree(n);return '<div class="chip'+(locked?' locked':'')+'" data-b="'+n+'">'+(locked?'🔒 ':'')+'Билет '+n+'</div>';}).join('');
+  pc.innerHTML='<p style="color:var(--muted);font-size:14px;margin-bottom:14px">Каждый билет — 20 вопросов с таймером и лимитом ошибок, как на экзамене. '+(paid?'Открыты все 40 билетов.':'Бесплатно открыты билеты 1–'+FREE_BILETY+', остальные — по подписке.')+'</p><div class="chips">'+chips+'</div>';
+  pc.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{
+    const n=+ch.dataset.b;
+    if(!isPaid()&&!biletFree(n)){go('pricing');return;}
+    const list=QUESTIONS.map((q,i)=>i).filter(i=>QUESTIONS[i].bilet===n);
+    startQuiz(list,{exam:true,label:'Билет '+n});
+  }));
+}
+function renderExamIntro(){
+  pc.innerHTML=`<div class="exam-card">
+    <h3>Экзамен как в ГИБДД</h3>
+    <ul><li>20 вопросов из всех тем</li><li>20 минут на прохождение</li><li>Не больше 2 ошибок — иначе провал</li><li>Точная репетиция настоящего экзамена</li></ul>
+    ${isPaid()?'<button class="btn btn-go" id="startExam">Начать экзамен →</button>'
+      :'<p style="color:var(--muted);font-size:14px;margin-bottom:14px">Полный экзамен — по подписке. Сейчас доступен пробный по бесплатным билетам (1–'+FREE_BILETY+').</p><button class="btn btn-go" id="startDemo">Пробный экзамен →</button> <button class="btn btn-ghost" onclick="go(\'pricing\')">Открыть полный</button>'}
+  </div>`;
+  const ex=document.getElementById('startExam');if(ex)ex.addEventListener('click',()=>{
+    const pool=shuffle(QUESTIONS.map((q,i)=>i));startQuiz(pool.slice(0,20),{exam:true,label:"Экзамен"});
+  });
+  const dm=document.getElementById('startDemo');if(dm)dm.addEventListener('click',()=>{
+    const pool=shuffle(freePool());
+    startQuiz(pool.slice(0,Math.min(20,pool.length)),{exam:true,label:"Пробный экзамен",lives:2});
+  });
+}
+function renderMistakes(){
+  const list=[...state.wrong];
+  if(list.length===0){pc.innerHTML=`<div class="empty"><h3>Ошибок пока нет</h3><p>Реши вопросы в тренажёре — те, что не дались, появятся здесь для разбора.</p></div>`;return;}
+  const byTopic={};list.forEach(gi=>{const tp=QUESTIONS[gi].tp;byTopic[tp]=(byTopic[tp]||0)+1;});
+  const max=Math.max.apply(null,Object.values(byTopic));
+  const bars=Object.keys(byTopic).sort((a,b)=>byTopic[b]-byTopic[a]).map(tp=>
+    `<div class="mbar"><span class="ml">${QTOPICS[tp]}</span><span class="mt"><span class="mf" style="width:${byTopic[tp]/max*100}%"></span></span><span class="mv">${byTopic[tp]}</span></div>`).join('');
+  pc.innerHTML=`<div class="exam-card"><h3>Анализ ошибок</h3>
+    <p style="color:var(--muted);font-size:14.5px;margin:8px 0 16px">У тебя ${list.length} ${plural(list.length,'вопрос','вопроса','вопросов')} на разбор. Темы, где ошибки чаще всего:</p>
+    ${bars}
+    <button class="btn btn-go" id="startWrong" style="margin-top:18px">Разобрать ошибки →</button></div>`;
+  document.getElementById('startWrong').addEventListener('click',()=>startQuiz(list,{label:"Мои ошибки",review:true}));
+}
+
+/* ===================== ДВИЖОК ТРЕНАЖЁРА ===================== */
+let queue=[],qpos=0,qscore=0,qanswered=false,opts={},lives=0,timer=null,timeLeft=0;
+function startQuiz(list,o){
+  if(list.length===0)return;
+  opts=o||{};queue=list.slice();qpos=0;qscore=0;lives=opts.lives||2;
+  touchStreak();
+  if(opts.exam){timeLeft=(opts.timeLeft||20*60);startTimer();}
+  renderQ();
+}
+function startTimer(){clearInterval(timer);timer=setInterval(()=>{timeLeft--;updateTimer();if(timeLeft<=0){clearInterval(timer);finishQuiz(true);}},1000);}
+function updateTimer(){const el=document.getElementById('qtimer');if(!el)return;const m=Math.floor(timeLeft/60),s=timeLeft%60;el.textContent=m+':'+String(s).padStart(2,'0');el.classList.toggle('low',timeLeft<=60);}
+function renderQ(){
+  qanswered=false;
+  if(qpos>=queue.length){return finishQuiz(false);}
+  const q=QUESTIONS[queue[qpos]];
+  const lim=queue.length;
+  const livesHtml=opts.exam?`<div class="qlives">${[0,1].map(i=>`<span class="heart${i>=lives?' lost':''}"></span>`).join('')}</div>`:'';
+  const timerHtml=opts.exam?`<span class="qtimer" id="qtimer"></span>`:'';
+  pc.innerHTML=`<div class="quiz">
+    <div class="quiz-top"><span class="qcount">${opts.label} · ${qpos+1}/${lim}</span>
+      <div class="qright">${timerHtml}<span class="qscore">Верно: ${qscore}</span>${livesHtml}</div></div>
+    <div class="road"><div class="fill" style="width:${qpos/lim*100}%"></div></div>
+    <div class="qtopic">${QTOPICS[q.tp]}</div>
+    ${q.img?`<img class="qimg" src="${q.img}" onerror="this.style.display='none'" alt="">`:''}
+    <div class="qtext">${q.q}</div>
+    <div class="opts">${q.o.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join('')}</div>
+    <div class="explain"><b>Пояснение.</b> ${q.e}<div><button class="ai-btn" id="aiBtn" type="button">Объяснить проще (ИИ) ✨</button></div><div class="ai-out" id="aiOut"></div></div>
+    <div class="quiz-foot"><div class="signal"><span class="bulb" id="bR"></span><span class="bulb" id="bG"></span></div><div id="nextSlot"></div></div>
+  </div>`;
+  if(opts.exam)updateTimer();
+  pc.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>choose(+b.dataset.k)));
+}
+function choose(k){
+  if(qanswered)return;qanswered=true;
+  const gi=queue[qpos],q=QUESTIONS[gi],els=pc.querySelectorAll('.opt');
+  els.forEach(b=>b.disabled=true);els[q.c].classList.add('correct');
+  state.answered++;
+  if(k===q.c){qscore++;state.correct++;document.getElementById('bG').className='bulb on-g';if(state.wrong.has(gi))state.wrong.delete(gi);}
+  else{els[k].classList.add('wrong');document.getElementById('bR').className='bulb on-r';state.wrong.add(gi);state.everHadMistake=true;
+       if(opts.exam){lives--;document.querySelectorAll('.heart').forEach((h,i)=>{if(i>=lives)h.classList.add('lost');});}}
+  save();updateDash();
+  pc.querySelector('.explain').classList.add('show');
+  var aiBtn=document.getElementById('aiBtn');if(aiBtn)aiBtn.addEventListener('click',function(){aiExplain(q);});
+  pc.querySelector('.qscore').textContent='Верно: '+qscore;
+  if(opts.exam&&lives<0){clearInterval(timer);const n=document.createElement('button');n.className='btn btn-go';n.textContent='Результат';n.addEventListener('click',()=>finishQuiz(true));document.getElementById('nextSlot').appendChild(n);return;}
+  const next=document.createElement('button');next.className='btn btn-go';
+  next.textContent=qpos>=queue.length-1?'Результат':'Дальше →';
+  next.addEventListener('click',()=>{qpos++;renderQ();});
+  document.getElementById('nextSlot').appendChild(next);
+}
+function finishQuiz(forced){
+  clearInterval(timer);
+  const lim=queue.length;const pct=Math.round(qscore/lim*100);
+  let pass;
+  if(opts.exam){pass=(lives>=0)&&!forced?true:(qscore>=lim-2&&lives>=0);if(forced&&timeLeft<=0)pass=false;if(lives<0)pass=false;
+    if(pass)state.examPassed=true;}
+  else{pass=pct>=80;}
+  save();updateDash();checkAch();
+  let msg;
+  if(opts.exam)msg=pass?'Ты уложился в норму — не больше 2 ошибок. Так держать!':'Провал по правилам экзамена. Разбери ошибки и попробуй снова.';
+  else if(opts.review)msg=state.wrong.size===0?'Все ошибки разобраны — чисто!':`Осталось ${state.wrong.size} ${plural(state.wrong.size,'ошибка','ошибки','ошибок')} на разбор.`;
+  else msg=pass?'Отличный результат по теме.':'Стоит перечитать тему и пройти ещё раз.';
+  const upsell=opts.limited?'<div style="margin:6px 0 16px;padding:14px 16px;border-radius:12px;border:1px solid rgba(244,196,48,.4);background:rgba(244,196,48,.07);color:#efe3c2;font-size:14px">Это бесплатная часть — '+lim+' из '+(opts.total||lim)+' вопросов темы. Открой полный доступ, чтобы решать все вопросы и билеты.</div>':'';
+  pc.innerHTML=`<div class="quiz"><div class="result ${pass?'pass':'fail'}">
+    <div class="big" style="color:${pass?'var(--go)':'var(--stop)'}">${pct}%</div>
+    <div class="verdict">${pass?'Зачёт':'Нужно подтянуть'}</div>
+    <p>Правильных: ${qscore} из ${lim}. ${msg}</p>
+    ${upsell}
+    ${opts.limited?'<button class="btn btn-go" id="buyBtn" style="margin-bottom:12px">Открыть полный доступ →</button><br>':''}
+    <button class="btn ${opts.limited?'btn-ghost':'btn-go'}" id="againBtn">Ещё раз</button>
+    <div style="margin-top:12px"><button class="btn btn-ghost" id="backBtn">К выбору</button></div>
+  </div></div>`;
+  const bb=document.getElementById('buyBtn');if(bb)bb.addEventListener('click',()=>go('pricing'));
+  document.getElementById('againBtn').addEventListener('click',renderMode);
+  document.getElementById('backBtn').addEventListener('click',renderMode);
+}
+
+/* ===================== ДАШБОРД / ДОСТУП / ПРОЧЕЕ ===================== */
+function updateDash(){
+  document.getElementById('sLessons').textContent=state.read.size+'/'+LESSONS.length;
+  document.getElementById('sAcc').textContent=state.answered?Math.round(state.correct/state.answered*100)+'%':'—';
+  document.getElementById('sStreak').textContent=state.streak;
+  document.getElementById('sMistakes').textContent=state.wrong.size;
+  renderLevel();
+}
+const achGrid=document.getElementById('achGrid');
+function renderAch(){
+  achGrid.innerHTML=ACHS.map(a=>`<div class="badge-c${state.achGot.has(a.id)?' got':''}"><div class="ic">${a.ic}</div><div class="nm">${a.nm}</div><div class="ds">${a.ds}</div></div>`).join('');
+}
+const TIERS=[
+ {name:"Старт",price:0,per:"бесплатно навсегда",
+  f:["3 темы теории бесплатно","Билеты 1–6 целиком (≈15%)","~15% вопросов в каждой теме","Пробный экзамен, уровни и достижения"],
+  no:["Все 40 билетов","Полный банк вопросов","ИИ-объяснения","Анализ ошибок","Доступ навсегда"],
+  act:"free",cta:"Уже доступно"},
+ {name:"Месяц",price:499,per:"доступ на 30 дней",best:1,ribbon:"Выбор большинства",
+  f:["Все 10 тем теории с разбором","Полный банк вопросов по всем темам","Все 4 плана: Срочный, Быстрый, Спокойный, Свободный","ИИ-объяснение каждого вопроса простым языком","Симулятор экзамена один в один как в ГИБДД","Анализ и работа над ошибками","Сохранение прогресса на всех устройствах","Поддержка в чате"],
+  no:["Доступ навсегда"],
+  act:"pay",cta:"Оформить за 499 ₽"},
+ {name:"Полный курс",price:990,per:"разово — и курс твой навсегда",premium:1,ribbon:"Всё включено",
+  f:["Всё из тарифа «Месяц», без ограничений по времени","Доступ навсегда — без продлений и доплат","🚗 Раздел «Практика ГИБДД»: где заваливают и как сдать","Чек-листы к элементам экзамена: старт, эстакада, парковка","Ответы куратора в чате по практике","Установка как приложение на телефон","Все будущие обновления и новые вопросы бесплатно","Персональный план под любой срок и уровень","Полный разбор ошибок с ИИ-объяснениями","Приоритетная поддержка"],
+  no:[],
+  act:"pay",cta:"Купить за 990 ₽"}
+];
+const tiersEl=document.getElementById('tiers');
+function renderTiers(){
+  tiersEl.innerHTML='';
+  TIERS.forEach(t=>{
+    const card=document.createElement('div');card.className='tier'+(t.best?' best':'')+(t.premium?' premium':'');
+    const lis=t.f.map(x=>`<li>${x}</li>`).join('')+t.no.map(x=>`<li class="no">${x}</li>`).join('');
+    card.innerHTML=`${t.ribbon?`<span class="ribbon${t.premium?' gold':''}">${t.ribbon}</span>`:''}<div class="name">${t.name}</div>
+      <div class="price">${t.price===0?'0 ₽':t.price+' ₽'}</div><div class="per">${t.per}</div>
+      <ul>${lis}</ul><button class="btn ${t.act==='pay'?'btn-go':'btn-ghost'}">${t.cta}</button>`;
+    card.querySelector('button').addEventListener('click',()=>{if(t.act==='pay')openModal(t);});
+    tiersEl.appendChild(card);
+  });
+}
+const faqEl=document.getElementById('faqList');
+function renderFaq(){
+  faqEl.innerHTML=FAQ.map(f=>`<div class="qa"><div class="q">${f.q}<span class="plus">+</span></div><div class="a"><div class="a-in">${f.a}</div></div></div>`).join('');
+  faqEl.querySelectorAll('.qa').forEach(qa=>{const a=qa.querySelector('.a');qa.querySelector('.q').addEventListener('click',()=>{const o=qa.classList.toggle('open');a.style.maxHeight=o?a.scrollHeight+'px':0;});});
+}
+function applyAccess(){
+  const badge=document.getElementById('accBadge');
+  if(isFull()){badge.textContent='Полный курс';badge.className='badge pro';}
+  else if(isPaid()){badge.textContent='Доступ открыт';badge.className='badge pro';}
+  else{badge.textContent='Бесплатный';badge.className='badge free';}
+  renderLessons();renderMode();renderTiers();updateDash();if(typeof renderPractice==='function')renderPractice();
+}
+
+/* модалка оплаты */
+const modal=document.getElementById('modal');
+let payTier=null;
+function openModal(t){payTier=t;document.getElementById('modalTitle').textContent='Оформление: '+t.name;
+  document.getElementById('modalText').textContent=`Тариф «${t.name}» — ${t.price} ₽ (${t.per}). После оплаты доступ откроется автоматически.`;
+  const chk=document.getElementById('modalCheck');if(chk)chk.style.display=serverMode()?'':'none';
+  modal.classList.add('show');}
+function closeModal(){modal.classList.remove('show');}
+document.getElementById('modalClose').addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+function planCode(t){return (t&&t.price>=900)?'full':'month';}
+document.getElementById('modalPay').addEventListener('click',async()=>{
+  if(serverMode()){
+    if(!authToken()){closeModal();openReg();alert('Сначала зарегистрируйтесь или войдите — доступ привяжется к аккаунту.');return;}
+    if(PAYMENT_URL){
+      const email=(state.user&&state.user.email)||'';
+      location.href=PAYMENT_URL.replace('{email}',encodeURIComponent(email)).replace('{plan}',encodeURIComponent(planCode(payTier)));
+      return;
+    }
+    await refreshMe();applyAccess();
+    alert(isPaid()?'Доступ открыт!':'Ссылка на оплату не задана (PAYMENT_URL). После оплаты нажмите «Я оплатил — проверить».');
+    if(isPaid())closeModal();
+    return;
+  }
+  /* демо-режим: открываем доступ по выбранному тарифу */
+  activateSubscription(planCode(payTier));
+});
+const modalCheckBtn=document.getElementById('modalCheck');
+if(modalCheckBtn)modalCheckBtn.addEventListener('click',async()=>{
+  await refreshMe();applyAccess();
+  if(isPaid()){closeModal();alert('Оплата подтверждена, доступ открыт!');}
+  else alert('Оплата пока не подтверждена. Если только что оплатили — подождите минуту и нажмите ещё раз.');
+});
+
+/* утилиты */
+function go(id){document.getElementById(id).scrollIntoView();}
+function goMode(m){
+  go('practice');
+  setTimeout(()=>{
+    const btn=document.querySelector('.mode-btn[data-mode="'+m+'"]');
+    if(btn){document.querySelectorAll('#practice .mode-btn').forEach(x=>x.classList.remove('active'));btn.classList.add('active');mode=m;renderMode();}
+  },400);
+}
+function goTickets(){goMode('tickets');}
+window.go=go;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function plural(n,one,few,many){const m=n%10,d=n%100;if(m===1&&d!==11)return one;if(m>=2&&m<=4&&(d<10||d>=20))return few;return many;}
+
+/* ===================== УРОВНИ / XP ===================== */
+const LEVELS=[{xp:0,t:"Новичок за рулём"},{xp:150,t:"Уверенный ученик"},{xp:400,t:"Знаток правил"},{xp:800,t:"Почти инструктор"},{xp:1400,t:"Мастер ПДД"}];
+function xpTotal(){return state.correct*10+state.read.size*50+(state.examPassed?200:0);}
+function renderLevel(){
+  const nEl=document.getElementById('lvNum');if(!nEl)return;
+  const xp=xpTotal();let i=0;for(let k=0;k<LEVELS.length;k++){if(xp>=LEVELS[k].xp)i=k;}
+  const cur=LEVELS[i],next=LEVELS[i+1];
+  nEl.textContent=i+1;document.getElementById('lvTitle').textContent=cur.t;
+  const fill=document.getElementById('lvFill'),xpEl=document.getElementById('lvXp');
+  if(next){const span=next.xp-cur.xp,prog=xp-cur.xp;fill.style.width=Math.min(100,prog/span*100)+'%';xpEl.textContent=xp+' XP · до «'+next.t+'»: '+(next.xp-xp)+' XP';}
+  else{fill.style.width='100%';xpEl.textContent=xp+' XP · максимальный уровень';}
+}
+
+/* ===================== ИИ-ОБЪЯСНЕНИЕ ===================== */
+async function aiExplain(q){
+  const out=document.getElementById('aiOut'),btn=document.getElementById('aiBtn');
+  if(!out)return;out.classList.add('show');out.innerHTML='<span class="tag">ИИ-объяснение</span>Готовлю объяснение…';if(btn)btn.disabled=true;
+  const correct=q.o[q.c];
+  if(serverMode()){
+    try{
+      const d=await api('/api/ai/explain',{method:'POST',body:{question:q.q,correct:correct}});
+      out.innerHTML='<span class="tag">ИИ-объяснение</span>'+(d.text||'Не получилось получить ответ.');
+    }catch(e){
+      const m=(''+e.message);
+      out.innerHTML='<span class="tag">ИИ-объяснение</span>'+(m.indexOf('подписк')>=0?'ИИ-объяснения доступны по подписке.':(m.indexOf('token')>=0?'Войдите в аккаунт, чтобы пользоваться ИИ-объяснениями.':'Не удалось получить объяснение, попробуйте позже.'));
+    }finally{if(btn)btn.disabled=false;}
+    return;
+  }
+  const prompt='Ты добрый автоинструктор. Объясни простым коротким языком, 3-4 предложения, без сложных терминов и без списков, можно с бытовым примером, почему на вопрос по ПДД «'+q.q+'» правильный ответ — «'+correct+'».';
+  try{
+    /* Демо/превью: прямой запрос работает только в превью Claude. На хостинге включите серверный режим (API_BASE). */
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
+    const data=await r.json();
+    const text=(data.content||[]).map(b=>b&&b.type==='text'?b.text:'').join('').trim();
+    out.innerHTML='<span class="tag">ИИ-объяснение</span>'+(text||'Не получилось получить ответ, попробуйте ещё раз.');
+  }catch(e){
+    out.innerHTML='<span class="tag">ИИ-объяснение</span>В превью объяснение работает напрямую. На вашем хостинге включите серверный режим (API_BASE) — запрос пойдёт через бэкенд с ключом API.';
+  }finally{if(btn)btn.disabled=false;}
+}
+
+/* ===================== ПЕРСОНАЛЬНЫЙ ПЛАН ===================== */
+let planDaysSel=7,planLevelSel=0;
+(function(){
+  const cards=document.getElementById('planCards'),pl=document.getElementById('planLevel');
+  if(!cards)return;
+  cards.querySelectorAll('.plan-card').forEach(b=>b.addEventListener('click',()=>{cards.querySelectorAll('.plan-card').forEach(x=>x.classList.remove('on'));b.classList.add('on');planDaysSel=+b.dataset.d;}));
+  pl.querySelectorAll('.pchip').forEach(b=>b.addEventListener('click',()=>{pl.querySelectorAll('.pchip').forEach(x=>x.classList.remove('on'));b.classList.add('on');planLevelSel=+b.dataset.l;}));
+  document.getElementById('makePlan').addEventListener('click',makePlan);
+})();
+function makePlan(){
+  const out=document.getElementById('planOut');const days=planDaysSel,topics=TOPICS.length;
+  const frac=[0.78,0.65,0.5][planLevelSel];
+  const studyDays=Math.max(1,Math.min(days>2?days-1:days,Math.round(days*frac)));
+  const perDay=Math.ceil(topics/studyDays);
+  const paceTip=[
+    'Не спеши: сначала вдумчиво прочитай тему, потом реши тренажёр и разбери каждое пояснение.',
+    'Прочитай тему и сразу закрепи тренажёром — у тебя уже есть база, иди увереннее.',
+    'Не задерживайся на теории: бегло освежи и больше решай, сразу подключай пробные экзамены.'
+  ][planLevelSel];
+  const planNames={3:'Срочный',7:'Быстрый',14:'Спокойный',30:'Свободный'};
+  const intensity={
+    3:'Интенсивный темп, примерно 2–3 часа в день. Подходит, когда экзамен совсем близко.',
+    7:'Оптимально для большинства — около 1,5 часов в день.',
+    14:'Спокойно, без спешки, примерно 45 минут в день.',
+    30:'Максимально комфортно — 20–30 минут в день.'
+  }[days];
+  const levelName=['Не знаю','Знаю немного','Уже учил'][planLevelSel];
+  let t=0;const items=[];
+  for(let d=1;d<=days;d++){
+    if(t<topics){const chunk=[];for(let k=0;k<perDay&&t<topics;k++){chunk.push(TOPICS[t]);t++;}
+      items.push({d:'День '+d,h:chunk.join(' · '),p:'Изучи темы, отметь пройденными и реши тренажёр по каждой. '+paceTip});}
+    else if(d===days){items.push({d:'День '+d,h:'Финальный экзамен',p:'Пройди симулятор экзамена 2–3 раза без провала и разбери всё, что не далось. Ты готов!'});}
+    else{items.push({d:'День '+d,h:'Экзамен и работа над ошибками',p:'Сдай пробный экзамен, затем разбери ошибки в режиме «Мои ошибки».'});}
+  }
+  const head='<div class="pday" style="background:rgba(244,196,48,.06);border-color:rgba(244,196,48,.3)"><div class="d" style="background:var(--lane)">План</div><div class="pc"><div class="ph">'+planNames[days]+' · '+days+' '+plural(days,'день','дня','дней')+' · уровень «'+levelName+'»</div><div class="pp">'+intensity+'</div></div></div>';
+  out.innerHTML=head+items.map(it=>'<div class="pday"><div class="d">'+it.d+'</div><div class="pc"><div class="ph">'+it.h+'</div><div class="pp">'+it.p+'</div></div></div>').join('')
+    +'<div style="margin-top:14px"><button class="btn btn-go" onclick="goTickets()">Начать с первого дня →</button></div>';
+  out.scrollIntoView({behavior:'smooth'});
+}
+
+/* ===================== PWA ===================== */
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;var b=document.getElementById('installBtn');if(b){b.style.display='inline-flex';b.onclick=async function(){b.style.display='none';try{deferredPrompt.prompt();}catch(_){}deferredPrompt=null;};}});
+
+/* ===================== НАВИГАЦИЯ (мобильное меню) ===================== */
+(function(){
+  const t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+  if(t&&l){t.addEventListener('click',()=>l.classList.toggle('open'));
+    l.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>l.classList.remove('open')));}
+})();
+
+/* ===================== РЕГИСТРАЦИЯ / ВХОД ===================== */
+state.user=store.get('zl_user')||null;
+/* ===================== ЛОКАЛЬНАЯ АВТОРИЗАЦИЯ (демо/standalone) =====================
+   Пользователи хранятся в браузере (localStorage: zl_users), сессия — zl_session.
+   Пароль не хранится в открытом виде — сохраняется простой хеш.
+   Это рабочая регистрация для версии без сервера. Для продакшена с реальной
+   защитой данных подключите бэкенд (API_BASE) — код для этого уже есть выше. */
+function zlHash(s){let h=5381;for(let i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))>>>0;}return 'h'+h.toString(16);}
+function getUsers(){return store.get('zl_users')||{};}
+function normLogin(s){return (s||'').trim().toLowerCase();}
+function isEmail(s){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);}
+function isPhone(s){return /^\+?[0-9][0-9\-\s()]{9,}$/.test(s);}
+function applySession(){
+  const cur=store.get('zl_session');if(!cur){return;}
+  const users=getUsers();const u=users[cur];if(!u){store.set('zl_session',null);return;}
+  state.user={name:u.name||u.email||u.phone,email:u.email||'',phone:u.phone||''};
+  store.set('zl_user',state.user);
+  state.tier=u.tier||'free';state.paid=(state.tier!=='free');save();
+}
+state.user=store.get('zl_user')||null;
+const regModal=document.getElementById('regModal');
+let regLoginMode=false;
+function setRegMode(login){
+  regLoginMode=login;
+  document.getElementById('regTitle').textContent=login?'Вход':'Регистрация';
+  document.getElementById('regSub').textContent=login?'Войдите в свой аккаунт.':'Быстрая регистрация — нужны только контакт и пароль.';
+  document.getElementById('regSubmit').textContent=login?'Войти':'Зарегистрироваться';
+  const fn=document.getElementById('fName');if(fn)fn.style.display=login?'none':'';
+  const sw=document.getElementById('regSwitch');
+  sw.style.display='';
+  sw.textContent=login?'Нет аккаунта? Зарегистрироваться':'Уже регистрировались? Войти';
+}
+function openReg(){setRegMode(false);regModal.classList.add('show');setTimeout(()=>{const n=document.getElementById('rEmail');if(n)n.focus();},50);}
+function closeReg(){regModal.classList.remove('show');}
+function applyUser(){
+  const b=document.getElementById('regBtn');if(!b)return;
+  const u=state.user, c=u&&(u.name||u.email);
+  b.textContent=c?('👤 '+(c.indexOf('@')>0?c.split('@')[0]:c)):(serverMode()?'Войти':'Регистрация');
+  const lo=document.getElementById('logoutBtn');if(lo)lo.style.display=c?'':'none';
+}
+function logout(){
+  store.set('zl_token',null);store.set('zl_user',null);store.set('zl_session',null);
+  state.user=null;
+  /* при выходе доступ возвращается к бесплатному (тариф привязан к аккаунту) */
+  state.tier='free';state.paid=false;save();
+  applyUser();applyAccess();
+}
+document.getElementById('logoutBtn').addEventListener('click',logout);
+document.getElementById('regBtn').addEventListener('click',openReg);
+document.getElementById('regClose').addEventListener('click',closeReg);
+document.getElementById('regSwitch').addEventListener('click',()=>setRegMode(!regLoginMode));
+regModal.addEventListener('click',e=>{if(e.target===regModal)closeReg();});
+document.getElementById('regSubmit').addEventListener('click',async function(){
+  const login=document.getElementById('rEmail').value.trim();
+  const pass=document.getElementById('rPass').value;
+  if(serverMode()){
+    let bad=false;
+    document.getElementById('fEmail').classList.toggle('bad',!login);if(!login)bad=true;
+    document.getElementById('fPass').classList.toggle('bad',pass.length<6);if(pass.length<6)bad=true;
+    if(bad)return;
+    const btn=document.getElementById('regSubmit');btn.disabled=true;
+    try{
+      const d=regLoginMode?await api('/api/login',{method:'POST',body:{login,password:pass}})
+                          :await api('/api/register',{method:'POST',body:{login,password:pass}});
+      store.set('zl_token',d.token);
+      state.user={name:d.user.name,email:d.user.email};state.paid=!!d.user.paid;
+      store.set('zl_user',state.user);store.set('zl_paid',state.paid);
+      if(!regLoginMode&&window.ymGoal)ymGoal('registration');
+      applyUser();applyAccess();closeReg();
+      alert(regLoginMode?'С возвращением!':'Готово! Вы зарегистрированы.');
+    }catch(e){alert(e.message||'Ошибка');}
+    finally{btn.disabled=false;}
+    return;
+  }
+  /* демо/standalone-режим: реальная регистрация и вход в браузере */
+  const fE=document.getElementById('fEmail'),fP=document.getElementById('fPass');
+  const validContact=isEmail(login)||isPhone(login);
+  fE.classList.toggle('bad',!validContact);
+  fP.classList.toggle('bad',pass.length<6);
+  if(!validContact){fE.querySelector('.err').textContent='Введите корректный e-mail или телефон';return;}
+  if(pass.length<6)return;
+  const key=normLogin(login);
+  const users=getUsers();
+  if(regLoginMode){
+    /* ВХОД */
+    const u=users[key];
+    if(!u){fE.classList.add('bad');fE.querySelector('.err').textContent='Аккаунт не найден — зарегистрируйтесь';return;}
+    if(u.passHash!==zlHash(pass)){fP.classList.add('bad');fP.querySelector('.err').textContent='Неверный пароль';return;}
+    store.set('zl_session',key);
+    state.user={name:u.name||u.email||u.phone,email:u.email||'',phone:u.phone||''};
+    store.set('zl_user',state.user);
+    state.tier=u.tier||'free';state.paid=(state.tier!=='free');save();
+    applyUser();applyAccess();closeReg();
+    alert('С возвращением, '+(state.user.name||'')+'!');
+  }else{
+    /* РЕГИСТРАЦИЯ */
+    if(users[key]){fE.classList.add('bad');fE.querySelector('.err').textContent='Такой аккаунт уже есть — войдите';return;}
+    const name=document.getElementById('rName').value.trim();
+    const carry=(state.tier&&state.tier!=='free')?state.tier:'free';
+    const rec={
+      name:name||(isEmail(login)?login.split('@')[0]:login),
+      email:isEmail(login)?login.trim():'',
+      phone:isPhone(login)?login.trim():'',
+      passHash:zlHash(pass),
+      tier:carry,
+      date:new Date().toISOString()
+    };
+    users[key]=rec;store.set('zl_users',users);store.set('zl_session',key);
+    state.user={name:rec.name,email:rec.email,phone:rec.phone};
+    store.set('zl_user',state.user);
+    state.tier=carry;state.paid=(carry!=='free');save();
+    if(window.ymGoal)ymGoal('registration');
+    applyUser();applyAccess();closeReg();
+    alert('Готово! Аккаунт создан. Добро пожаловать, '+rec.name+'!');
+  }
+  document.getElementById('rPass').value='';
+});
+
+/* ===================== СПРАВОЧНИК ===================== */
+let REF={signs:null,markup:null,penalties:null},refTab='signs',refQuery='',refCat='all',refLimit=48;
+const refContent=document.getElementById('refContent');
+const refModal=document.getElementById('refModal');
+async function loadReference(){
+  async function get(f){try{const r=await fetch(f,{cache:'no-store'});if(!r.ok)return null;return await r.json();}catch(e){return null;}}
+  REF.signs=await get('signs.json');REF.markup=await get('markup.json');REF.penalties=await get('penalties.json');
+}
+document.querySelectorAll('.ref-tabs .mode-btn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.ref-tabs .mode-btn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');refTab=b.dataset.ref;refQuery='';refCat='all';refLimit=48;renderRef();
+}));
+function imgTag(src){return src?'<img src="'+src+'" onerror="this.style.display=\'none\'" alt="">':'';}
+function wireRefSearch(){
+  const s=document.getElementById('refSearch');if(!s)return;
+  s.addEventListener('input',e=>{refQuery=e.target.value;refLimit=48;renderRef();const ns=document.getElementById('refSearch');if(ns){ns.focus();const v=ns.value;ns.value='';ns.value=v;}});
+}
+function renderRef(){if(refTab==='signs')renderRefSigns();else if(refTab==='markup')renderRefMarkup();else renderRefPenalties();}
+function refCap(total){return isPaid()?total:freeCount(total);}
+function refUpsell(total,cap){return (!isPaid()&&cap<total)?'<div class="ref-upsell">🔒 В бесплатном доступе открыто <b>'+cap+' из '+total+'</b>. Полный справочник — все знаки, разметка и штрафы — входит в платный доступ.<br><button class="btn btn-go" onclick="go(\'pricing\')" style="margin-top:12px">Открыть полный справочник →</button></div>':'';}
+function renderRefSigns(){
+  if(!REF.signs){refContent.innerHTML='<div class="ref-empty">Справочник знаков подгрузится на сайте (нужны файл signs.json и папка images рядом с index.html).</div>';return;}
+  const cats=Object.keys(REF.signs);
+  const catChips='<button class="chip'+(refCat==='all'?' on':'')+'" data-c="all">Все</button>'+cats.map(c=>'<button class="chip'+(refCat===c?' on':'')+'" data-c="'+c+'">'+c+'</button>').join('');
+  let items=[];cats.forEach(c=>{if(refCat==='all'||refCat===c)Object.values(REF.signs[c]).forEach(s=>items.push(s));});
+  if(refQuery){const q=refQuery.toLowerCase();items=items.filter(s=>(s.title||'').toLowerCase().includes(q)||(s.number||'').includes(q));}
+  const total=items.length, cap=refCap(total), lim=Math.min(refLimit,cap), shown=items.slice(0,lim);
+  const grid=shown.map((s,i)=>'<div class="ref-card" data-i="'+i+'">'+imgTag(s.image)+'<div class="rn">'+s.number+'</div><div class="rt">'+s.title+'</div></div>').join('');
+  const more=lim<cap?'<div style="text-align:center;margin-top:18px"><button class="btn btn-ghost" id="refMore">Показать ещё ('+(cap-lim)+')</button></div>':'';
+  const note=total?'<div style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Показано '+shown.length+' из '+total+'</div>':'';
+  refContent.innerHTML='<input class="ref-search" id="refSearch" placeholder="Поиск знака по названию или номеру…" value="'+refQuery.replace(/"/g,'&quot;')+'"><div class="ref-cats" id="refCats">'+catChips+'</div>'+note+'<div class="ref-grid">'+(grid||'<div class="ref-empty">Ничего не найдено.</div>')+'</div>'+more+refUpsell(total,cap);
+  wireRefSearch();
+  refContent.querySelectorAll('#refCats .chip').forEach(ch=>ch.addEventListener('click',()=>{refCat=ch.dataset.c;refLimit=48;renderRefSigns();}));
+  refContent.querySelectorAll('.ref-card').forEach(card=>card.addEventListener('click',()=>{const s=shown[+card.dataset.i];openRef(s.number+' · '+s.title,s.image,s.description||'Описание отсутствует.');}));
+  const mb=document.getElementById('refMore');if(mb)mb.addEventListener('click',()=>{refLimit+=48;renderRefSigns();});
+}
+function renderRefMarkup(){
+  if(!REF.markup){refContent.innerHTML='<div class="ref-empty">Справочник разметки подгрузится на сайте (нужны файл markup.json и папка images).</div>';return;}
+  let items=[];Object.keys(REF.markup).forEach(c=>Object.values(REF.markup[c]).forEach(s=>items.push(Object.assign({cat:c},s))));
+  if(refQuery){const q=refQuery.toLowerCase();items=items.filter(s=>(s.number||'').includes(q)||(s.description||'').toLowerCase().includes(q));}
+  const total=items.length, cap=refCap(total), lim=Math.min(refLimit,cap), shown=items.slice(0,lim);
+  const grid=shown.map((s,i)=>'<div class="ref-card" data-i="'+i+'">'+imgTag(s.image)+'<div class="rn">'+s.number+'</div><div class="rt">'+s.cat.replace(' разметка','')+'</div></div>').join('');
+  const more=lim<cap?'<div style="text-align:center;margin-top:18px"><button class="btn btn-ghost" id="refMore">Показать ещё ('+(cap-lim)+')</button></div>':'';
+  refContent.innerHTML='<input class="ref-search" id="refSearch" placeholder="Поиск разметки по номеру…" value="'+refQuery.replace(/"/g,'&quot;')+'"><div class="ref-grid">'+(grid||'<div class="ref-empty">Ничего не найдено.</div>')+'</div>'+more+refUpsell(total,cap);
+  wireRefSearch();
+  refContent.querySelectorAll('.ref-card').forEach(card=>card.addEventListener('click',()=>{const s=shown[+card.dataset.i];openRef('Разметка '+s.number,s.image,s.description||'');}));
+  const mb=document.getElementById('refMore');if(mb)mb.addEventListener('click',()=>{refLimit+=48;renderRefMarkup();});
+}
+function renderRefPenalties(){
+  if(!REF.penalties){refContent.innerHTML='<div class="ref-empty">Справочник штрафов подгрузится на сайте (нужен файл penalties.json).</div>';return;}
+  let items=REF.penalties;
+  if(refQuery){const q=refQuery.toLowerCase();items=items.filter(p=>(p.text||'').toLowerCase().includes(q)||(p.article_part||'').toLowerCase().includes(q));}
+  const total=items.length, cap=refCap(total), lim=Math.min(refLimit,cap), shown=items.slice(0,lim);
+  const rows=shown.map(p=>'<div class="ref-row"><div class="ra">'+(p.article_part||'')+'</div><div class="rx">'+(p.text||'')+'</div><div class="rp">'+(p.penalty||'')+'</div></div>').join('');
+  const more=lim<cap?'<div style="text-align:center;margin-top:18px"><button class="btn btn-ghost" id="refMore">Показать ещё ('+(cap-lim)+')</button></div>':'';
+  const note=total?'<div style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Показано '+shown.length+' из '+total+'</div>':'';
+  refContent.innerHTML='<input class="ref-search" id="refSearch" placeholder="Поиск по статье или нарушению…" value="'+refQuery.replace(/"/g,'&quot;')+'">'+note+'<div class="ref-list">'+(rows||'<div class="ref-empty">Ничего не найдено.</div>')+'</div>'+more+refUpsell(total,cap);
+  wireRefSearch();
+  const mb=document.getElementById('refMore');if(mb)mb.addEventListener('click',()=>{refLimit+=48;renderRefPenalties();});
+}
+function openRef(title,img,desc){
+  document.getElementById('refTitle').textContent=title;
+  const im=document.getElementById('refImg');
+  if(img){im.src=img;im.style.display='block';im.onerror=function(){im.style.display='none';};}else{im.style.display='none';}
+  document.getElementById('refDesc').textContent=desc;refModal.classList.add('show');
+}
+document.getElementById('refClose').addEventListener('click',()=>refModal.classList.remove('show'));
+refModal.addEventListener('click',e=>{if(e.target===refModal)refModal.classList.remove('show');});
+
+/* ===================== ЗАГРУЗКА ПОЛНОГО БАНКА ВОПРОСОВ ===================== */
+/* Сайт подгружает вопросы из questions.json. Чтобы добавить полную базу —
+   просто отредактируйте questions.json (формат: массив объектов
+   {tp, q, o:[...], c, e, img?}). При открытии через file:// загрузка не сработает,
+   и используются встроенные вопросы — это нормально, на хостинге всё подхватится. */
+async function loadQuestions(){
+  try{
+    const r=await fetch('questions.json',{cache:'no-store'});
+    if(!r.ok)return;
+    const data=await r.json();
+    const arr=Array.isArray(data)?data:(data&&Array.isArray(data.questions)?data.questions:null);
+    if(arr&&arr.length){QUESTIONS.length=0;arr.forEach(q=>QUESTIONS.push(q));}
+    if(data&&Array.isArray(data.topics)&&data.topics.length){QTOPICS.length=0;data.topics.forEach(t=>QTOPICS.push(t));}
+  }catch(e){/* нет файла или file:// — работаем на встроенных вопросах */}
+}
+
+/* ===================== ПРАКТИКА ГИБДД (тариф «Полный курс») ===================== */
+const PRACTICE_CSS=`
+<style>
+.dg-lock{background:linear-gradient(160deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:18px;padding:40px 34px;text-align:center;max-width:640px;margin:0 auto}
+.dg-lock .ic{width:64px;height:64px;margin:0 auto 14px;border-radius:16px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:30px}
+.dg-lock h3{font-family:'Oswald';font-size:25px;margin:0 0 10px}
+.dg-lock p{color:var(--muted);margin:0 auto 20px;max-width:480px;line-height:1.55}
+.dg-lock ul{list-style:none;padding:0;margin:0 auto 24px;max-width:430px;text-align:left;display:flex;flex-direction:column;gap:9px}
+.dg-lock li{padding:0 0 0 28px;position:relative;color:var(--ink);font-size:14.5px;line-height:1.5}
+.dg-lock li:before{content:"✓";position:absolute;left:0;top:0;color:var(--go);font-weight:700}
+
+.dg-wrap{display:flex;flex-direction:column;gap:20px}
+.dg-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 28px}
+.dg-h{display:flex;align-items:flex-start;gap:15px;margin-bottom:18px}
+.dg-ic{flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:23px}
+.dg-h .tt{font-family:'Oswald';font-size:21px;line-height:1.15;margin:4px 0 0;text-transform:uppercase;letter-spacing:.02em}
+.dg-h .sb{color:var(--muted);font-size:14px;margin:7px 0 0;line-height:1.55;max-width:760px}
+.dg-card.red .dg-ic{border-color:rgba(255,77,79,.45);color:var(--stop)}
+.dg-card.gold .dg-ic{border-color:rgba(244,196,48,.5)}
+
+.dg-ul{list-style:none;margin:0;padding:0}
+.dg-ul li{position:relative;padding:11px 0 11px 26px;font-size:14.5px;line-height:1.55;border-top:1px solid var(--line)}
+.dg-ul li:first-child{border-top:0;padding-top:2px}
+.dg-ul li:before{content:"";position:absolute;left:6px;top:19px;width:7px;height:7px;border-radius:2px;background:var(--lane);transform:rotate(45deg)}
+.dg-ul li:first-child:before{top:10px}
+.dg-ul li b{color:var(--ink)}
+
+.dg-score{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.dg-pill{background:var(--surface-2);border:1px solid var(--line);border-radius:13px;padding:17px 18px}
+.dg-pill .pts{font-family:'Oswald';font-weight:700;font-size:32px;line-height:1}
+.dg-pill.g .pts{color:var(--stop)}.dg-pill.m .pts{color:var(--lane)}.dg-pill.s .pts{color:var(--info)}.dg-pill.x .pts{color:var(--ink)}
+.dg-pill .lbl{font-size:12.5px;color:var(--muted);margin-top:7px;line-height:1.45}
+.dg-note{background:var(--surface-2);border-left:3px solid var(--lane);border-radius:8px;padding:14px 16px;font-size:14px;color:var(--ink);margin-top:16px;line-height:1.55}
+
+.dg-fails{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dg-fail{display:flex;gap:13px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.55}
+.dg-fail .x{flex:0 0 auto;width:23px;height:23px;border-radius:7px;background:rgba(255,77,79,.13);color:var(--stop);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-top:1px}
+.dg-fail b{color:var(--ink)}
+
+.dg-steps{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.dg-sc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+.dg-sc .sh{display:flex;align-items:center;gap:11px;font-family:'Oswald';font-size:17px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:16px}
+.dg-sc .sh .e{font-size:21px}
+.dg-sl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:13px}
+.dg-sl li{display:flex;gap:13px;font-size:14px;line-height:1.55}
+.dg-sl .n{flex:0 0 auto;width:25px;height:25px;border-radius:8px;background:var(--lane);color:var(--asphalt);font-family:'Oswald';font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.dg-sl .t b{color:var(--ink)}
+
+.dg-tips{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dg-tip{display:flex;gap:12px;font-size:14px;line-height:1.55;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.dg-tip .s{flex:0 0 auto;color:var(--lane);font-size:15px;margin-top:1px}
+.dg-tip b{color:var(--ink)}
+
+@media(max-width:820px){
+  .dg-score{grid-template-columns:1fr 1fr}
+  .dg-fails,.dg-steps,.dg-tips{grid-template-columns:1fr}
+  .dg-card{padding:22px 20px}
+}
+</style>`;
+const DG_FAILS=[
+ "<b>Не уступил пешеходу</b> на нерегулируемом переходе — самая частая грубая ошибка. Снижай скорость заранее у каждой «зебры».",
+ "<b>Выезд на встречную</b> или пересечение сплошной линии разметки.",
+ "<b>Проезд на запрещающий сигнал</b> светофора или жест регулировщика.",
+ "<b>Не уступил дорогу</b> там, где обязан: перекрёсток, помеха справа, перестроение.",
+ "<b>Превышение скорости</b> или, наоборот, помехи слишком медленной ездой без причины.",
+ "<b>Не пристегнулся</b> / телефон в руках / не включил нужный поворотник.",
+ "<b>Сбил конус, наехал на бордюр</b> или пересёк границу при манёврах.",
+ "<b>Вмешательство экзаменатора</b> (взялся за руль или педали) — мгновенный «не сдал»."
+];
+const DG_START=[
+ "Сел в авто — <b>пристегнись</b>, отрегулируй зеркала и сиденье ещё до старта.",
+ "Перед началом движения включи <b>левый поворотник</b>, проверь зеркала и слепую зону.",
+ "Плавно тронься — без рывка и без заглохшего двигателя.",
+ "Проговаривай действия вслух: экзаменатор видит, что ты контролируешь обстановку."
+];
+const DG_ESTAKADA=[
+ "Подъехав к подъёму, остановись перед линией «Стоп».",
+ "Зафиксируй авто — ручником или удержанием сцеплением и тормозом.",
+ "Трогайся в горку <b>без отката назад больше 30 см</b> — это типичный провал.",
+ "На механике: добавь газ, плавно отпусти сцепление до схватывания, затем сними с ручника."
+];
+const DG_PARK=[
+ "Параллельная: поравняйся с ориентиром, сдай назад с выворотом руля, выровняйся в «карман».",
+ "Перпендикулярная (в бокс задним ходом): рассчитай траекторию заранее, крути руль вовремя.",
+ "<b>Не задень конусы и не пересеки линии</b> — это штрафные баллы.",
+ "Лучше медленно и точно, чем быстро и мимо: время на элемент есть."
+];
+const DG_TURNS=[
+ "Перед каждым поворотом и разворотом <b>заранее включи поворотник</b> и займи нужную полосу.",
+ "Поворот налево и разворот: пропусти встречных и пешеходов, не «режь» встречную.",
+ "Поворот направо: держись правее, не выноси корпус на соседнюю полосу.",
+ "На перекрёстке следи за знаками приоритета и сигналами — здесь чаще всего «не уступают»."
+];
+const DG_TIPS=[
+ "Проговаривай свои действия — помогает и тебе, и показывает контроль экзаменатору.",
+ "Проверяй зеркала <b>перед каждым манёвром</b>, а не после него.",
+ "Снижай скорость у любого пешеходного перехода — всегда, на автомате.",
+ "Держи безопасную дистанцию и боковой интервал.",
+ "Медленно, но правильно: спешка приносит грубые ошибки.",
+ "Заранее узнай типовые маршруты своего ГИБДД и проедь их с инструктором."
+];
+function dgUl(arr){return '<ul class="dg-ul">'+arr.map(x=>'<li>'+x+'</li>').join('')+'</ul>';}
+function dgFails(arr){return '<div class="dg-fails">'+arr.map(x=>'<div class="dg-fail"><span class="x">✕</span><span>'+x+'</span></div>').join('')+'</div>';}
+function dgTips(arr){return '<div class="dg-tips">'+arr.map(x=>'<div class="dg-tip"><span class="s">★</span><span>'+x+'</span></div>').join('')+'</div>';}
+function dgStepCard(emoji,title,arr){
+  return '<div class="dg-sc"><div class="sh"><span class="e">'+emoji+'</span>'+title+'</div>'
+    +'<ol class="dg-sl">'+arr.map((x,i)=>'<li><span class="n">'+(i+1)+'</span><span class="t">'+x+'</span></li>').join('')+'</ol></div>';
+}
+function renderPractice(){
+  const el=document.getElementById('drivingContent');if(!el)return;
+  if(!isFull()){
+    el.innerHTML=PRACTICE_CSS+`<div class="dg-lock">
+      <div class="ic">🔒</div>
+      <h3>Раздел входит в тариф «Полный курс»</h3>
+      <p>Практический гид готовит именно к экзамену в ГИБДД — тому, на чём срезается большинство. Внутри:</p>
+      <ul>
+        <li>Формат экзамена и все обязательные манёвры</li>
+        <li>Система штрафных баллов — за что и сколько</li>
+        <li>Главные ошибки, на которых чаще всего заваливают</li>
+        <li>Пошаговые чек-листы: старт, эстакада, парковка, повороты</li>
+        <li>Фишки, которые ценят экзаменаторы</li>
+      </ul>
+      <button class="btn btn-go" onclick="go('pricing')">Открыть в тарифе «Полный курс» → 990 ₽</button>
+    </div>`;
+    return;
+  }
+  el.innerHTML=PRACTICE_CSS+`
+    <div class="dg-wrap">
+      <div class="dg-card">
+        <div class="dg-h"><div class="dg-ic">🚗</div><div><div class="tt">Как устроен экзамен</div>
+          <div class="sb">С 2021 года площадка и город объединены: экзамен сдают единым маршрутом по дорогам общего пользования, а отдельные элементы — старт в горку, парковку, развороты — инспектор просит выполнить по ходу движения.</div></div></div>
+        ${dgUl([
+          "Длительность — около 30 минут реального движения в потоке.",
+          "Маршрут заранее не объявляют, но он проходит по типовым улицам района ГИБДД.",
+          "Рядом — экзаменатор; в салоне могут быть и другие кандидаты.",
+          "Оценка: «сдал» или «не сдал» — по сумме штрафных баллов."
+        ])}
+      </div>
+
+      <div class="dg-card gold">
+        <div class="dg-h"><div class="dg-ic">⚖️</div><div><div class="tt">Штрафные баллы</div>
+          <div class="sb">Экзамен прекращается, как только набрано <b>5 штрафных баллов</b>. Ошибки делятся на три уровня.</div></div></div>
+        <div class="dg-score">
+          <div class="dg-pill g"><div class="pts">5</div><div class="lbl">Грубая ошибка — сразу «не сдал»</div></div>
+          <div class="dg-pill m"><div class="pts">3</div><div class="lbl">Средняя ошибка</div></div>
+          <div class="dg-pill s"><div class="pts">1</div><div class="lbl">Мелкая ошибка</div></div>
+          <div class="dg-pill x"><div class="pts">5+</div><div class="lbl">Сумма баллов = прекращение</div></div>
+        </div>
+        <div class="dg-note">Две средние ошибки (3 + 3 = 6) или пять мелких — это уже провал. Поэтому важно не копить мелочи.</div>
+      </div>
+
+      <div class="dg-card red">
+        <div class="dg-h"><div class="dg-ic">❗</div><div><div class="tt">Где чаще всего заваливают</div>
+          <div class="sb">Грубые ошибки: каждая — сразу 5 баллов и конец экзамена. Держи их в голове постоянно.</div></div></div>
+        ${dgFails(DG_FAILS)}
+      </div>
+
+      <div class="dg-card">
+        <div class="dg-h"><div class="dg-ic">📋</div><div><div class="tt">Чек-листы по элементам</div>
+          <div class="sb">Пошагово по каждому обязательному манёвру — то, что инспектор проверяет на маршруте.</div></div></div>
+        <div class="dg-steps">
+          ${dgStepCard('🏁','Старт и начало движения',DG_START)}
+          ${dgStepCard('⛰️','Эстакада (старт в горку)',DG_ESTAKADA)}
+          ${dgStepCard('🅿️','Парковка',DG_PARK)}
+          ${dgStepCard('↩️','Повороты и перекрёстки',DG_TURNS)}
+        </div>
+      </div>
+
+      <div class="dg-card gold">
+        <div class="dg-h"><div class="dg-ic">⭐</div><div><div class="tt">Фишки, которые помогают сдать</div>
+          <div class="sb">Привычки, которые ценят экзаменаторы и которые экономят штрафные баллы.</div></div></div>
+        ${dgTips(DG_TIPS)}
+      </div>
+    </div>`;
+}
+
+/* ===================== ПАНЕЛЬ СТАТИСТИКИ (для владельца) ===================== */
+/* Код доступа к статистике. Поменяйте на свой. Открывается по адресу сайта с «#stats». */
+const ADMIN_CODE='67bhVGUHGF6red5NJHUiogh76FdsWKIKOMyu';
+function fmtDate(s){try{const d=new Date(s);return d.toLocaleDateString('ru-RU')+' '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch(e){return s||'';}}
+function statsData(){
+  const users=store.get('zl_users')||{};
+  const list=Object.keys(users).map(k=>users[k]);
+  const free=list.filter(u=>!u.tier||u.tier==='free').length;
+  const month=list.filter(u=>u.tier==='month').length;
+  const full=list.filter(u=>u.tier==='full').length;
+  const sales=store.get('zl_sales')||[];
+  const support=store.get('zl_support')||[];
+  const visits=store.get('zl_visits')||0;
+  const revenue=sales.reduce((s,x)=>s+(x.price||0),0);
+  return {list,free,month,full,sales,support,visits,revenue};
+}
+function renderStats(){
+  const d=statsData();const el=document.getElementById('statsBody');if(!el)return;
+  const usersRows=d.list.length?d.list.slice().reverse().map(u=>{
+    const tier=u.tier==='full'?'<span class="st-tag full">Полный</span>':u.tier==='month'?'<span class="st-tag month">Месяц</span>':'<span class="st-tag">Бесплатный</span>';
+    return `<tr><td>${(u.name||'—')}</td><td>${(u.email||u.phone||'—')}</td><td>${tier}</td><td>${fmtDate(u.date)}</td></tr>`;
+  }).join(''):'';
+  const supRows=d.support.length?d.support.slice().reverse().map(s=>(
+    `<tr><td>${fmtDate(s.time)}</td><td>${s.contact||'—'}</td><td>${s.type==='call'?'Вызов оператора':(s.message?('«'+s.message+'»'):'Сообщение')}</td></tr>`
+  )).join(''):'';
+  el.innerHTML=`
+    <div class="st-kpis">
+      <div class="st-kpi"><div class="v">${d.list.length}</div><div class="l">Регистраций</div></div>
+      <div class="st-kpi gold"><div class="v">${d.month+d.full}</div><div class="l">Платных доступов</div></div>
+      <div class="st-kpi go"><div class="v">${d.revenue.toLocaleString('ru-RU')} ₽</div><div class="l">Выручка (оценка)</div></div>
+      <div class="st-kpi info"><div class="v">${d.visits}</div><div class="l">Заходов на сайт</div></div>
+    </div>
+    <div class="st-kpis">
+      <div class="st-kpi"><div class="v">${d.free}</div><div class="l">На тарифе «Старт»</div></div>
+      <div class="st-kpi info"><div class="v">${d.month}</div><div class="l">Тариф «Месяц»</div></div>
+      <div class="st-kpi gold"><div class="v">${d.full}</div><div class="l">«Полный курс»</div></div>
+      <div class="st-kpi"><div class="v">${d.support.length}</div><div class="l">Обращений в поддержку</div></div>
+    </div>
+
+    <div class="st-sec">Регистрации</div>
+    ${d.list.length?`<div class="st-scroll"><table class="st-tbl"><thead><tr><th>Имя</th><th>Контакт</th><th>Тариф</th><th>Дата</th></tr></thead><tbody>${usersRows}</tbody></table></div>`:'<div class="st-empty">Пока нет регистраций.</div>'}
+
+    <div class="st-sec">Обращения в поддержку</div>
+    ${d.support.length?`<div class="st-scroll"><table class="st-tbl"><thead><tr><th>Дата</th><th>Контакт</th><th>Что</th></tr></thead><tbody>${supRows}</tbody></table></div>`:'<div class="st-empty">Обращений пока нет.</div>'}
+
+    <div class="st-actions">
+      <button class="btn btn-go" id="stExport">Скачать CSV (регистрации)</button>
+      <button class="btn btn-ghost" id="stRefresh">Обновить</button>
+    </div>
+    <div class="st-note">Здесь показаны данные, сохранённые <b>в этом браузере</b>. Чтобы видеть статистику со всех устройств и посетителей, подключите Яндекс.Метрику (вставьте номер счётчика в начале файла, переменная <b>YM_COUNTER_ID</b>) — отчёты будут на metrika.yandex.ru. Полная серверная статистика появится после подключения бэкенда.</div>
+  `;
+  const ex=document.getElementById('stExport');if(ex)ex.addEventListener('click',exportUsersCSV);
+  const rf=document.getElementById('stRefresh');if(rf)rf.addEventListener('click',renderStats);
+}
+function exportUsersCSV(){
+  const d=statsData();
+  let csv='Имя;Контакт;Тариф;Дата\n';
+  d.list.forEach(u=>{csv+=[(u.name||''),(u.email||u.phone||''),(u.tier||'free'),(u.date||'')].join(';')+'\n';});
+  try{
+    const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='zeleny-registrations.csv';document.body.appendChild(a);a.click();a.remove();
+  }catch(e){alert('Не удалось сформировать файл в этом окружении.');}
+}
+let statsAuthed=false;
+function openStats(){
+  if(!statsAuthed){
+    try{if(sessionStorage.getItem('zl_admin')==='1')statsAuthed=true;}catch(e){}
+  }
+  if(!statsAuthed){
+    const code=prompt('Введите код доступа к статистике:');
+    if(code===null)return;
+    if(code!==ADMIN_CODE){alert('Неверный код.');return;}
+    statsAuthed=true;try{sessionStorage.setItem('zl_admin','1');}catch(e){}
+  }
+  renderStats();
+  document.getElementById('statsModal').classList.add('show');
+}
+window.openStats=openStats;
+(function(){
+  const sm=document.getElementById('statsModal');
+  const cl=document.getElementById('statsClose');
+  if(cl)cl.addEventListener('click',()=>{sm.classList.remove('show');if(location.hash==='#stats')history.replaceState(null,'','#');});
+  if(sm)sm.addEventListener('click',e=>{if(e.target===sm){sm.classList.remove('show');if(location.hash==='#stats')history.replaceState(null,'','#');}});
+  function check(){if(location.hash==='#stats')openStats();}
+  window.addEventListener('hashchange',check);
+  check();
+})();
+
+/* старт */
+function pingVisit(){if(serverMode()){try{fetch(API_BASE+'/api/visit',{method:'POST'}).catch(function(){});}catch(e){}}}
+function countVisit(){try{store.set('zl_visits',(store.get('zl_visits')||0)+1);}catch(e){}}
+(async function(){await loadQuestions();await loadReference();await refreshMe();if(!serverMode())applySession();countVisit();pingVisit();applyAccess();renderAch();renderFaq();applyUser();renderRef();renderPractice();})();
+</script>
+
+<!-- ====== ЖИВОЙ ЧАТ ====== -->
+<style>
+.lc-btn{position:fixed;right:20px;bottom:20px;z-index:200;width:58px;height:58px;border-radius:50%;background:var(--go);border:none;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;transition:.15s}
+.lc-btn:hover{transform:translateY(-2px)}.lc-btn svg{width:26px;height:26px}
+.lc-badge{position:absolute;top:0;right:0;width:13px;height:13px;border-radius:50%;background:var(--stop);border:2px solid var(--asphalt)}
+.lc-panel{position:fixed;right:20px;bottom:88px;z-index:200;width:360px;max-width:calc(100vw - 40px);background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 16px 48px rgba(0,0,0,.55)}
+.lc-panel.show{display:flex}
+.lc-head{background:var(--surface-2);padding:12px 14px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--line)}
+.lc-head .av{flex:0 0 auto;width:38px;height:38px;border-radius:11px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:19px}
+.lc-head .hd{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.lc-head .ttl{font-family:'Oswald';text-transform:uppercase;letter-spacing:.03em;font-size:15px}
+.lc-head .st{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.lc-head .st .dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--go);box-shadow:0 0 7px var(--go)}
+.lc-head .st.live .dot{background:var(--lane);box-shadow:0 0 7px var(--lane);animation:lcp 1.2s infinite}
+@keyframes lcp{50%{opacity:.35}}
+.lc-head .x{cursor:pointer;color:var(--muted);font-size:23px;line-height:1;margin-left:auto;background:none;border:none}
+.lc-body{height:344px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.lc-msg{max-width:84%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.5}
+.lc-msg.op{background:var(--surface-2);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px;color:#e7eaee}
+.lc-msg.op b{color:#fff}
+.lc-msg.me{background:var(--go);color:#08130d;align-self:flex-end;border-bottom-right-radius:4px}
+.lc-chips{display:flex;flex-wrap:wrap;gap:7px;align-self:flex-start;max-width:100%}
+.lc-chip{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:16px;padding:8px 13px;font-size:13px;cursor:pointer;font-family:inherit;line-height:1.3;transition:.12s;text-align:left}
+.lc-chip:hover{border-color:var(--go);color:var(--go)}
+.lc-chip.call{border-color:var(--go);background:rgba(38,194,129,.10);color:var(--go);font-weight:600}
+.lc-typing{align-self:flex-start;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;border-bottom-left-radius:4px;padding:12px 14px;display:flex;gap:4px}
+.lc-typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:lcb 1s infinite}
+.lc-typing i:nth-child(2){animation-delay:.15s}.lc-typing i:nth-child(3){animation-delay:.3s}
+@keyframes lcb{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.lc-note{align-self:center;font-size:11.5px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:20px;padding:4px 12px;text-align:center}
+.lc-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.lc-foot input{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font-family:inherit;font-size:14px;outline:none}
+.lc-foot input:focus{border-color:var(--go)}
+.lc-foot button{background:var(--go);border:none;border-radius:10px;width:42px;cursor:pointer;color:#08130d;font-size:18px}
+</style>
+<button class="lc-btn" id="lcBtn" aria-label="Открыть чат"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h16v11.5H8.5L4 19.5V4z" fill="#08130d"/></svg><span class="lc-badge"></span></button>
+<div class="lc-panel" id="lcPanel">
+  <div class="lc-head">
+    <span class="av">🛟</span>
+    <div class="hd"><span class="ttl">Поддержка «Зелёный»</span><span class="st" id="lcStatus"><span class="dot"></span>обычно отвечаем за пару минут</span></div>
+    <button class="x" id="lcX" aria-label="Закрыть">×</button>
+  </div>
+  <div class="lc-body" id="lcBody"></div>
+  <div class="lc-foot"><input id="lcInput" placeholder="Напишите сообщение..."><button id="lcSend" aria-label="Отправить">→</button></div>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('lcBtn'),panel=document.getElementById('lcPanel'),
+      body=document.getElementById('lcBody'),input=document.getElementById('lcInput'),
+      statusEl=document.getElementById('lcStatus');
+  var inited=false, supportCalled=false;
+
+  var FAQ=[
+    {q:"Сколько стоит?",a:"Три варианта: <b>Старт</b> — бесплатно (3 темы и часть вопросов), <b>Месяц</b> — 499 ₽ (полный доступ на 30 дней) и <b>Полный курс</b> — 990 ₽ (доступ навсегда + раздел «Практика ГИБДД»). Все тарифы — в разделе «Тарифы»."},
+    {q:"Что входит в «Полный курс»?",a:"Все 10 тем теории, полный банк вопросов, симулятор экзамена, разбор ошибок с ИИ и раздел <b>«Практика ГИБДД»</b> — где заваливают и как сдать. Плюс доступ навсегда и все будущие обновления."},
+    {q:"Доступ правда навсегда?",a:"Да. В тарифе <b>«Полный курс»</b> (990 ₽) доступ остаётся навсегда — без продлений и доплат. В тарифе «Месяц» доступ открыт на 30 дней."},
+    {q:"Как войти / восстановить доступ?",a:"Нажмите «Войти» вверху страницы и введите e-mail или телефон и пароль, которые указывали при регистрации. Доступ и оплата привязаны к вашему аккаунту."},
+    {q:"Билеты актуальные?",a:"Да, вопросы соответствуют актуальным билетам категории B. Для тарифа «Полный курс» все обновления — бесплатно."},
+    {q:"Экзамен скоро, как готовиться?",a:"Соберите персональный план в разделе «План» — он подстроится под ваш срок. Параллельно решайте билеты в «Тренажёре» и разбирайте ошибки в режиме «Мои ошибки»."},
+    {q:"Вопрос про оплату или возврат",a:"Это лучше решить с живым специалистом. Нажмите «Вызвать специалиста» ниже — оператор подключится и поможет."}
+  ];
+
+  function scroll(){body.scrollTop=body.scrollHeight;}
+  function add(t,w,html){var m=document.createElement('div');m.className='lc-msg '+w;if(html)m.innerHTML=t;else m.textContent=t;body.appendChild(m);scroll();return m;}
+  function note(t){var n=document.createElement('div');n.className='lc-note';n.textContent=t;body.appendChild(n);scroll();}
+  function setStatus(t,live){statusEl.className='st'+(live?' live':'');statusEl.innerHTML='<span class="dot"></span>'+t;}
+
+  function removeChips(){var c=body.querySelector('.lc-chips');if(c)c.remove();}
+  function showChips(){
+    removeChips();
+    var wrap=document.createElement('div');wrap.className='lc-chips';
+    FAQ.forEach(function(f){var b=document.createElement('button');b.className='lc-chip';b.textContent=f.q;b.addEventListener('click',function(){ask(f);});wrap.appendChild(b);});
+    var call=document.createElement('button');call.className='lc-chip call';call.textContent='🧑‍💼 Вызвать специалиста';call.addEventListener('click',callSupport);wrap.appendChild(call);
+    body.appendChild(wrap);scroll();
+  }
+  function typing(cb,delay){
+    removeChips();
+    var t=document.createElement('div');t.className='lc-typing';t.innerHTML='<i></i><i></i><i></i>';body.appendChild(t);scroll();
+    setTimeout(function(){t.remove();cb();},delay||800);
+  }
+  function ask(f){
+    removeChips();
+    add(f.q,'me');
+    typing(function(){add(f.a,'op',true);setTimeout(showChips,250);});
+  }
+
+  function userContact(){try{var u=JSON.parse(localStorage.getItem('zl_user')||'null');return u&&(u.email||u.phone||u.name)||'';}catch(e){return '';}}
+  function saveReq(extra){try{var a=JSON.parse(localStorage.getItem('zl_support')||'[]');a.push(Object.assign({time:new Date().toISOString(),contact:userContact()},extra||{}));localStorage.setItem('zl_support',JSON.stringify(a));}catch(e){}}
+
+  function callSupport(){
+    removeChips();
+    add('Вызвать специалиста','me');
+    typing(function(){
+      add('Передаю ваш запрос живому специалисту 🧑‍💼','op');
+      setStatus('оператор подключается…',true);
+      typing(function(){
+        add('Свободный специалист <b>скоро подойдёт</b> — обычно это занимает несколько минут. Можете пока описать вопрос здесь, оператор увидит всю переписку.','op',true);
+        var c=userContact();
+        saveReq({type:'call'});
+        note('Запрос отправлен'+(c?' · '+c:''));
+        if(!c)add('Оставьте, пожалуйста, e-mail или телефон — на случай, если связь прервётся.','op');
+        supportCalled=true;
+      },1100);
+    });
+  }
+
+  function send(){
+    var t=input.value.trim();if(!t)return;add(t,'me');input.value='';
+    if(supportCalled){typing(function(){add('Принято! Передал специалисту — он скоро ответит здесь.','op');saveReq({type:'message',message:t});},700);return;}
+    typing(function(){
+      add('Подскажу по частым вопросам — выберите тему ниже. Если нужен живой человек, нажмите «Вызвать специалиста».','op');
+      showChips();
+    });
+  }
+
+  function openChat(){
+    panel.classList.add('show');
+    if(!inited){inited=true;add('Привет! Это поддержка курса «Зелёный» 🚦 Чем помочь? Выберите вопрос или напишите свой.','op');showChips();}
+    input.focus();
+  }
+  btn.addEventListener('click',function(){panel.classList.contains('show')?panel.classList.remove('show'):openChat();});
+  document.getElementById('lcX').addEventListener('click',function(){panel.classList.remove('show');});
+  document.getElementById('lcSend').addEventListener('click',send);
+  input.addEventListener('keydown',function(e){if(e.key==='Enter')send();});
+})();
+</script>
+</body>
+</html>
