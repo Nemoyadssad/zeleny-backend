@@ -47,7 +47,7 @@ const REQUIRE_SUB = String(AI_REQUIRE_SUBSCRIPTION) === 'true';
 /* ---------- хранилище: простой JSON-файл ---------- */
 let DB = { users: [], metrics: {}, seq: 0 };
 try { if (fs.existsSync(DB_PATH)) DB = JSON.parse(fs.readFileSync(DB_PATH, 'utf8')); } catch (e) { console.error('Не удалось прочитать', DB_PATH, e.message); }
-DB.users = DB.users || []; DB.metrics = DB.metrics || {}; DB.seq = DB.seq || 0; DB.promos = DB.promos || []; DB.sales = DB.sales || [];
+DB.users = DB.users || []; DB.metrics = DB.metrics || {}; DB.seq = DB.seq || 0; DB.promos = DB.promos || []; DB.sales = DB.sales || []; DB.tickets = DB.tickets || [];
 let saveTimer = null;
 function save() { clearTimeout(saveTimer); saveTimer = setTimeout(() => { try { fs.writeFileSync(DB_PATH, JSON.stringify(DB)); } catch (e) { console.error('save error', e.message); } }, 50); }
 
@@ -217,6 +217,43 @@ app.post('/api/promo/redeem', authLimiter, auth, (req, res) => {
 });
 
 /* ---------- учёт посещения (сайт пингует при загрузке) ---------- */
+/* ---------- тикеты поддержки ---------- */
+const ticketLimiter = rateLimit({ windowMs: 60 * 1000, max: 5 });
+
+// создать тикет (с сайта, без авторизации)
+app.post('/api/support/ticket', ticketLimiter, (req, res) => {
+  const b = req.body || {};
+  const contact = String(b.contact || '').trim().slice(0, 200);   // e-mail или username
+  const message = String(b.message || '').trim().slice(0, 4000);
+  const topic   = String(b.topic || '').trim().slice(0, 100);
+  if (!contact || !message) return res.status(400).json({ error: 'Укажите контакт и сообщение' });
+  const id = 'T-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(Math.random() * 1000);
+  DB.tickets.push({ id, contact, topic: topic || 'Общий вопрос', message, status: 'new', created_at: new Date().toISOString() });
+  if (DB.tickets.length > 50000) DB.tickets = DB.tickets.slice(-50000);
+  save();
+  res.json({ ok: true, id });
+});
+
+// список тикетов (админ)
+app.get('/api/admin/tickets', (req, res) => {
+  if (!ADMIN_TOKEN || (req.headers['x-admin-token'] || req.query.token || '') !== ADMIN_TOKEN)
+    return res.status(403).json({ error: 'forbidden' });
+  res.json({ tickets: (DB.tickets || []).slice(-1000).reverse() });
+});
+
+// сменить статус / удалить тикет (админ)
+app.post('/api/admin/ticket/status', (req, res) => {
+  if (!ADMIN_TOKEN || (req.headers['x-admin-token'] || '') !== ADMIN_TOKEN)
+    return res.status(403).json({ error: 'forbidden' });
+  const { id, status } = req.body || {};
+  const t = (DB.tickets || []).find(x => x.id === id);
+  if (!t) return res.status(404).json({ error: 'not_found' });
+  if (status === 'deleted') { DB.tickets = DB.tickets.filter(x => x.id !== id); }
+  else { t.status = (status === 'done' ? 'done' : status === 'progress' ? 'progress' : 'new'); }
+  save();
+  res.json({ ok: true });
+});
+
 app.post('/api/visit', (req, res) => {
   const d = todayStr();
   DB.metrics[d] = (DB.metrics[d] || 0) + 1; save();
@@ -258,10 +295,11 @@ app.get('/api/stats', (req, res) => {
   const month_users = DB.users.filter(u => isActive(u) && u.plan === 'month').length;
   const full_users  = DB.users.filter(u => isActive(u) && u.plan === 'full').length;
   const revenue = (DB.sales || []).reduce((s, x) => s + (x.price || 0), 0);
+  const tickets_new = (DB.tickets || []).filter(t => t.status === 'new').length;
   res.json({
     total_users: DB.users.length,
     paid_users: DB.users.filter(u => isActive(u)).length,
-    month_users, full_users, revenue,
+    month_users, full_users, revenue, tickets_new,
     registrations_today: regToday,
     registrations_week: regWeek,
     visits_today: DB.metrics[td] || 0,
