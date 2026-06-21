@@ -47,7 +47,7 @@ const REQUIRE_SUB = String(AI_REQUIRE_SUBSCRIPTION) === 'true';
 /* ---------- хранилище: простой JSON-файл ---------- */
 let DB = { users: [], metrics: {}, seq: 0 };
 try { if (fs.existsSync(DB_PATH)) DB = JSON.parse(fs.readFileSync(DB_PATH, 'utf8')); } catch (e) { console.error('Не удалось прочитать', DB_PATH, e.message); }
-DB.users = DB.users || []; DB.metrics = DB.metrics || {}; DB.seq = DB.seq || 0; DB.promos = DB.promos || [];
+DB.users = DB.users || []; DB.metrics = DB.metrics || {}; DB.seq = DB.seq || 0; DB.promos = DB.promos || []; DB.sales = DB.sales || [];
 let saveTimer = null;
 function save() { clearTimeout(saveTimer); saveTimer = setTimeout(() => { try { fs.writeFileSync(DB_PATH, JSON.stringify(DB)); } catch (e) { console.error('save error', e.message); } }, 50); }
 
@@ -86,10 +86,15 @@ function isActive(u) {
   return true; // доступ навсегда
 }
 const publicUser = u => ({ name: u.name, email: u.email, paid: isActive(u), plan: u.plan, paid_until: u.paid_until });
-function grant(user, plan) {
+function grant(user, plan, source) {
   let until = null;
   if (plan === 'month') { const d = new Date(); d.setDate(d.getDate() + 30); until = d.toISOString(); }
-  user.paid = 1; user.plan = plan; user.paid_until = until; save();
+  user.paid = 1; user.plan = plan; user.paid_until = until;
+  // журнал выдачи доступа (для админ-панели)
+  const price = plan === 'month' ? 499 : plan === 'full' ? 990 : 0;
+  DB.sales.push({ email: user.email, plan, price, source: source || 'manual', time: new Date().toISOString() });
+  if (DB.sales.length > 100000) DB.sales = DB.sales.slice(-100000);
+  save();
 }
 
 /* ---------- регистрация (контакт = e-mail или телефон + пароль) ---------- */
@@ -139,7 +144,7 @@ app.post('/api/payment/webhook', (req, res) => {
   let data; try { data = JSON.parse(raw); } catch (e) { return res.status(400).json({ error: 'bad_json' }); }
   const u = getByEmail(data.email || data.login);
   if (!u) return res.status(404).json({ error: 'user_not_found' });
-  grant(u, data.plan || 'full');
+  grant(u, data.plan || 'full', 'payment');
   res.json({ ok: true });
 });
 
@@ -149,7 +154,7 @@ app.post('/api/admin/grant', (req, res) => {
     return res.status(403).json({ error: 'forbidden' });
   const u = getByEmail((req.body || {}).email || (req.body || {}).login);
   if (!u) return res.status(404).json({ error: 'user_not_found' });
-  grant(u, (req.body || {}).plan || 'full');
+  grant(u, (req.body || {}).plan || 'full', 'manual');
   res.json({ ok: true });
 });
 
@@ -197,7 +202,7 @@ app.post('/api/promo/redeem', authLimiter, auth, (req, res) => {
   if (promo.uses >= promo.max_uses) return res.status(410).json({ error: 'Промокод уже использован' });
   if (promo.used_by.includes(u.id)) return res.status(409).json({ error: 'Вы уже использовали этот промокод' });
   promo.uses++; promo.used_by.push(u.id);
-  grant(u, promo.plan);
+  grant(u, promo.plan, 'promo:' + key);
   res.json({ ok: true, plan: promo.plan, user: publicUser(u) });
 });
 
@@ -206,6 +211,26 @@ app.post('/api/visit', (req, res) => {
   const d = todayStr();
   DB.metrics[d] = (DB.metrics[d] || 0) + 1; save();
   res.json({ ok: true });
+});
+
+/* ---------- список всех пользователей (для админ-панели) ---------- */
+app.get('/api/admin/users', (req, res) => {
+  if (!ADMIN_TOKEN || (req.headers['x-admin-token'] || req.query.token || '') !== ADMIN_TOKEN)
+    return res.status(403).json({ error: 'forbidden' });
+  const users = DB.users.map(u => ({
+    id: u.id, name: u.name, email: u.email, phone: u.phone || '',
+    paid: isActive(u), plan: u.plan || null, paid_until: u.paid_until || null,
+    created_at: u.created_at
+  })).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  res.json({ users });
+});
+
+/* ---------- история выдачи доступа / оплат (для админ-панели) ---------- */
+app.get('/api/admin/sales', (req, res) => {
+  if (!ADMIN_TOKEN || (req.headers['x-admin-token'] || req.query.token || '') !== ADMIN_TOKEN)
+    return res.status(403).json({ error: 'forbidden' });
+  const sales = (DB.sales || []).slice(-500).reverse();
+  res.json({ sales });
 });
 
 /* ---------- статистика (ваш отчёт) ---------- */
@@ -220,9 +245,13 @@ app.get('/api/stats', (req, res) => {
     const v = DB.metrics[day]; visTotal += v;
     if (new Date(day).getTime() >= weekAgo) visWeek += v;
   }
+  const month_users = DB.users.filter(u => isActive(u) && u.plan === 'month').length;
+  const full_users  = DB.users.filter(u => isActive(u) && u.plan === 'full').length;
+  const revenue = (DB.sales || []).reduce((s, x) => s + (x.price || 0), 0);
   res.json({
     total_users: DB.users.length,
-    paid_users: DB.users.filter(u => u.paid).length,
+    paid_users: DB.users.filter(u => isActive(u)).length,
+    month_users, full_users, revenue,
     registrations_today: regToday,
     registrations_week: regWeek,
     visits_today: DB.metrics[td] || 0,
