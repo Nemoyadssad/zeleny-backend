@@ -158,6 +158,16 @@ app.post('/api/admin/grant', (req, res) => {
   res.json({ ok: true });
 });
 
+/* ---------- забрать доступ (вернуть на бесплатный) ---------- */
+app.post('/api/admin/revoke', (req, res) => {
+  if (!ADMIN_TOKEN || (req.headers['x-admin-token'] || '') !== ADMIN_TOKEN)
+    return res.status(403).json({ error: 'forbidden' });
+  const u = getByEmail((req.body || {}).email || (req.body || {}).login);
+  if (!u) return res.status(404).json({ error: 'user_not_found' });
+  u.paid = 0; u.plan = null; u.paid_until = null; save();
+  res.json({ ok: true });
+});
+
 /* ---------- промокоды ---------- */
 
 // Создать промокод (админ)
