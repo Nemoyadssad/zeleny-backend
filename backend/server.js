@@ -27,12 +27,20 @@ const {
   ALLOWED_ORIGIN = '*',
   DB_PATH = 'data.json',
   SERVE_STATIC = '',
+  // ---- платёжная система Platega ----
+  PLATEGA_MERCHANT_ID,                     // X-MerchantId из ЛК Platega
+  PLATEGA_SECRET,                          // X-Secret из ЛК Platega
+  PLATEGA_API = 'https://app.platega.io',  // базовый URL API
+  SITE_URL = 'https://greendrive.club',    // куда возвращать после оплаты
+  PRICE_MONTH = '499',                     // цена тарифа «Месяц», ₽
+  PRICE_FULL = '990',                      // цена тарифа «Полный курс», ₽
   // ---- настройки ИИ ----
   AI_PROVIDER = 'mistral',                 // mistral | groq | anthropic
   AI_API_KEY,                              // ключ выбранного провайдера
   AI_MODEL,                                // если пусто — берётся модель по умолчанию
   AI_REQUIRE_SUBSCRIPTION = ''             // 'true' => ИИ только для оплативших
 } = process.env;
+const PRICES = { month: parseInt(PRICE_MONTH, 10) || 499, full: parseInt(PRICE_FULL, 10) || 990 };
 
 if (!JWT_SECRET) { console.error('Ошибка: задайте JWT_SECRET в файле .env'); process.exit(1); }
 
@@ -47,7 +55,7 @@ const REQUIRE_SUB = String(AI_REQUIRE_SUBSCRIPTION) === 'true';
 /* ---------- хранилище: простой JSON-файл ---------- */
 let DB = { users: [], metrics: {}, seq: 0 };
 try { if (fs.existsSync(DB_PATH)) DB = JSON.parse(fs.readFileSync(DB_PATH, 'utf8')); } catch (e) { console.error('Не удалось прочитать', DB_PATH, e.message); }
-DB.users = DB.users || []; DB.metrics = DB.metrics || {}; DB.seq = DB.seq || 0; DB.promos = DB.promos || []; DB.sales = DB.sales || []; DB.tickets = DB.tickets || [];
+DB.users = DB.users || []; DB.metrics = DB.metrics || {}; DB.seq = DB.seq || 0; DB.promos = DB.promos || []; DB.sales = DB.sales || []; DB.tickets = DB.tickets || []; DB.pays = DB.pays || {};
 let saveTimer = null;
 function save() { clearTimeout(saveTimer); saveTimer = setTimeout(() => { try { fs.writeFileSync(DB_PATH, JSON.stringify(DB)); } catch (e) { console.error('save error', e.message); } }, 50); }
 
@@ -131,20 +139,88 @@ app.get('/api/me', auth, (req, res) => {
   res.json({ user: publicUser(u) });
 });
 
-/* ---------- вебхук оплаты (вызывает платёжная система) ----------
-   Подпись проверяется как HMAC-SHA256 от тела запроса.
-   Поля (email/login, plan) и заголовок подписи подстройте под вашего провайдера. */
+/* ---------- СОЗДАНИЕ ПЛАТЕЖА (Platega) ----------
+   Вызывается с сайта залогиненным пользователем. Создаёт транзакцию в Platega
+   и возвращает ссылку на оплату. В payload зашиваем наш внутренний id платежа,
+   по которому в колбэке откроем доступ нужному аккаунту. */
+app.post('/api/payment/create', aiLimiter, auth, async (req, res) => {
+  const u = getUser(req.userId);
+  if (!u) return res.status(404).json({ error: 'not_found' });
+  const plan = ((req.body || {}).plan === 'month') ? 'month' : 'full';
+  const amount = PRICES[plan];
+  if (!PLATEGA_MERCHANT_ID || !PLATEGA_SECRET) {
+    console.error('Platega: не заданы PLATEGA_MERCHANT_ID / PLATEGA_SECRET');
+    return res.status(500).json({ error: 'Оплата временно недоступна' });
+  }
+  // наш внутренний идентификатор платежа
+  const payId = 'P-' + crypto.randomBytes(9).toString('hex');
+  DB.pays[payId] = { payId, userId: u.id, email: u.email, plan, amount, status: 'pending', created_at: new Date().toISOString() };
+  save();
+
+  const body = {
+    paymentDetails: { amount, currency: 'RUB' },
+    description: plan === 'month' ? 'Доступ «Месяц» — курс ПДД «Зелёный»' : 'Доступ «Полный курс» — курс ПДД «Зелёный»',
+    return: SITE_URL + '/?paid=1',
+    failedUrl: SITE_URL + '/?paid=0',
+    payload: payId,                                  // вернётся в колбэке
+    metadata: { userId: String(u.id), userName: u.email || ('user' + u.id) }
+  };
+  try {
+    const r = await fetch(PLATEGA_API + '/v2/transaction/process', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'X-MerchantId': PLATEGA_MERCHANT_ID, 'X-Secret': PLATEGA_SECRET },
+      body: JSON.stringify(body)
+    });
+    const data = await r.json();
+    if (!r.ok || !data.url) {
+      console.error('Platega create error', r.status, JSON.stringify(data));
+      return res.status(502).json({ error: 'Не удалось создать платёж' });
+    }
+    DB.pays[payId].transactionId = data.transactionId;
+    save();
+    res.json({ url: data.url });                      // фронт перенаправит сюда
+  } catch (e) {
+    console.error('Platega create exception:', e.message);
+    res.status(502).json({ error: 'Платёжная система недоступна' });
+  }
+});
+
+/* ---------- КОЛБЭК ОБ ОПЛАТЕ (Platega) ----------
+   Platega шлёт заголовки X-MerchantId / X-Secret и JSON со статусом.
+   Доступ открываем по нашему payId из поля payload. */
 app.post('/api/payment/webhook', (req, res) => {
   const raw = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : JSON.stringify(req.body || {});
-  if (PAYMENT_WEBHOOK_SECRET) {
-    const sig = req.headers['x-signature'] || '';
-    const expected = crypto.createHmac('sha256', PAYMENT_WEBHOOK_SECRET).update(raw).digest('hex');
-    if (sig !== expected) return res.status(401).json({ error: 'bad_signature' });
+  // проверка подлинности: заголовки должны совпасть с нашими ключами Platega
+  const mid = req.headers['x-merchantid'] || req.headers['x-merchant-id'] || '';
+  const sec = req.headers['x-secret'] || '';
+  if (!PLATEGA_MERCHANT_ID || !PLATEGA_SECRET || mid !== PLATEGA_MERCHANT_ID || sec !== PLATEGA_SECRET) {
+    console.error('Platega callback: неверные ключи в заголовках');
+    return res.status(401).json({ error: 'bad_auth' });
   }
   let data; try { data = JSON.parse(raw); } catch (e) { return res.status(400).json({ error: 'bad_json' }); }
-  const u = getByEmail(data.email || data.login);
-  if (!u) return res.status(404).json({ error: 'user_not_found' });
-  grant(u, data.plan || 'full', 'payment');
+
+  const payId = data.payload;
+  const rec = payId && DB.pays[payId];
+  // отвечаем 200 в любом случае (чтобы Platega не долбила повторами), но действуем только при CONFIRMED и известном платеже
+  if (!rec) { console.error('Platega callback: неизвестный payload', payId); return res.json({ ok: true }); }
+
+  if (data.status === 'CONFIRMED') {
+    if (rec.status !== 'confirmed') {            // защита от повторной обработки
+      rec.status = 'confirmed'; rec.confirmed_at = new Date().toISOString(); rec.transactionId = data.id || rec.transactionId;
+      const u = getUser(rec.userId);
+      if (u) grant(u, rec.plan, 'payment');
+      save();
+      console.log('Оплата подтверждена:', rec.email, rec.plan, rec.amount + '₽');
+    }
+  } else if (data.status === 'CANCELED') {
+    rec.status = 'canceled'; save();
+  } else if (data.status === 'CHARGEBACKED') {
+    // возврат средств — забираем доступ
+    rec.status = 'chargebacked';
+    const u = getUser(rec.userId);
+    if (u) { u.paid = 0; u.plan = null; u.paid_until = null; }
+    save();
+  }
   res.json({ ok: true });
 });
 
